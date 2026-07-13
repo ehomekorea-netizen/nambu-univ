@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 프로포절 내비게이터 - 2일차 실전 인터랙티브 교안</title>
+    <meta name="description" content="Gemini & NotebookLM 실전 프로포절 작성">
+
+    <!-- Tailwind CSS & Lucide Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts: 시인성 극대화를 위해 두껍고 명확한 폰트 적용 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        chest: {
+                            DEFAULT: '#0f172a', // 다크 슬레이트 네이비
+                            gold: '#f59e0b',    // 슬릭 골드
+                            blue: '#3b82f6',     // 네온 블루
+                            purple: '#8b5cf6'   // 네온 퍼플
+                        },
+                        glass: {
+                            bg: 'rgba(15, 23, 42, 0.55)',
+                            border: 'rgba(255, 255, 255, 0.08)'
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Inter', sans-serif;
+            background-color: #080b11;
+            color: #f1f5f9;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* 뷰포트 높이 맞춤 (빔프로젝터 단락별 프레젠테이션용) */
+        .presentation-section {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            scroll-margin-top: 130px;
+        }
+
+        /* Meng To / Design+Code 스타일 글래스모피즘 */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            background: rgba(30, 41, 59, 0.55);
+            transform: translateY(-2px);
+        }
+
+        /* Large Accordion Style */
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .accordion-item.active .accordion-body {
+            max-height: 2500px;
+        }
+
+        /* 세련된 그라데이션 보더 효과 */
+        .glow-border {
+            position: relative;
+        }
+        .glow-border::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(to bottom right, rgba(59,130,246,0.3), rgba(139,92,246,0.1), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        /* 코드 에디터 스타일 가독성 향상 */
+        .code-container {
+            font-family: 'Fira Code', 'Noto Sans KR', monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+
+    <!-- 안전한 오버레이 해제 및 토글용 인라인 스크립트 선행 정의 -->
+    <script>
+        window.closeSplash = function() {
+            const splash = document.getElementById("splash-overlay");
+            if (splash) {
+                splash.style.transition = "opacity 0.4s ease, visibility 0.4s ease";
+                splash.style.opacity = "0";
+                splash.style.pointerEvents = "none";
+                setTimeout(() => {
+                    splash.style.display = "none";
+                }, 400);
+            }
+        };
+
+        function toggleDeepResearchExplain() {
+            const body = document.getElementById("deep-research-explain-body");
+            const icon = document.getElementById("toggle-icon");
+            if (body.style.maxHeight === "0px" || !body.style.maxHeight) {
+                body.style.maxHeight = body.scrollHeight + "px";
+                if (icon) icon.style.transform = "rotate(180deg)";
+            } else {
+                body.style.maxHeight = "0px";
+                if (icon) icon.style.transform = "rotate(0deg)";
+            }
+        }
+
+        // 마인드셋 안내 토글 제어
+        function toggleMindsetExplain() {
+            const body = document.getElementById("mindset-explain-body");
+            const icon = document.getElementById("mindset-icon");
+            if (body.style.maxHeight === "0px" || !body.style.maxHeight) {
+                body.style.maxHeight = body.scrollHeight + "px";
+                if (icon) icon.style.transform = "rotate(180deg)";
+            } else {
+                body.style.maxHeight = "0px";
+                if (icon) icon.style.transform = "rotate(0deg)";
+            }
+        }
+    </script>
+</head>
+<body class="antialiased text-xl leading-relaxed">
+
+    <!-- 1. SPLASH INTRO OVERLAY -->
+    <div id="splash-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-[#080b11] transition-all duration-500">
+        <div class="max-w-3xl w-full mx-4 p-10 md:p-16 rounded-[40px] glass-panel text-center space-y-8 glow-border">
+            <span class="px-5 py-2 rounded-full bg-chest-gold/10 text-chest-gold text-sm font-extrabold tracking-widest uppercase">2026 아동복지 현장 실무 교육</span>
+            <h2 class="text-4xl md:text-6xl font-black text-white leading-tight tracking-tight">
+                AI 프로포절 내비게이터<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-violet-500">실전 공동 기획 과정</span>
+            </h2>
+            <p class="text-slate-300 text-lg leading-relaxed max-w-xl mx-auto font-medium">
+                우수 사례 역분석과 체계적인 연쇄적 프롬프팅 과정을 통해, 오류와 환각 없이 완성하는 고급 자동화 프로세스입니다.
+            </p>
+            <div class="pt-4">
+                <button onclick="closeSplash()" class="w-full py-5 px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-lg rounded-2xl shadow-xl shadow-blue-500/20 transform transition active:scale-[0.98] duration-150">
+                    2일차 실습실 입장하기 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. STICKY HEADER -->
+    <header class="w-full py-4 px-6 md:px-12 flex items-center justify-between border-b border-white/10 bg-[#080b11]/80 backdrop-blur-md sticky top-0 z-40">
+        <div class="flex items-center space-x-4">
+            <div class="w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-xl font-black text-lg shadow-md">AI</div>
+            <span class="font-black text-xl text-white tracking-tight select-none">AI 프로포절 내비게이터 [2일차]</span>
+        </div>
+        <nav class="hidden xl:flex items-center gap-8 text-sm font-bold text-slate-300">
+            <a href="#step-download" class="hover:text-blue-400 transition-colors">자료 다운로드</a>
+            <a href="#step-1" class="hover:text-blue-400 transition-colors">1. 딥리서치 & 이유</a>
+            <a href="#step-2" class="hover:text-blue-400 transition-colors">2. PDF 역분석</a>
+            <a href="#step-3" class="hover:text-blue-400 transition-colors">3. 우리데이터 수집</a>
+            <a href="#step-4" class="hover:text-blue-400 transition-colors">4. 구글독스 자동화</a>
+        </nav>
+        <!-- 퀴즈 팝업 분리 버튼 -->
+        <a href="quiz.html" target="_blank" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-sm transition shadow-lg shadow-amber-500/10 flex items-center gap-2">
+            <i data-lucide="file-check-2" class="w-4 h-4"></i>
+            성취도 퀴즈 풀기
+        </a>
+    </header>
+
+    <!-- 3. COMPACT REAL-TIME TOPIC CONTROLLER (주제 구체성 교육용 가이드 텍스트 장착) -->
+    <section class="bg-[#080b11]/90 py-3 px-6 md:px-12 border-b border-white/10 sticky top-[73px] z-30 shadow-xl">
+        <div class="max-w-7xl mx-auto flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+            <div class="flex items-center gap-2 shrink-0">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
+                <span class="text-sm font-black text-white">작성 주제 설정 :</span>
+            </div>
+            <div class="flex-grow w-full max-w-4xl">
+                <input type="text" id="user-topic" 
+                       class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2 text-white text-base font-bold focus:outline-none focus:border-blue-500 transition shadow-inner"
+                       value="저소득 가정 아동·청소년의 즐거운 돌봄서비스 제공을 위한 그린 방과후 프로그램">
+            </div>
+            <div class="text-xs text-amber-400 font-bold flex items-center gap-1.5 shrink-0">
+                <i data-lucide="alert-circle" class="w-4 h-4 text-amber-400"></i>
+                예시처럼 '대상+목적+수단'이 결합되도록 구체적으로 작성해 주세요!
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. HERO SECTION -->
+    <section id="hero" class="bg-gradient-to-b from-slate-900/60 to-transparent py-16 px-6 md:px-12 border-b border-white/5">
+        <div class="max-w-6xl mx-auto space-y-6">
+            <span class="px-4 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-wider">실무 프로세스 개편</span>
+            <h1 class="text-4xl md:text-6xl font-black text-white leading-tight tracking-tight">
+                Gemini & NotebookLM<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">프로포절 내비게이터 과정</span>
+            </h1>
+            <p class="text-lg text-slate-400 max-w-3xl leading-relaxed">
+                공모 배분사업 선정을 위한 2일차 가이드. 
+                단순 복사 수업을 넘어 가이드라인을 주입(Lock)하고, 우수 제안서를 역기획(Reverse Engineering)하여 구글 문서에서 최종 완성하는 체계적인 4단계 흐름을 시작합니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- 5. MAIN CONTENT MAP -->
+    <main class="max-w-7xl mx-auto px-6 py-4 space-y-24">
+
+        <!-- [마인드셋 영역] -->
+        <section id="mindset-section" class="w-full">
+            <div class="border border-amber-500/30 rounded-3xl overflow-hidden bg-amber-500/5 glass-panel glow-border">
+                <button onclick="toggleMindsetExplain()" class="w-full text-left p-6 md:p-8 text-white flex items-center justify-between hover:bg-amber-500/10 transition">
+                    <div class="flex items-center gap-4">
+                        <span class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center font-black">
+                            <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                        </span>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-black text-white">💡 사회복지사를 위한 AI 프로포절 작성 마인드셋 (클릭하여 읽기)</h3>
+                            <p class="text-sm text-slate-400 pt-1">프롬프트에는 정답이 없습니다. 본질과 전략을 이해해 주세요.</p>
+                        </div>
+                    </div>
+                    <i id="mindset-icon" data-lucide="chevron-down" class="w-6 h-6 text-amber-500 transition-transform"></i>
+                </button>
+                <div id="mindset-explain-body" class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-950/20">
+                    <div class="p-6 md:p-8 text-base md:text-lg text-slate-300 space-y-4 border-t border-amber-500/20 leading-relaxed font-medium">
+                        <p>
+                            이 교안 웹페이지에 제시된 연쇄 프롬프트들은 완벽한 일회성 정답이 아닙니다. 
+                            이는 단지 하나의 <strong>Best Practice (베스트 프랙티스: 가장 모범적인 예시 활용 사례)</strong>이자 참고용 <strong>Use-Case (유스케이스: 활용 시나리오)</strong>일 뿐입니다.
+                        </p>
+                        <p class="text-amber-400 font-bold">
+                            정답 프롬프트라는 것은 세상에 존재하지 않으며, 오직 자신의 손으로 깎아 나가는 것만이 진짜 전략입니다.
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 text-slate-400 pl-2">
+                            <li><strong class="text-white">현장 데이터가 답입니다</strong>: 기관이 소속된 자치구의 현황, 해당 수혜 아동들이 겪는 실제 고통의 수치 등 여러분만이 알고 있는 데이터를 계속하여 프롬프트에 녹여야 합니다.</li>
+                            <li><strong class="text-white">반복해서 깎아 나가세요</strong>: AI가 준 답변을 보며 맘에 들지 않는 표현, 비현실적인 사업 비목 수량을 계속 정정해 주며 프롬프트를 미세 조정해야 성공적인 당선 초안이 탄생합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 📥 실습 소스 및 양식 파일 다운로드 센터 -->
+        <section id="step-download" class="presentation-section">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border">
+                <div class="flex items-center gap-4">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-lg">
+                        <i data-lucide="download" class="w-5 h-5"></i>
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white">실습용 공모 양식 및 유형별 참고 PDF 다운로드</h2>
+                </div>
+
+                <p class="text-slate-300 text-base">
+                    실무 교육장에서 실습을 진행하기 위해 필요한 한글 기획서 양식과 유형별 참고 자료 파일들입니다. 
+                    아래 버튼을 눌러 교육용 PC 바탕화면에 바로 다운로드하여 수업 준비를 진행해 주세요.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
+                    <!-- HWPX 양식 카드 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold text-amber-500 bg-amber-500/10 px-2 py-1 rounded">기획서 공식 한글 양식</span>
+                            <h4 class="font-bold text-white text-lg pt-1">광주공동모금회 산출중심형 양식.hwpx</h4>
+                            <p class="text-xs text-slate-400">실습 시 AI 결과물 데이터를 실제로 이식해서 편집 및 작성할 최종 한글 기안용 파일 양식입니다.</p>
+                        </div>
+                        <a href="files/광주공동모금회 산출중심형 사업계획서 양식.hwpx" download target="_blank" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 text-center font-black text-sm rounded-xl transition flex items-center justify-center gap-2">
+                            <i data-lucide="download" class="w-4 h-4"></i> 양식 다운로드 (.hwpx)
+                        </a>
+                    </div>
+
+                    <!-- 성과중심형 PDF -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2 py-1 rounded">사례 1: 성과중심형</span>
+                            <h4 class="font-bold text-white text-lg pt-1">난독 아동 언어역량 발달 및 정서회복 지원</h4>
+                            <p class="text-xs text-slate-400">정서적 변화(Outcome)를 측정하기 위해 사전/사후 설문지 척도를 활용한 대표 기획서 사례입니다.</p>
+                        </div>
+                        <a href="files/읽기, 쓰기 곤란한 난독증 아동의 언어역량 발달 및 정서회복 지원사업(성과중심형).pdf" download target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-center font-black text-sm rounded-xl transition flex items-center justify-center gap-2">
+                            <i data-lucide="file-text" class="w-4 h-4"></i> 성과중심 사례 PDF 다운
+                        </a>
+                    </div>
+
+                    <!-- 산출중심형 PDF -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold text-blue-400 bg-blue-400/10 px-2 py-1 rounded">사례 2: 산출중심형</span>
+                            <h4 class="font-bold text-white text-lg pt-1">저소득가정 아동 그린 방과후 돌봄서비스</h4>
+                            <p class="text-xs text-slate-400">서비스 제공 회차(연 40회) 및 급식 일수 등의 물리적 산출량(Output)을 기준으로 작성된 사례입니다.</p>
+                        </div>
+                        <a href="files/저소득 가정 아동·청소년의 즐거운 돌봄서비스 제공을 위한 그린 방과후 프로그램(산출중심형).pdf" download target="_blank" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white text-center font-black text-sm rounded-xl transition flex items-center justify-center gap-2">
+                            <i data-lucide="file-text" class="w-4 h-4"></i> 산출중심 사례 PDF 다운
+                        </a>
+                    </div>
+
+                    <!-- 성과확산형 PDF -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold text-purple-400 bg-purple-400/10 px-2 py-1 rounded">사례 3: 성과확산형</span>
+                            <h4 class="font-bold text-white text-lg pt-1">취약계층 아동 심리지원 동행자 연계 사업</h4>
+                            <p class="text-xs text-slate-400">유관 복지 협의체 거버넌스 및 상담 동행 모델을 타 지역에 확산시키는 것을 목적으로 한 사례입니다.</p>
+                        </div>
+                        <a href="files/취약계층 아동 심리지원 동행자 연계 사업(성과확산형).pdf" download target="_blank" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white text-center font-black text-sm rounded-xl transition flex items-center justify-center gap-2">
+                            <i data-lucide="file-text" class="w-4 h-4"></i> 성과확산 사례 PDF 다운
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1단계: 딥리서치 & 한계 파악 -->
+        <section id="step-1" class="presentation-section">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border">
+                <div class="flex items-center gap-4">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-black text-lg">1</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white">1단계: 유형별 전략 딥리서치 & 한계 파악</h2>
+                </div>
+
+                <!-- 아하 포인트 -->
+                <div class="bg-blue-500/5 rounded-2xl p-6 border border-blue-500/10 space-y-3">
+                    <span class="text-xs font-bold text-blue-400 tracking-widest uppercase">💡 AHA POINT</span>
+                    <h3 class="text-xl font-bold text-white">"왜 단순히 '써줘'라고 하면 탈락할 수밖에 없을까요?"</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        주제와 유형만 툭 입력해서 얻은 AI 문장은 **사람 중심의 고유한 맥락 부족, 논리 정렬(Logic Model)의 붕괴, 예산 단가/척도 비객관성, 표절 윤리 리스크**로 서류 통과가 어렵습니다. 
+                        따라서 실무자가 직접 통제하는 연쇄적 프롬프팅을 가동해야 합니다.
+                    </p>
+                </div>
+
+                <!-- 딥리서치 도구 유용성 토글 영역 -->
+                <div class="border border-white/5 rounded-2xl overflow-hidden bg-slate-950/20">
+                    <button onclick="toggleDeepResearchExplain()" class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-white/5 transition">
+                        <span class="text-base font-bold flex items-center gap-2 text-chest-gold">
+                            <i data-lucide="help-circle" class="w-5 h-5 text-chest-gold"></i>
+                            왜 단순 검색이 아닌 '딥리서치(Deep Research)'가 유용한 도구인가요? (클릭하여 토글)
+                        </span>
+                        <i id="toggle-icon" data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="deep-research-explain-body" class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-slate-900/30">
+                        <div class="p-6 text-sm md:text-base text-slate-300 space-y-4 border-t border-white/5">
+                            <p>
+                                일반 AI 검색은 단순 단발성 요약을 반환하지만, <strong>딥리서치(Deep Research)</strong>는 다단계의 자율 탐색 메커니즘을 수행합니다:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 text-slate-400 pl-2">
+                                <li><strong class="text-white">자율적 다단계 추적(Multi-turn Search)</strong>: 하나의 키워드를 인구수, 지자체 조례, 표준 단가 등 다양한 서브 쿼리로 확장해 깊숙이 연쇄 탐색합니다.</li>
+                                <li><strong class="text-white">공신력 있는 출처(Citation) 보장</strong>: KOSIS, KIHASA 등 1차 출처 도메인의 팩트 데이터를 비교하여 환각(Hallucination)을 원천 차단합니다.</li>
+                                <li><strong class="text-white">교차검증 시간 90% 이상 단축</strong>: 각 기관 가이드라인과 척도집 요건에 부합하는 리서치 보고서를 즉시 빌드해 줍니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 유형별 락(Lock) 프롬프트 빌더 위젯 -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4">
+                    <div class="lg:col-span-1 bg-slate-900/60 border border-white/5 rounded-2xl p-5 space-y-4 text-sm">
+                        <div class="space-y-1">
+                            <label class="font-bold text-slate-300 block text-xs">1. 기획할 프로포절 유형</label>
+                            <div class="grid grid-cols-1 gap-1.5">
+                                <label class="flex items-center gap-2 text-white font-medium cursor-pointer">
+                                    <input type="radio" name="var-agency" value="chest" checked class="w-4 h-4"> 산출중심형 (수량/횟수 정량화)
+                                </label>
+                                <label class="flex items-center gap-2 text-white font-medium cursor-pointer">
+                                    <input type="radio" name="var-agency" value="enterprise" class="w-4 h-4"> 성과중심형 (표준 척도/질적 변화)
+                                </label>
+                                <label class="flex items-center gap-2 text-white font-medium cursor-pointer">
+                                    <input type="radio" name="var-agency" value="gov" class="w-4 h-4"> 성과확산형 (거버넌스/매뉴얼)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="font-bold text-slate-300 block text-xs">2. 총 사업 예산 한도</label>
+                            <select id="var-budget" class="w-full bg-slate-950 border border-white/10 rounded-xl p-2.5 text-white focus:outline-none text-xs">
+                                <option value="15,000,000원">1,500만 원 이하 (일반 배분사업)</option>
+                                <option value="30,000,000원">3,000만 원 이하 (중규모 기획사업)</option>
+                                <option value="50,000,000원">5,000만 원 이하 (대규모 기업 매칭)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 1단계: 복제용 텍스트 프리뷰 컨테이너 -->
+                    <div class="lg:col-span-2 flex flex-col justify-between border border-white/5 rounded-2xl bg-slate-950/40">
+                        <div class="flex justify-between items-center bg-slate-900 px-5 py-2.5 border-b border-white/5 rounded-t-2xl">
+                            <span class="text-xs font-bold text-slate-400">Lock용 검색 프롬프트 (대화창에 입력할 텍스트)</span>
+                            <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded-lg text-xs" onclick="copyPrompt('deep-research-result')">복사</button>
+                        </div>
+                        <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container" id="deep-research-result"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2단계: 우수사례 PDF 역분석 -->
+        <section id="step-2" class="presentation-section">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full">
+                <div class="flex items-center gap-4">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-black text-lg">2</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white">2단계: 우수 사례 파일(PDF) 분석 및 역기획</h2>
+                </div>
+
+                <!-- 아하 포인트 -->
+                <div class="bg-blue-500/5 rounded-2xl p-6 border border-blue-500/10 space-y-3">
+                    <span class="text-xs font-bold text-blue-400 tracking-widest uppercase">💡 AHA POINT</span>
+                    <h3 class="text-xl font-bold text-white">"우수한 기획서의 뼈대(맥락)를 AI에게 역기획(Reverse Engineering) 시켜야 합니다."</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        실습 다운로드 센터에서 내려받은 PDF 파일(성과/산출/성과확산형)은 복사 차단 스캔본이므로 **구글 NotebookLM**에 업로드(Lock)해야 온전히 해독됩니다. 
+                        그 후 아래 프롬프트를 주어 기획 뼈대를 역으로 추출해 내십시오.
+                    </p>
+                </div>
+
+                <!-- 역분석 프롬프트 카드 -->
+                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                    <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                        <span class="text-xs font-bold text-slate-400">NotebookLM 입력용 역분석 프롬프트</span>
+                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs" onclick="copyPrompt('p-reverse-prompt')">복사</button>
+                    </div>
+                    <div class="p-6 text-sm leading-relaxed text-slate-300 select-all code-container" id="p-reverse-prompt">내가 첨부한 소스 문서인 [우수 제안서 PDF 파일]의 내용과 작성 방식을 완벽하게 분석해줘.
+
+이 문서와 동일한 퀄리티와 엄격한 논리 정렬을 가진 계획서를 새로운 주제로 기획하여 완성하고자 해.
+이 PDF 문서의 작성 구조를 뼈대로 삼기 위해 다음 요소를 정밀하게 추출하여 요약해줘:
+
+1. [논리 정렬 구도]: 욕구 분석, 사업 목적, 세부 세션 구성, 산출/성과 평가 지표 및 예산 편성 간의 유기적 인과관계 요약.
+2. [이상적 지시 프롬프트]: 이 정도의 논리 완성도와 공문서 규격을 지닌 초안을 AI가 빌드해내도록 하기 위해, 사용자가 처음에 입력했어야 하는 '구체적인 마스터 프롬프트 명령서 지침'을 템플릿 형태로 재구성하여 도출해줘.
+3. [필수 입력 데이터 구멍]: 새로운 기획 주제를 대입할 때 내가 수집하여 AI에 공급해줘야 하는 핵심 입력 데이터 변수(예: [지역사회 고유 특성], [예산 한도액], [대상자 척도명] 등) 목록과 팁 제시.
+
+이 지침들을 구조화하여 리포트 형태로 보고해줘.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3단계: 우리 데이터 수집 & 연쇄적 프롬프팅 -->
+        <section id="step-3" class="presentation-section">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full">
+                <div class="flex items-center gap-4">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-black text-lg">3</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white">3단계: 현장 데이터 수집 & 연쇄적 프롬프팅</h2>
+                </div>
+
+                <!-- 아하 포인트 -->
+                <div class="bg-blue-500/5 rounded-2xl p-6 border border-blue-500/10 space-y-3">
+                    <span class="text-xs font-bold text-blue-400 tracking-widest uppercase">💡 AHA POINT</span>
+                    <h3 class="text-xl font-bold text-white">"욕구, 대상, 예산의 실물 데이터를 단계적으로 AI에게 주입해 가며 작성합니다."</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        우리가 확보한 **현장 통계 및 센터 정원, 자원 상황**을 바탕으로 한 단계씩 차례대로 아래 아코디언 메뉴의 연쇄 프롬프트 카드를 사용하여 살을 붙여 나갑니다.
+                    </p>
+                </div>
+
+                <!-- 실시간 연쇄 프롬프트 아코디언 로드맵 -->
+                <div class="space-y-4 text-base">
+
+                    <!-- 3-1: 사업명 -->
+                    <div class="accordion-item border border-white/10 rounded-2xl overflow-hidden bg-slate-900/30">
+                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/60 transition accordion-header">
+                            <div class="flex items-center gap-4">
+                                <span class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold">3-1</span>
+                                <span class="font-bold text-slate-100">양식 1번 항목: 대상·목적·방법 사업명 선정</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                        </button>
+                        <div class="accordion-body bg-slate-950/40 border-t border-white/5">
+                            <div class="p-6 md:p-8 space-y-6">
+                                <div class="bg-blue-500/5 border-l-4 border-blue-600 p-4 rounded-r-xl text-xs md:text-sm">
+                                    <span class="font-bold text-white block mb-1">💡 [실무자 AI 처리 & 양식 기입 팁]</span>
+                                    <p class="text-slate-300 leading-relaxed">
+                                        * **한글파일 매칭 위치**: [1. 사업명] 표 칸에 대상, 목적, 방법을 각각 나누어 기재한 뒤, 결합된 최종 명칭을 삽입합니다.
+                                    </p>
+                                </div>
+                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                    <div class="flex justify-between items-center bg-slate-900 px-4 py-2 border-b border-white/5 rounded-t-xl">
+                                        <span class="text-xs text-slate-400">3-1단계 프롬프트</span>
+                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-2 py-0.5 rounded text-xs" onclick="copyPrompt('p-step-1')">복사</button>
+                                    </div>
+                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container" id="p-step-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3-2: 사업 필요성 -->
+                    <div class="accordion-item border border-white/10 rounded-2xl overflow-hidden bg-slate-900/30">
+                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/60 transition accordion-header">
+                            <div class="flex items-center gap-4">
+                                <span class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold">3-2</span>
+                                <span class="font-bold text-slate-100">양식 2번 항목: 수집 데이터 기반 필요성 작성</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                        </button>
+                        <div class="accordion-body bg-slate-950/40 border-t border-white/5">
+                            <div class="p-6 md:p-8 space-y-6">
+                                <div class="bg-blue-500/5 border-l-4 border-blue-600 p-4 rounded-r-xl text-xs md:text-sm">
+                                    <span class="font-bold text-white block mb-1">💡 [실무자 AI 처리 & 양식 기입 팁]</span>
+                                    <p class="text-slate-300 leading-relaxed">
+                                        * **한글파일 매칭 위치**: [2. 사업 필요성] 란에 개조식 소제목 단락으로 구분하여 작성합니다.
+                                    </p>
+                                </div>
+                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                    <div class="flex justify-between items-center bg-slate-900 px-4 py-2 border-b border-white/5 rounded-t-xl">
+                                        <span class="text-xs text-slate-400">3-2단계 프롬프트</span>
+                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-2 py-0.5 rounded text-xs" onclick="copyPrompt('p-step-2')">복사</button>
+                                    </div>
+                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container" id="p-step-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3-3: 참여자 선정 -->
+                    <div class="accordion-item border border-white/10 rounded-2xl overflow-hidden bg-slate-900/30">
+                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/60 transition accordion-header">
+                            <div class="flex items-center gap-4">
+                                <span class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold">3-3</span>
+                                <span class="font-bold text-slate-100">양식 3-1번 항목: 참여자 및 우선 선정조건 수립</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                        </button>
+                        <div class="accordion-body bg-slate-950/40 border-t border-white/5">
+                            <div class="p-6 md:p-8 space-y-6">
+                                <div class="bg-blue-500/5 border-l-4 border-blue-600 p-4 rounded-r-xl text-xs md:text-sm">
+                                    <span class="font-bold text-white block mb-1">💡 [실무자 AI 처리 & 양식 기입 팁]</span>
+                                    <p class="text-slate-300 leading-relaxed">
+                                        * **한글파일 매칭 위치**: [3. 사업 내용 및 추진방법] &gt; [1) 사업 참여자 및 인원] 표와 텍스트 란에 매치시킵니다.
+                                    </p>
+                                </div>
+                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                    <div class="flex justify-between items-center bg-slate-900 px-4 py-2 border-b border-white/5 rounded-t-xl">
+                                        <span class="text-xs text-slate-400">3-3단계 프롬프트</span>
+                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-2 py-0.5 rounded text-xs" onclick="copyPrompt('p-step-3')">복사</button>
+                                    </div>
+                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container" id="p-step-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3-4: 세부사업 내용 -->
+                    <div class="accordion-item border border-white/10 rounded-2xl overflow-hidden bg-slate-900/30">
+                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/60 transition accordion-header">
+                            <div class="flex items-center gap-4">
+                                <span class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold">3-4</span>
+                                <span class="font-bold text-slate-100">양식 3-2번 항목: 세부사업 내용 및 일정표 생성</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                        </button>
+                        <div class="accordion-body bg-slate-950/40 border-t border-white/5">
+                            <div class="p-6 md:p-8 space-y-6">
+                                <div class="bg-blue-500/5 border-l-4 border-blue-600 p-4 rounded-r-xl text-xs md:text-sm">
+                                    <span class="font-bold text-white block mb-2">💡 [실무자 AI 처리 & 양식 기입 팁]</span>
+                                    <p class="text-slate-300 leading-relaxed">
+                                        * **한글파일 매칭 위치**: [3. 사업 내용 및 추진방법] &gt; [2) 사업내용 및 방법] 표 영역에 칸을 맞춰 이식합니다.
+                                    </p>
+                                </div>
+                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                    <div class="flex justify-between items-center bg-slate-900 px-4 py-2 border-b border-white/5 rounded-t-xl">
+                                        <span class="text-xs text-slate-400">3-4단계 프롬프트</span>
+                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-2 py-0.5 rounded text-xs" onclick="copyPrompt('p-step-4')">복사</button>
+                                    </div>
+                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container" id="p-step-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3-5: 예산 편성 -->
+                    <div class="accordion-item border border-white/10 rounded-2xl overflow-hidden bg-slate-900/30">
+                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/60 transition accordion-header">
+                            <div class="flex items-center gap-4">
+                                <span class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold">3-5</span>
+                                <span class="font-bold text-slate-100">양식 4번 항목: 단가 기반 예산계획 편성</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                        </button>
+                        <div class="accordion-body bg-slate-950/40 border-t border-white/5">
+                            <div class="p-6 md:p-8 space-y-6">
+                                <div class="bg-blue-500/5 border-l-4 border-blue-600 p-4 rounded-r-xl text-xs md:text-sm">
+                                    <span class="font-bold text-white block mb-2">💡 [실무자 AI 처리 & 양식 기입 팁]</span>
+                                    <p class="text-slate-300 leading-relaxed">
+                                        * **한글파일 매칭 위치**: [4. 예산편성] 표의 단가 공식을 준용해 표 셀에 나누어 기입합니다.
+                                    </p>
+                                </div>
+                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                    <div class="flex justify-between items-center bg-slate-900 px-4 py-2 border-b border-white/5 rounded-t-xl">
+                                        <span class="text-xs text-slate-400">3-5단계 프롬프트</span>
+                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-2 py-0.5 rounded text-xs" onclick="copyPrompt('p-step-5')">복사</button>
+                                    </div>
+                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container" id="p-step-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4단계: Google Docs 연계 한방 자동화 빌드 -->
+        <section id="step-4" class="presentation-section">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full">
+                <div class="flex items-center gap-4">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-black text-lg">4</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white">4단계: Google Docs 연계 한방 자동화 빌드</h2>
+                </div>
+
+                <!-- 아하 포인트 -->
+                <div class="bg-blue-500/5 rounded-2xl p-6 border border-blue-500/10 space-y-3">
+                    <span class="text-xs font-bold text-blue-400 tracking-widest uppercase">💡 AHA POINT</span>
+                    <h3 class="text-xl font-bold text-white">"다듬어진 최종 수치들을 구글 문서에 모아둔 뒤, AI에게 최종 한방 컴파일을 지시합니다."</h3>
+                    <p class="text-slate-300 text-base leading-relaxed">
+                        3단계에서 획득한 확정 수치들을 **Google Docs**나 메모장에 모아 두고 아래 마스터 템플릿과 함께 대화창에 넣으십시오. 
+                        AI가 공문서 양식 격조와 합계 금액이 칼같이 정렬된 최종 기획서 전체 텍스트를 출력합니다.
+                    </p>
+                </div>
+
+                <!-- 마스터 템플릿 프롬프트 카드 -->
+                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                    <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                        <span class="text-xs font-bold text-slate-400">최종 4단계 마스터 프롬프트</span>
+                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs" onclick="copyPrompt('p-master-docs')">복사</button>
+                    </div>
+                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container" id="p-master-docs"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 6. FOOTER -->
+    <footer class="w-full py-10 border-t border-white/5 bg-[#080b11]/80 text-center text-slate-500 text-sm">
+        <p>&copy; 2026 아동복지 현장 교육 프로그램 기획서 작성 실무 과정. All Rights Reserved.</p>
+    </footer>
+
+    <!-- 복사 완료 토스트 알림 -->
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 translate-y-24 bg-chest-gold text-slate-950 font-black px-8 py-4 rounded-full text-sm shadow-2xl pointer-events-none z-50 transition-all duration-300">
+        프롬프트가 클립보드에 복사되었습니다!
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

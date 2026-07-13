@@ -1,0 +1,83 @@
+/* Custom styles to complement Tailwind CSS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+
+:root {
+    --chest-navy: #0d1b3e;
+    --chest-gold: #f59e0b;
+    --chest-blue: #3b82f6;
+    --bg-dark: #0b0f19;
+    --border-ink: #1e293b;
+    --text-main: #f1f5f9;
+}
+
+body {
+    font-family: 'Noto Sans KR', 'Inter', sans-serif;
+}
+
+/* Splash Screen Animation */
+#splash-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Accordion Transition */
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+}
+
+.accordion-item.active .accordion-body {
+    max-height: 800px; /* 넉넉한 높이 */
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.accordion-item.active .step-num {
+    background-color: var(--chest-blue) !important;
+    color: white !important;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.accordion-item.active {
+    border-color: rgba(59, 130, 246, 0.4) !important;
+    background-color: rgba(15, 23, 42, 0.5) !important;
+}
+
+/* Quiz Option Selected */
+.option-item.selected {
+    border-color: var(--chest-blue) !important;
+    background-color: rgba(59, 130, 246, 0.1) !important;
+    color: #ffffff !important;
+}
+
+.option-item.correct {
+    border-color: #10b981 !important;
+    background-color: rgba(16, 185, 129, 0.1) !important;
+    color: #34d399 !important;
+}
+
+.option-item.incorrect {
+    border-color: #ef4444 !important;
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    color: #f87171 !important;
+}
+
+/* Toast Message */
+#toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+#toast {
+    transform: translateX(-50%) translateY(100px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Card Zoom Feedback */
+.card-tactile {
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.card-tactile:hover {
+    transform: translateY(-2px);
+    border-color: var(--chest-blue);
+}
