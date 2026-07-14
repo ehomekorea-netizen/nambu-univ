@@ -466,23 +466,152 @@
                         </div>
                     </div>
 
-                    <!-- AI-ML-DL Relationship (Tiro Meeting Sync) -->
-                    <div class="bg-slate-950/30 p-6 rounded-2xl border border-white/5 space-y-4">
-                        <h4 class="text-white font-extrabold text-sm flex items-center gap-2 text-indigo-400">
-                            <i data-lucide="layers" class="w-4 h-4"></i> 쉽게 정리하는 AI 생태계 포함관계 (인공지능 > 머신러닝 > 딥러닝)
+                    <!-- AI-ML-DL Interactive Concentric Diagram -->
+                    <div class="bg-slate-950/40 p-6 md:p-8 rounded-2xl border border-white/5 space-y-6">
+                        <h4 class="text-indigo-400 font-extrabold text-sm flex items-center gap-2">
+                            <i data-lucide="layers" class="w-4 h-4"></i>
+                            AI 생태계 포함관계 — 클릭해서 각 층이 뭔지 알아보세요
                         </h4>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                            <div class="bg-[#05070f]/50 p-4 rounded-xl border border-white/5 space-y-2">
-                                <div class="flex items-center justify-center gap-1.5"><span class="w-5 h-5 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[10px]">1</span><strong class="text-white">인공지능 (AI)</strong></div>
-                                <p class="text-slate-400 leading-relaxed">가장 넓은 범주로, 센서를 활용해 정해진 온도를 자동으로 맞추는 단순 온도조절기부터 자율주행까지 '기계가 스스로 판단을 모방하는 모든 기술'을 통칭합니다.</p>
+
+                        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+
+                            <!-- Concentric Rings SVG -->
+                            <div class="shrink-0 relative w-[280px] h-[280px] md:w-[320px] md:h-[320px] select-none" id="ai-rings-container">
+                                <!-- Ring 1: AI (outermost) -->
+                                <div id="ring-ai"
+                                     onclick="selectAiRing('ai')"
+                                     class="ai-ring absolute inset-0 rounded-full cursor-pointer transition-all duration-300 flex items-center justify-center"
+                                     style="background: rgba(59,130,246,0.08); border: 2.5px solid rgba(59,130,246,0.35);">
+                                </div>
+                                <!-- Ring 2: ML -->
+                                <div id="ring-ml"
+                                     onclick="selectAiRing('ml')"
+                                     class="ai-ring absolute rounded-full cursor-pointer transition-all duration-300 flex items-center justify-center"
+                                     style="inset: 42px; background: rgba(168,85,247,0.10); border: 2.5px solid rgba(168,85,247,0.40);">
+                                </div>
+                                <!-- Ring 3: DL -->
+                                <div id="ring-dl"
+                                     onclick="selectAiRing('dl')"
+                                     class="ai-ring absolute rounded-full cursor-pointer transition-all duration-300 flex items-center justify-center"
+                                     style="inset: 84px; background: rgba(245,158,11,0.10); border: 2.5px solid rgba(245,158,11,0.45);">
+                                </div>
+                                <!-- Center: GenAI Star -->
+                                <div id="ring-genai"
+                                     onclick="selectAiRing('genai')"
+                                     class="ai-ring absolute rounded-full cursor-pointer transition-all duration-300 flex flex-col items-center justify-center gap-1 z-10"
+                                     style="inset: 114px; background: linear-gradient(135deg, rgba(16,185,129,0.25), rgba(6,182,212,0.20)); border: 2.5px solid rgba(16,185,129,0.6); box-shadow: 0 0 18px rgba(16,185,129,0.25);">
+                                    <i data-lucide="sparkles" class="w-5 h-5 text-emerald-400"></i>
+                                    <span class="text-[9px] font-black text-emerald-400 text-center leading-tight">생성형<br>AI</span>
+                                </div>
+
+                                <!-- Layer Labels (non-clickable, decorative) -->
+                                <!-- AI label -->
+                                <div class="absolute top-3 left-1/2 -translate-x-1/2 pointer-events-none">
+                                    <span class="text-[11px] font-black text-blue-400 bg-[#05070f] px-2 py-0.5 rounded-full border border-blue-500/30 whitespace-nowrap">🌐 인공지능 (AI)</span>
+                                </div>
+                                <!-- ML label -->
+                                <div class="absolute pointer-events-none" style="top: 55px; left: 14px;">
+                                    <span class="text-[10px] font-black text-purple-400 bg-[#05070f] px-1.5 py-0.5 rounded-full border border-purple-500/25 whitespace-nowrap">🧠 머신러닝</span>
+                                </div>
+                                <!-- DL label -->
+                                <div class="absolute pointer-events-none" style="bottom: 58px; right: 8px;">
+                                    <span class="text-[10px] font-black text-amber-400 bg-[#05070f] px-1.5 py-0.5 rounded-full border border-amber-500/25 whitespace-nowrap">⚡ 딥러닝</span>
+                                </div>
+
+                                <!-- Tap hint -->
+                                <div class="absolute -bottom-7 left-1/2 -translate-x-1/2 pointer-events-none">
+                                    <span class="text-[10px] text-slate-500 font-bold whitespace-nowrap animate-pulse">← 각 원을 클릭해 보세요 →</span>
+                                </div>
                             </div>
-                            <div class="bg-[#05070f]/50 p-4 rounded-xl border border-white/5 space-y-2">
-                                <div class="flex items-center justify-center gap-1.5"><span class="w-5 h-5 rounded bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-[10px]">2</span><strong class="text-white">머신러닝 (기계학습)</strong></div>
-                                <p class="text-slate-400 leading-relaxed">사람이 작동 규칙을 직접 코딩하지 않고, 방대한 데이터를 컴퓨터에 주어 최적값을 알아서 도출하게 하는 기술입니다. (예: 자전거가 넘어지지 않도록 수많은 주행 패턴 데이터를 던져주고 핸들 각도 최적값을 기계 스스로 찾아내게 학습시킴)</p>
-                            </div>
-                            <div class="bg-[#05070f]/50 p-4 rounded-xl border border-white/5 space-y-2">
-                                <div class="flex items-center justify-center gap-1.5"><span class="w-5 h-5 rounded bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-[10px]">3</span><strong class="text-white">딥러닝 (심층학습)</strong></div>
-                                <p class="text-slate-400 leading-relaxed">인간 뇌의 신경 세포 구조를 컴퓨터로 구현한 '인공신경망'을 여러 겹(Deep)으로 쌓아 올린 머신러닝의 하위 고도화 기술입니다. 자율주행(FSD)이나 알파고 등 극도로 복잡한 의사결정 전략을 학습하기 위해 사용됩니다.</p>
+
+                            <!-- Detail Panel -->
+                            <div class="flex-1 min-w-0">
+                                <!-- Default hint state -->
+                                <div id="ai-panel-hint" class="h-full flex flex-col items-center justify-center text-center gap-3 py-8 text-slate-500">
+                                    <i data-lucide="mouse-pointer-2" class="w-8 h-8 opacity-40"></i>
+                                    <p class="text-sm font-bold">왼쪽 동심원 중 하나를 클릭하면<br>해당 개념 설명이 여기 나타납니다.</p>
+                                </div>
+
+                                <!-- AI Panel -->
+                                <div id="ai-panel-ai" class="hidden space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center text-blue-400 shrink-0">
+                                            <i data-lucide="globe" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-white font-black text-xl">인공지능 (AI)</h5>
+                                            <span class="text-xs text-blue-400 font-bold">Artificial Intelligence — 가장 넓은 우산 개념</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-sm leading-relaxed">기계가 사람처럼 <strong class="text-white">스스로 판단하고 반응</strong>하도록 만드는 모든 기술을 총칭합니다. 단순한 온도조절기의 규칙 기반 판단부터 자율주행 자동차까지 모두 AI의 범주에 속합니다.</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">온도조절기</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">음성인식</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">자율주행</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">번역기</span>
+                                    </div>
+                                </div>
+
+                                <!-- ML Panel -->
+                                <div id="ai-panel-ml" class="hidden space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-purple-500/15 flex items-center justify-center text-purple-400 shrink-0">
+                                            <i data-lucide="brain" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-white font-black text-xl">머신러닝 (기계학습)</h5>
+                                            <span class="text-xs text-purple-400 font-bold">Machine Learning — AI 안에 있는 학습 방법론</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-sm leading-relaxed">사람이 규칙을 직접 코딩하지 않고, <strong class="text-white">대량의 데이터를 보여줘서</strong> 기계 스스로 최적의 규칙을 찾아내게 하는 기술입니다. 자전거가 넘어지지 않도록 수만 번의 주행 데이터를 학습시키는 방식을 예로 들 수 있습니다.</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 font-bold">스팸 필터</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 font-bold">넷플릭스 추천</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 font-bold">신용카드 이상탐지</span>
+                                    </div>
+                                </div>
+
+                                <!-- DL Panel -->
+                                <div id="ai-panel-dl" class="hidden space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center text-amber-400 shrink-0">
+                                            <i data-lucide="cpu" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-white font-black text-xl">딥러닝 (심층학습)</h5>
+                                            <span class="text-xs text-amber-400 font-bold">Deep Learning — 머신러닝의 진화형, 뇌 신경망 모방</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-sm leading-relaxed">인간 뇌의 신경세포 구조를 흉내 낸 <strong class="text-white">인공신경망을 수십~수백 겹</strong> 쌓아 올린 머신러닝의 정점입니다. 이미지 속 사람 얼굴을 정확히 구분하거나 알파고처럼 바둑을 두는 복잡한 판단을 가능하게 합니다.</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">알파고</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">얼굴인식</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold">자율주행 FSD</span>
+                                    </div>
+                                </div>
+
+                                <!-- GenAI Panel -->
+                                <div id="ai-panel-genai" class="hidden space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-emerald-500/15 flex items-center justify-center text-emerald-400 shrink-0">
+                                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-white font-black text-xl">생성형 AI <span class="text-emerald-400">← 지금 배우는 것!</span></h5>
+                                            <span class="text-xs text-emerald-400 font-bold">Generative AI — 딥러닝 안에 있는 특별한 한 점</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-300 text-sm leading-relaxed">딥러닝 기술 중에서도 <strong class="text-white">새로운 콘텐츠(텍스트·이미지·코드)를 만들어내는</strong> 데 특화된 기술입니다. ChatGPT, Gemini, Claude가 모두 이 생성형 AI에 해당합니다. 코딩 없이 한국어 대화만으로 사용할 수 있는 것이 핵심 차별점입니다.</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">ChatGPT</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">Gemini</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">Claude</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">Midjourney</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/15 text-xs text-emerald-300 font-bold">
+                                        💡 AI라는 거대한 나무 안에서, 생성형 AI는 우리가 직접 대화로 사용할 수 있는 가장 특별한 가지입니다.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2441,6 +2570,70 @@
                     pathLit.setAttribute("d", d);
                 }
             });
+        };
+
+        // Interactive Concentric AI Ring Selector
+        window.selectAiRing = function(layer) {
+            // Hide the default hint panel
+            const hint = document.getElementById("ai-panel-hint");
+            if (hint) hint.classList.add("hidden");
+
+            // Hide all detail panels
+            const panels = ["ai", "ml", "dl", "genai"];
+            panels.forEach(p => {
+                const el = document.getElementById(`ai-panel-${p}`);
+                if (el) el.classList.add("hidden");
+            });
+
+            // Show the selected panel
+            const activePanel = document.getElementById(`ai-panel-${layer}`);
+            if (activePanel) activePanel.classList.remove("hidden");
+
+            // Reset borders and shadows of all rings
+            const ringAi = document.getElementById("ring-ai");
+            const ringMl = document.getElementById("ring-ml");
+            const ringDl = document.getElementById("ring-dl");
+            const ringGenAi = document.getElementById("ring-genai");
+
+            if (ringAi) {
+                ringAi.style.borderColor = "rgba(59,130,246,0.35)";
+                ringAi.style.boxShadow = "none";
+                ringAi.style.background = "rgba(59,130,246,0.08)";
+            }
+            if (ringMl) {
+                ringMl.style.borderColor = "rgba(168,85,247,0.40)";
+                ringMl.style.boxShadow = "none";
+                ringMl.style.background = "rgba(168,85,247,0.10)";
+            }
+            if (ringDl) {
+                ringDl.style.borderColor = "rgba(245,158,11,0.45)";
+                ringDl.style.boxShadow = "none";
+                ringDl.style.background = "rgba(245,158,11,0.10)";
+            }
+            if (ringGenAi) {
+                ringGenAi.style.borderColor = "rgba(16,185,129,0.6)";
+                ringGenAi.style.boxShadow = "0 0 18px rgba(16,185,129,0.25)";
+                ringGenAi.style.background = "linear-gradient(135deg, rgba(16,185,129,0.25), rgba(6,182,212,0.20))";
+            }
+
+            // Highlight the selected ring
+            if (layer === "ai" && ringAi) {
+                ringAi.style.borderColor = "rgba(59,130,246,0.95)";
+                ringAi.style.boxShadow = "0 0 25px rgba(59,130,246,0.4)";
+                ringAi.style.background = "rgba(59,130,246,0.15)";
+            } else if (layer === "ml" && ringMl) {
+                ringMl.style.borderColor = "rgba(168,85,247,0.95)";
+                ringMl.style.boxShadow = "0 0 25px rgba(168,85,247,0.4)";
+                ringMl.style.background = "rgba(168,85,247,0.18)";
+            } else if (layer === "dl" && ringDl) {
+                ringDl.style.borderColor = "rgba(245,158,11,0.95)";
+                ringDl.style.boxShadow = "0 0 25px rgba(245,158,11,0.4)";
+                ringDl.style.background = "rgba(245,158,11,0.18)";
+            } else if (layer === "genai" && ringGenAi) {
+                ringGenAi.style.borderColor = "rgba(16,185,129,0.95)";
+                ringGenAi.style.boxShadow = "0 0 35px rgba(16,185,129,0.7)";
+                ringGenAi.style.background = "linear-gradient(135deg, rgba(16,185,129,0.40), rgba(6,182,212,0.30))";
+            }
         };
 
         // SIDEBAR TOGGLE SYSTEM (Robust Class-Based)
