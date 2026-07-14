@@ -530,33 +530,55 @@
             </section>
 
 <!-- SECTION 3: Generative vs Creative -->
-            <section id="section-generative" class="presentation-section">
+                        <!-- SECTION 3: Search vs Generation -->
+            <section id="section-search-vs-gen" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
-                                        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                    <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
                         <span class="px-4 py-2 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-lg md:text-xl">03</span>
-                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">생성형 AI와 창조 한계</h2>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">검색(Search)과 생성(Generation)의 차이</h2>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                        <div class="lg:col-span-12 space-y-5 flex flex-col justify-between">
-                            <div class="space-y-4">
-                                <p class="text-slate-300 text-base md:text-lg leading-relaxed font-bold">
-                                    많은 사람들이 오해하는 지점이 있습니다. *"AI는 스스로 생각해서 무에서 유를 만들어낸다(Creative)"*고 믿는 것입니다. 
-                                    하지만 그것은 거대한 환상입니다.
-                                </p>
-                                <div class="bg-[#05070f] p-6 rounded-2xl border border-white/5 space-y-3">
-                                    <h4 class="text-amber-400 font-extrabold text-base flex items-center gap-2"><i data-lucide="help-circle" class="w-5 h-5"></i> AI는 고도의 '언어 재조합기'이다</h4>
-                                    <p class="text-slate-350 text-sm md:text-base leading-relaxed">
-                                        생성형 AI는 무에서 지혜를 짜내는 현자가 아닙니다. 
-                                        우리가 <strong>'프롬프트'와 '첨부 자료'라는 동전(Data)</strong>을 구멍에 밀어 넣어줄 때, 
-                                        기존 웹 공간의 거대한 텍스트 통계 지식을 굴려 최적의 문장 조합을 뱉어내는 <strong>‘언어 재조합기(Generator)’</strong>입니다.
-                                    </p>
+                    <p class="text-slate-300 text-lg md:text-xl leading-relaxed font-bold">
+                        왜 생성형 AI는 종종 틀린 답(할루시네이션)을 당당하게 말할까요? 그 이유는 <strong class="text-purple-400 font-black">AI를 '검색기'로 착각</strong>하기 때문입니다.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+                        <!-- Search Card -->
+                        <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-700 hover:border-slate-500 transition-colors">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+                                    <i data-lucide="search" class="w-6 h-6"></i>
                                 </div>
+                                <h3 class="text-2xl font-black text-slate-300">검색 엔진 (사서)</h3>
                             </div>
-                            <p class="text-slate-400 text-sm leading-relaxed font-bold">
-                                ➔ 결론: 질문자가 던져주는 프롬프트의 품질과 데이터의 가치에 따라 결과물이 결정됩니다.
-                            </p>
+                            <ul class="space-y-4 text-slate-400 text-base md:text-lg">
+                                <li class="flex gap-3"><i data-lucide="check" class="w-5 h-5 text-slate-500 shrink-0 mt-0.5"></i> <span>세상에 이미 <strong class="text-white">존재하는 원본 문서</strong>를 찾아줍니다.</span></li>
+                                <li class="flex gap-3"><i data-lucide="check" class="w-5 h-5 text-slate-500 shrink-0 mt-0.5"></i> <span>출처가 명확하며 내용의 변형이 없습니다.</span></li>
+                                <li class="flex gap-3"><i data-lucide="check" class="w-5 h-5 text-slate-500 shrink-0 mt-0.5"></i> <span>정보의 <strong class="text-white">'정확성(Fact)'</strong>에 최적화되어 있습니다.</span></li>
+                            </ul>
                         </div>
+                        
+                        <!-- Generation Card -->
+                        <div class="p-8 rounded-2xl bg-purple-900/20 border border-purple-500/30 hover:border-purple-400/50 transition-colors shadow-[0_0_20px_rgba(168,85,247,0.1)]">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400">
+                                    <i data-lucide="pen-tool" class="w-6 h-6"></i>
+                                </div>
+                                <h3 class="text-2xl font-black text-purple-300">생성형 AI (작가)</h3>
+                            </div>
+                            <ul class="space-y-4 text-slate-300 text-base md:text-lg">
+                                <li class="flex gap-3"><i data-lucide="check" class="w-5 h-5 text-purple-400 shrink-0 mt-0.5"></i> <span>확률과 통계를 기반으로 <strong class="text-white">새로운 문장을 즉석에서 지어냅니다.</strong></span></li>
+                                <li class="flex gap-3"><i data-lucide="check" class="w-5 h-5 text-purple-400 shrink-0 mt-0.5"></i> <span>학습된 패턴을 조합할 뿐, 원본을 보관하지 않습니다.</span></li>
+                                <li class="flex gap-3"><i data-lucide="check" class="w-5 h-5 text-purple-400 shrink-0 mt-0.5"></i> <span>정보의 <strong class="text-white">'유창성(Fluency)'</strong>에 최적화되어 있습니다.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-6 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex flex-col md:flex-row items-center gap-6">
+                        <i data-lucide="alert-triangle" class="w-10 h-10 text-purple-400 shrink-0"></i>
+                        <p class="text-slate-300 text-base md:text-lg leading-relaxed">
+                            따라서 챗GPT에게 <strong>"2023년 남구 복지 예산이 얼마야?"</strong>라고 묻는 것은 소설가에게 팩트를 묻는 것과 같습니다. 모르는 것도 그럴싸하게 지어내는 <strong class="text-purple-300">할루시네이션(환각)</strong> 현상은 결함이 아니라 '생성'이라는 본질에서 파생되는 자연스러운 특징입니다.
+                        </p>
                     </div>
                 </div>
             </section>
@@ -1103,9 +1125,7 @@
                         <span class="px-4 py-2 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-lg md:text-xl">09</span>
                         <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">초거대 AI 진화 방향</h2>
                     </div>
-                        <button onclick="playModelTimeline()" class="bg-sky-600 hover:bg-sky-500 text-white font-black px-5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(56,189,248,0.3)]">
-                            <i data-lucide="play" class="w-4 h-4 fill-white"></i> ⚡ 3대 모델 진화 로드맵 재생
-                        </button>
+                        
                     </div>
 
                     <p class="text-slate-350 text-sm md:text-base leading-relaxed">
