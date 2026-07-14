@@ -3,84 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수업 성취도 자가 진단 퀴즈 - 사업계획서 AI자동화 마스터</title>
+    <title>수업 성취도 자가 진단 퀴즈 - AI 프로포절 내비게이터</title>
     <!-- Tailwind CSS & Lucide Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        chest: {
+                            DEFAULT: '#030712',
+                            gold: '#f59e0b',
+                            blue: '#3b82f6',
+                            purple: '#8b5cf6',
+                            slate: '#0f172a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        };
+    </script>
     <style>
         body {
-            font-family: 'Noto Sans KR', 'Inter', sans-serif;
-            background-color: #070a13;
-            color: #e2e8f0;
-            background-image: radial-gradient(#1e293b 1.5px, transparent 1.5px);
-            background-size: 32px 32px;
+            font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.04) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.04) 0px, transparent 50%),
+                radial-gradient(#1f2937 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px;
+            background-attachment: fixed;
         }
+        
+        /* Floating Capsule Nav */
+        .floating-nav {
+            background: rgba(3, 7, 18, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
         .option-item {
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .option-item:hover {
-            border-color: rgba(59, 130, 246, 0.5);
-            background-color: rgba(30, 41, 59, 0.5);
+            border-color: rgba(59, 130, 246, 0.4) !important;
+            background-color: rgba(30, 41, 59, 0.4) !important;
+            transform: translateY(-1px);
         }
         .option-item.selected {
-            border-color: #3b82f6;
-            background-color: rgba(59, 130, 246, 0.1);
-            color: #ffffff;
+            border-color: #3b82f6 !important;
+            background-color: rgba(59, 130, 246, 0.1) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
         }
         .option-item.correct {
-            border-color: #10b981;
-            background-color: rgba(16, 185, 129, 0.1);
-            color: #34d399;
+            border-color: #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.1) !important;
+            color: #34d399 !important;
         }
         .option-item.incorrect {
-            border-color: #ef4444;
-            background-color: rgba(239, 68, 68, 0.1);
-            color: #f87171;
+            border-color: #ef4444 !important;
+            background-color: rgba(239, 68, 68, 0.1) !important;
+            color: #f87171 !important;
+        }
+        
+        .glow-border {
+            position: relative;
+        }
+        .glow-border::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.2px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.08), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col justify-between text-lg">
+<body class="antialiased min-h-screen flex flex-col justify-between text-base">
 
-    <!-- HEADER -->
-    <header class="w-full py-6 px-8 flex items-center justify-between border-b border-white/10 bg-slate-900/80 backdrop-blur-md sticky top-0 z-40">
-        <div class="flex items-center space-x-3">
-            <div class="w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-xl font-black text-lg shadow-md">Quiz</div>
-            <span class="font-black text-xl text-white select-none">수업 성취도 자가 진단 퀴즈</span>
+    <!-- HEADER (Capsule Nav Matching index.html) -->
+    <header class="w-full max-w-4xl mx-auto px-4 mt-6 sticky top-4 z-40">
+        <div class="floating-nav rounded-2xl px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-xl font-black text-base shadow-lg shadow-blue-500/10">Q</div>
+                <div>
+                    <span class="text-sm font-black text-white tracking-wider block">자가 진단 퀴즈</span>
+                    <span class="text-[9px] font-bold text-blue-400 tracking-widest uppercase block">PROPOSAL QUIZ</span>
+                </div>
+            </div>
+            <button onclick="window.close()" class="border border-white/10 hover:border-white/20 bg-white/5 text-slate-300 font-bold px-4 py-2 rounded-xl text-xs transition active:scale-95">
+                창 닫기
+            </button>
         </div>
-        <button onclick="window.close()" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-sm font-bold transition">
-            창 닫기
-        </button>
     </header>
 
     <!-- MAIN QUIZ AREA -->
-    <main class="max-w-4xl w-full mx-auto px-6 py-12 flex-grow space-y-12">
+    <main class="max-w-4xl w-full mx-auto px-4 py-12 flex-grow space-y-12">
         <div class="space-y-4 text-center">
-            <h1 class="text-3xl md:text-4xl font-black text-white">자가 진단 퀴즈 (10문항)</h1>
-            <p class="text-ink-300 text-base">2일차 교육 과정을 이수하셨나요? 아래 퀴즈를 풀어 기준 점수(70점) 이상을 충족해 보세요.</p>
+            <span class="px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-black uppercase tracking-widest inline-block">10문항 진단</span>
+            <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight">수업 성취도 자가 진단 퀴즈</h1>
+            <p class="text-slate-400 text-sm md:text-base max-w-[55ch] mx-auto leading-relaxed">2일차 교육 과정을 마스터하셨나요? 아래의 핵심 질문에 답하여 지식 성취도(통과 기준: 70점)를 실시간으로 테스트해 보세요.</p>
         </div>
 
+        <!-- 퀴즈 컨테이너 -->
         <div id="quiz-container" class="space-y-8">
-            <!-- Questions will be rendered here dynamically -->
+            <!-- Questions rendered by quiz.js -->
         </div>
 
-        <div class="flex gap-6 justify-center pt-8 border-t border-white/10">
-            <button id="submit-quiz-btn" class="bg-blue-600 hover:bg-blue-500 text-white font-extrabold px-8 py-4 rounded-2xl text-base transition active:scale-95 shadow-lg shadow-blue-500/20">
+        <!-- 액션 버튼들 -->
+        <div class="flex gap-4 justify-center pt-8 border-t border-white/5">
+            <button id="submit-quiz-btn" class="bg-blue-600 hover:bg-blue-500 text-white font-extrabold px-8 py-4 rounded-xl text-sm transition active:scale-95 shadow-lg shadow-blue-500/25">
                 답안 제출 및 채점하기
             </button>
-            <button id="reset-quiz-btn" class="bg-slate-900 border border-white/10 text-slate-300 font-bold px-8 py-4 rounded-2xl text-base transition hover:bg-slate-800">
+            <button id="reset-quiz-btn" class="bg-slate-900/60 border border-white/10 text-slate-300 font-bold px-8 py-4 rounded-xl text-sm transition hover:bg-slate-800 active:scale-95">
                 다시 풀기
             </button>
         </div>
 
-        <div id="quiz-result" class="hidden p-8 rounded-[24px] border-2 transition duration-300"></div>
+        <!-- 결과 영역 -->
+        <div id="quiz-result" class="hidden p-8 rounded-[24px] border-2 transition duration-300 shadow-2xl"></div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="w-full py-8 border-t border-white/10 bg-slate-950/80 text-center text-slate-400 text-xs">
-        <p>&copy; 2026 아동복지 현장 교육 프로그램 기획서 작성 실무 과정. All Rights Reserved.</p>
+    <footer class="w-full py-8 border-t border-white/5 bg-[#030712]/95 text-center text-slate-500 text-xs mt-12">
+        <p>&copy; 2026 남부대학교 사회복지 실무가이드. All rights reserved.</p>
     </footer>
 
     <script src="quiz.js"></script>

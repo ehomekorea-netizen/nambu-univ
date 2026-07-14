@@ -121,19 +121,35 @@ const quizQuestions = [
     }
 ];
 
+let activeQuestions = [];
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    renderQuiz();
+    initQuiz();
     initQuizEvents();
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
 });
 
+function initQuiz() {
+    // 1. Shuffle the order of questions
+    activeQuestions = shuffleArray([...quizQuestions]);
+    renderQuiz();
+}
+
 function renderQuiz() {
     const container = document.getElementById("quiz-container");
     container.innerHTML = "";
 
-    quizQuestions.forEach((q, idx) => {
+    activeQuestions.forEach((q, idx) => {
         const qBox = document.createElement("div");
         qBox.className = "quiz-question-box bg-slate-900/50 border border-white/10 rounded-3xl p-6 md:p-8 space-y-5";
         qBox.dataset.qId = q.id;
@@ -146,13 +162,18 @@ function renderQuiz() {
         const optionsDiv = document.createElement("div");
         optionsDiv.className = "flex flex-col gap-3";
 
-        q.options.forEach((opt, oIdx) => {
+        // Map original indices so that correct checking remains valid after shuffle
+        const mappedOptions = q.options.map((opt, oIdx) => ({ text: opt, originalIdx: oIdx }));
+        // 2. Shuffle the order of option choices
+        const shuffledOptions = shuffleArray(mappedOptions);
+
+        shuffledOptions.forEach((optObj) => {
             const optItem = document.createElement("div");
             optItem.className = "option-item border border-white/10 bg-slate-950/40 rounded-2xl px-5 py-4 cursor-pointer text-base text-slate-300 flex items-center gap-4 transition";
-            optItem.dataset.oIdx = oIdx;
+            optItem.dataset.originalIdx = optObj.originalIdx;
             optItem.innerHTML = `
-                <input type="radio" name="q-${q.id}" id="q-${q.id}-o-${oIdx}" class="pointer-events-none" style="margin: 0;">
-                <label style="cursor:pointer; width:100%;" class="font-medium">${opt}</label>
+                <input type="radio" name="q-${q.id}" id="q-${q.id}-o-${optObj.originalIdx}" class="pointer-events-none" style="margin: 0;">
+                <label style="cursor:pointer; width:100%;" class="font-medium">${optObj.text}</label>
             `;
 
             optItem.addEventListener("click", () => {
@@ -181,14 +202,14 @@ function initQuizEvents() {
         let score = 0;
         let unanswered = false;
 
-        quizQuestions.forEach(q => {
+        activeQuestions.forEach(q => {
             const selectedOpt = document.querySelector(`.quiz-question-box[data-q-id="${q.id}"] .option-item.selected`);
             if (!selectedOpt) {
                 unanswered = true;
                 return;
             }
 
-            const userChoice = parseInt(selectedOpt.dataset.oIdx);
+            const userChoice = parseInt(selectedOpt.dataset.originalIdx);
             selectedOpt.classList.remove("selected");
 
             if (userChoice === q.answer) {
@@ -197,7 +218,7 @@ function initQuizEvents() {
             } else {
                 selectedOpt.classList.add("incorrect");
                 
-                const correctOpt = document.querySelector(`.quiz-question-box[data-q-id="${q.id}"] .option-item[data-o-idx="${q.answer}"]`);
+                const correctOpt = document.querySelector(`.quiz-question-box[data-q-id="${q.id}"] .option-item[data-original-idx="${q.answer}"]`);
                 if (correctOpt) {
                     correctOpt.style.border = "1.5px dashed #10b981";
                 }
@@ -217,7 +238,7 @@ function initQuizEvents() {
         resultHtml += `<p class="text-base text-white/80 font-medium mb-4">${pass ? '🎉 축하합니다! 교육 이수 기준을 성공적으로 통과하셨습니다.' : '⚠️ 오답 피드백을 확인하고 다시 복습해 풀어보세요.'}</p>`;
         resultHtml += `<div class="divide-y divide-white/10 text-base">`;
 
-        quizQuestions.forEach((q, idx) => {
+        activeQuestions.forEach((q, idx) => {
             const userOpt = document.querySelector(`.quiz-question-box[data-q-id="${q.id}"] .option-item.correct`);
             const isCorrect = !!userOpt;
             resultHtml += `
@@ -235,6 +256,6 @@ function initQuizEvents() {
 
     resetBtn.addEventListener("click", () => {
         resultBox.classList.add("hidden");
-        renderQuiz();
+        initQuiz();
     });
 }

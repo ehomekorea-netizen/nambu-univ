@@ -68,22 +68,47 @@ const promptTemplates = {
 
 이 모든 수치가 완벽히 매칭되어 한글 예산표에 drop-in 할 수 있는 최종 예산 편성 표(Table)를 생성해줘.`,
 
-    // 4단계 마스터 구글독스 한방 프롬프트
-    "p-master-docs": `내가 구글 문서(Google Docs)에 수집하고 정리해 둔 아래의 [기관 실무 팩트 데이터]와 [예시 사업계획서 뼈대]를 결합하여, 광주공동모금회 산출중심형 표준 양식에 맞추어 최종 기획서 본문 전체를 에러 없이 한방에 컴파일(출력)해줘.
+    // 최종 조립 및 윤문 마스터 프롬프트
+    "p-master-docs": `# 역할 정의 (Role)
+너는 사회복지공동모금회 프로포절 심사위원의 시각을 가진 15년 차 시니어 사회복지 기획 편집 전문가이다.
 
-[이식할 기관 실무 팩트 데이터]
-- 기획 주제: "[TOPIC]"
-- 대상 수혜자: 저소득 가정 아동/청소년 20명
-- 필요성 핵심 팩트: 지역사회 방과후 돌봄 사각지대율 35% 이상, 학업 격차 실태 통계 자료 연계
-- 총 사업 예산: 15,000,000원 (신청금 90% / 자부담 10% 비율 준수)
-- 세부 활동 분류: 1) 학습 교실, 2) 정서 치료 캠프, 3) 영양 건강 급식 제공
+# 임무 (Mission)
+내가 아래에 붙여넣은 [3단계 연쇄적 프롬프팅을 통해 도출한 부문별 초안 텍스트]는 이미 각 항목별로 작성이 완료된 상태이다. 이 초안 텍스트들을 하나의 완성된 기획서로 **조립(Assemble)하고, 어조를 통일(윤문)하며, 논리적 정합성을 검수**해라.
+⚠️ 전체를 처음부터 새로 쓰지 마라. 내가 제공한 초안의 핵심 내용과 수치를 그대로 유지하되, 아래의 편집 작업만 수행해라.
 
-[최종 출력 규격 지침]
-1. 한글 파일의 4대 항목(1. 사업명, 2. 사업 필요성, 3. 참여자 및 세부 내용, 4. 예산 편성)에 100% 대응되도록 목차를 나누어 출력할 것.
-2. 모든 문장의 어미는 "~할 계획임", "~할 예정임", "~함" 형태의 격조 높은 공문서 개조식 어조를 완벽히 유지할 것.
-3. 예산표 작성 시 인건비, 사업비, 관리비의 합계가 15,000,000원 단가 공식에 1원 오차 없이 맞아떨어지도록 표 형태로 완성할 것.
+# 편집 작업 지침 (Tasks)
 
-위 조건과 내가 제공한 데이터들을 바탕으로 최종 프로포절 전체를 완성하여 도출해줘.`
+## Task 1: 어조 통일 윤문
+- 모든 문장의 어미를 공문서 규격인 개조식 종결어미(~함, ~임, ~계획임, ~예정임)로 일관되게 통일한다.
+- 소제목 계층 구조를 1 -> 가. -> 1) -> (1) -> - 순으로 엄격하게 정렬한다.
+- 중복되거나 상충되는 서술이 있으면 통합하되, 원본 데이터는 삭제하지 않는다.
+
+## Task 2: 논리 흐름 감수 (Logic Model 크로스체크)
+- '사업 필요성'에서 제기된 문제점이 '세부 프로그램'의 활동 내용으로 해결되고 있는지 확인한다.
+- '세부 프로그램'의 활동이 '예산'의 비목(강사료, 교구비 등)에 정확히 반영되어 있는지 확인한다.
+- 논리가 끊기는 구간이 발견되면, 해당 부분을 [⚠️ 논리 불일치 발견] 태그로 표시하고 수정 제안을 함께 기재한다.
+
+## Task 3: 예산 총합 크로스체크
+- 각 비목의 산출식(단가 × 수량 × 인원 × 횟수)을 재계산하여 소계가 맞는지 확인한다.
+- 인건비 + 사업비 + 관리운영비의 합계가 총 사업 예산 [BUDGET]과 일치하는지 검증한다.
+- 신청금(90%)과 자부담(10%) 비율이 정확한지 확인한다.
+- 산출식 오류가 발견되면 [⚠️ 예산 산출식 오류] 태그로 표시하고 올바른 계산 결과를 병기한다.
+
+## Task 4: 구글 문서(Google Docs) 호환 포맷 출력
+- 표(Table)가 필요한 부분은 Markdown 표 서식(|)으로 깔끔하게 출력해라.
+- 완성된 기획서를 Google Docs에 복사-붙여넣기하면 바로 양식이 잡히도록 서식을 정돈해라.
+
+# 최종 출력 목차
+다음 순서로 조립하여 생략 없이 전체를 출력하라:
+1. 사업명
+2. 사업 필요성
+3. 서비스 대상 및 인원수 (인원 표 포함)
+4. 세부사업 내용 (연간 일정 타임라인 표 포함)
+5. 예산 계획 (상세 산출근거 예산표 포함)
+6. 기대효과 및 평가 계획
+
+---
+[아래에 3단계 연쇄적 프롬프팅을 통해 도출한 부문별 초안 텍스트들을 붙여넣으세요]`
 };
 
 // 2. WINDOW INITIALIZATION
@@ -91,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initAccordion();
     initInteractiveTopic();
     initDeepResearchGenerator();
+    initScrollSpy();
     
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
@@ -161,7 +187,7 @@ function renderAllPrompts(topic) {
                 .replace(/\n/g, "<br>")
                 .replace(/\[TOPIC\]/g, topicSpan);
 
-            if (id === "p-step-5") {
+            if (id === "p-step-5" || id === "p-master-docs") {
                 renderedHtml = renderedHtml.replace(/\[BUDGET\]/g, budgetSpan);
             }
 
@@ -173,6 +199,15 @@ function renderAllPrompts(topic) {
             }
 
             divEl.innerHTML = renderedHtml;
+
+            // Recalculate parent accordion body height if it is currently open
+            const activeItem = divEl.closest(".accordion-item.active");
+            if (activeItem) {
+                const body = activeItem.querySelector(".accordion-body");
+                if (body) {
+                    body.style.maxHeight = body.scrollHeight + 150 + "px";
+                }
+            }
         }
     }
 }
@@ -277,3 +312,80 @@ window.copyPrompt = function(elementId) {
             alert("자동 복사에 실패했습니다. 마우스로 영역을 지정해 수동 복사하세요.");
         });
 };
+
+// Sidebar ScrollSpy
+function initScrollSpy() {
+    const navLinks = document.querySelectorAll("aside nav a");
+    const progressLine = document.getElementById("sidebar-progress-line");
+
+    if (!navLinks.length) return;
+
+    // Dynamically retrieve the sections that map exactly to our nav links
+    const sections = Array.from(navLinks).map(link => {
+        const href = link.getAttribute("href");
+        return document.querySelector(href);
+    }).filter(el => el !== null);
+
+    const handleScroll = () => {
+        try {
+            let activeIdx = 0;
+
+            // Find which section covers the viewport trigger limit (200px threshold)
+            sections.forEach((section, idx) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 200) {
+                    activeIdx = idx;
+                }
+            });
+
+            // Apply styles to links and dots based on active index
+            navLinks.forEach((link, idx) => {
+                const dot = link.querySelector(".nav-dot");
+                
+                if (idx === activeIdx) {
+                    // Current active item
+                    link.classList.add("bg-white/10", "text-white");
+                    link.classList.remove("text-slate-400", "text-slate-500", "text-slate-300");
+                    if (dot) {
+                        dot.classList.add("active");
+                        dot.classList.remove("completed");
+                    }
+                } else if (idx < activeIdx) {
+                    // Completed items (above the current one)
+                    link.classList.remove("bg-white/10", "text-white");
+                    link.classList.add("text-slate-300");
+                    link.classList.remove("text-slate-400", "text-slate-500");
+                    if (dot) {
+                        dot.classList.add("completed");
+                        dot.classList.remove("active");
+                    }
+                } else {
+                    // Future items (below the current one)
+                    link.classList.remove("bg-white/10", "text-white", "text-slate-300");
+                    link.classList.add("text-slate-500");
+                    if (dot) {
+                        dot.classList.remove("active", "completed");
+                    }
+                }
+            });
+
+            // Update progress line height
+            if (progressLine && navLinks[0] && activeIdx >= 0) {
+                const firstDot = navLinks[0].querySelector(".nav-dot");
+                const activeDot = navLinks[activeIdx].querySelector(".nav-dot");
+                if (firstDot && activeDot) {
+                    const startY = firstDot.getBoundingClientRect().top;
+                    const activeY = activeDot.getBoundingClientRect().top;
+                    const diffY = activeY - startY;
+                    progressLine.style.height = `${diffY}px`;
+                }
+            }
+        } catch (e) {
+            console.error("Error in handleScroll:", e);
+        }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    // Initial call to set active state on load
+    setTimeout(handleScroll, 100);
+}
