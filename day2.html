@@ -2047,18 +2047,26 @@
             toastIconEl.className = 'w-4 h-4';
             if (typeof lucide !== 'undefined') lucide.createIcons({ el: toastIcon });
 
-            // Position: centered above the node element
+            // Position: centered above the node element (using absolute document coordinates)
             const rect = nodeEl.getBoundingClientRect();
-            // Determine toast width based on screen size (w-[380px] on mobile, w-[420px] on desktop)
             const toastW = window.innerWidth < 640 ? 380 : 420;
-            let left = rect.left + rect.width / 2;
-            // Clamp to viewport with 16px safety margin
-            left = Math.max(toastW / 2 + 16, Math.min(left, window.innerWidth - toastW / 2 - 16));
-            const top = rect.top + window.scrollY - 14; // 14px gap above node
+            
+            // Calculate absolute horizontal center of the node
+            const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            
+            let absoluteLeft = rect.left + scrollX + rect.width / 2;
+            // Clamp horizontal position within viewport bounds
+            const minLeft = toastW / 2 + 16 + scrollX;
+            const maxLeft = window.innerWidth - toastW / 2 - 16 + scrollX;
+            absoluteLeft = Math.max(minLeft, Math.min(absoluteLeft, maxLeft));
+            
+            // Absolute top of the node minus safety gap
+            const absoluteTop = rect.top + scrollY - 12;
 
             toast.style.display = 'block';
-            toast.style.left = left + 'px';
-            toast.style.top = top + 'px';
+            toast.style.left = absoluteLeft + 'px';
+            toast.style.top = absoluteTop + 'px';
             toast.style.transform = 'translateX(-50%) translateY(-100%)';
 
             // Trigger animation
@@ -2210,7 +2218,7 @@
 
     <!-- Model Toast Popup (Enlarged & Presentation-Optimized) -->
     <div id="model-toast"
-         style="display:none; position:fixed; z-index:9999; transform:translateX(-50%) translateY(0); transition: opacity 0.22s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);"
+         style="display:none; position:absolute; z-index:9999; transform:translateX(-50%) translateY(0); transition: opacity 0.22s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);"
          class="opacity-0 pointer-events-none">
         <div id="model-toast-inner"
              class="relative w-[380px] md:w-[420px] rounded-2xl border-2 shadow-[0_15px_50px_rgba(0,0,0,0.8)] overflow-hidden backdrop-blur-2xl"
