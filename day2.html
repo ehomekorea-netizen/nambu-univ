@@ -1879,7 +1879,35 @@
             }
         };
 
+        window.activeModelNode = null;
+
         window.selectModelNode = function(type, level) {
+            const toast = document.getElementById('model-toast');
+            // If the same node is clicked and toast is visible, close it (toggle off)
+            if (window.activeModelNode && 
+                window.activeModelNode.type === type && 
+                window.activeModelNode.level === level && 
+                toast && toast.classList.contains('visible')) {
+                closeModelToast();
+                
+                // Clear active nodes styling & unlit path for this type
+                for (let i = 1; i <= 6; i++) {
+                    const node = document.getElementById(`node-${type}-${i}`);
+                    if (node) {
+                        node.classList.remove("active-gpt", "active-gemini", "active-claude");
+                        node.classList.add("inactive");
+                    }
+                }
+                const litPath = document.getElementById(`path-${type}-lit`);
+                if (litPath) {
+                    litPath.style.strokeDashoffset = 1000;
+                }
+                return;
+            }
+
+            // Save active node state
+            window.activeModelNode = { type: type, level: level };
+
             // Reset all nodes in this series to inactive
             for (let i = 1; i <= 6; i++) {
                 const node = document.getElementById(`node-${type}-${i}`);
@@ -1907,7 +1935,7 @@
                 litPath.style.strokeDashoffset = (1 - percentage) * 1000;
             }
 
-            // Open Modal with model info
+            // Open toast with model info
             openModelInfoModal(type, level);
         };
 
@@ -1927,6 +1955,7 @@
             if (!toast) return;
             toast.classList.remove('visible');
             setTimeout(() => { toast.style.display = 'none'; }, 220);
+            window.activeModelNode = null;
         }
 
         function openModelInfoModal(type, level) {
