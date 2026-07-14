@@ -366,6 +366,10 @@
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>09. 초거대 AI 진화 방향</span>
             </a>
+            <a href="#section-ai-agent" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>10. AI 에이전트 시대</span>
+            </a>
         </nav>
         
         <div class="space-y-3 shrink-0">
@@ -1352,7 +1356,163 @@
                 </div>
             </section>
         
-    </main>
+                <!-- SECTION 10: AI 에이전트 시대 -->
+            <section id="section-ai-agent" class="presentation-section">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
+                    <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                        <span class="px-4 py-2 rounded-xl bg-indigo-500/20 text-indigo-400 font-extrabold text-lg md:text-xl">10</span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">AI 에이전트(Agent) 시대</h2>
+                    </div>
+
+                    <p class="text-slate-300 text-lg md:text-xl leading-relaxed font-bold">
+                        단순히 질문에 답하는 챗봇(Chatbot)을 넘어, 스스로 목표를 세우고 도구를 사용해 결과를 만들어내는 <strong class="text-indigo-400 font-black">자율형 에이전트(Agent)</strong>의 개념을 알아봅니다.
+                    </p>
+
+                    <!-- Comparison Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
+                        <!-- Chatbot Card -->
+                        <div class="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-slate-700 transition-colors">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+                                    <i data-lucide="message-square" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-black text-slate-300">기존 AI 챗봇 (수동 비서)</h3>
+                                    <span class="text-xs text-slate-500 font-medium font-mono">Chat-Based Assistant</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-6 text-slate-400 text-base md:text-lg">
+                                <li class="flex gap-3">
+                                    <i data-lucide="help-circle" class="w-5.5 h-5.5 text-slate-500 shrink-0 mt-1"></i>
+                                    <div>
+                                        <strong class="text-white block">단발성 질답 (Single turn)</strong>
+                                        <span>사람이 매 질문을 던질 때만 답변을 출력합니다.</span>
+                                    </div>
+                                </li>
+                                <li class="flex gap-3">
+                                    <i data-lucide="user" class="w-5.5 h-5.5 text-slate-500 shrink-0 mt-1"></i>
+                                    <div>
+                                        <strong class="text-white block">지속적인 인간 개입 필수</strong>
+                                        <span>수치 검증, 문서 비교, 메일 발송 등 다음 단계를 매번 지시해 줘야 합니다.</span>
+                                    </div>
+                                </li>
+                                <li class="flex gap-3">
+                                    <i data-lucide="message-square-off" class="w-5.5 h-5.5 text-slate-500 shrink-0 mt-1"></i>
+                                    <div>
+                                        <strong class="text-white block">제한된 소통 범위</strong>
+                                        <span>채팅 창 내부의 텍스트와 파일에 갇혀 실시간 연동이 불가능합니다.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Agent Card -->
+                        <div class="p-8 rounded-2xl bg-indigo-950/20 border border-indigo-500/30 hover:border-indigo-400/50 transition-colors shadow-[0_0_30px_rgba(99,102,241,0.05)]">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                                    <i data-lucide="bot" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-black text-indigo-300">자율형 AI 에이전트 (자기주도적 비서)</h3>
+                                    <span class="text-xs text-indigo-400 font-bold font-mono">Goal-Oriented Autonomous Agent</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-6 text-slate-300 text-base md:text-lg">
+                                <li class="flex gap-3">
+                                    <i data-lucide="target" class="w-5.5 h-5.5 text-indigo-400 shrink-0 mt-1"></i>
+                                    <div>
+                                        <strong class="text-white block">목표 기반 작동 (Goal-driven)</strong>
+                                        <span>"내년도 남구 아동 예산서 초안 기획 및 모순점 검증해줘"라는 단 하나의 목표만 주어지면 작동합니다.</span>
+                                    </div>
+                                </li>
+                                <li class="flex gap-3">
+                                    <i data-lucide="workflow" class="w-5.5 h-5.5 text-indigo-400 shrink-0 mt-1"></i>
+                                    <div>
+                                        <strong class="text-white block">자율적 다단계 기획 (Planning)</strong>
+                                        <span>자체 계획 수립 ➔ 문서 스캔 ➔ 계산식 검증 ➔ 보고서 작성까지 인간 개입 없이 자율적으로 실행합니다.</span>
+                                    </div>
+                                </li>
+                                <li class="flex gap-3">
+                                    <i data-lucide="terminal" class="w-5.5 h-5.5 text-indigo-400 shrink-0 mt-1"></i>
+                                    <div>
+                                        <strong class="text-white block">도구 자율 조작 (Tool/Computer Use)</strong>
+                                        <span>필요한 경우 직접 브라우저를 띄워 검색하고, 파이썬 코드를 실행해 계산을 검증하며, 메일을 보내 보고합니다.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Loop Simulator -->
+                    <div class="mt-8 p-6 md:p-8 rounded-2xl bg-[#030611] border border-white/5 space-y-6">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-4">
+                            <div>
+                                <h4 class="text-white font-extrabold text-lg flex items-center gap-2">
+                                    <i data-lucide="refresh-cw" class="w-5 h-5 text-indigo-400 animate-spin-slow"></i>
+                                    자율 에이전트 사고 루프 시뮬레이션
+                                </h4>
+                                <p class="text-xs text-slate-500 mt-1">에이전트가 목표를 달성하기 위해 어떻게 자율적인 인지 루프를 도는지 모사한 체험기입니다.</p>
+                            </div>
+                            <button id="btn-start-agent-sim" onclick="startAgentSimulation()"
+                                    class="bg-indigo-600 hover:bg-indigo-500 text-white font-black px-6 py-2.5 rounded-xl text-xs md:text-sm flex items-center gap-2 transition-all shadow-[0_0_20px_rgba(99,102,241,0.35)] active:scale-95 shrink-0">
+                                <i data-lucide="play" class="w-4 h-4 fill-white"></i> 에이전트 구동 시작
+                            </button>
+                        </div>
+
+                        <!-- Simulation Screen / Box -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                            <!-- Loop Stages List (left) -->
+                            <div class="lg:col-span-5 space-y-3 flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <div id="sim-stage-1" class="stage-item flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-[#080d1a]/50 text-slate-500 transition-all duration-300">
+                                        <span class="w-6 h-6 rounded-lg bg-slate-800 text-[10px] font-black flex items-center justify-center border border-white/5 shrink-0 text-slate-400">01</span>
+                                        <span class="text-xs md:text-sm font-bold">목표 분석 & 기획 (Planning)</span>
+                                    </div>
+                                    <div id="sim-stage-2" class="stage-item flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-[#080d1a]/50 text-slate-500 transition-all duration-300">
+                                        <span class="w-6 h-6 rounded-lg bg-slate-800 text-[10px] font-black flex items-center justify-center border border-white/5 shrink-0 text-slate-400">02</span>
+                                        <span class="text-xs md:text-sm font-bold">도구 활용 & 정보 수집 (Tool Use)</span>
+                                    </div>
+                                    <div id="sim-stage-3" class="stage-item flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-[#080d1a]/50 text-slate-500 transition-all duration-300">
+                                        <span class="w-6 h-6 rounded-lg bg-slate-800 text-[10px] font-black flex items-center justify-center border border-white/5 shrink-0 text-slate-400">03</span>
+                                        <span class="text-xs md:text-sm font-bold">수치 연산 검증 (Reasoning/Code)</span>
+                                    </div>
+                                    <div id="sim-stage-4" class="stage-item flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-[#080d1a]/50 text-slate-500 transition-all duration-300">
+                                        <span class="w-6 h-6 rounded-lg bg-slate-800 text-[10px] font-black flex items-center justify-center border border-white/5 shrink-0 text-slate-400">04</span>
+                                        <span class="text-xs md:text-sm font-bold">자가 교정 & 보고 (Self-Correction)</span>
+                                    </div>
+                                </div>
+                                <div class="bg-indigo-950/10 border border-indigo-500/10 p-4 rounded-xl text-xs text-indigo-300 font-bold leading-normal">
+                                    💡 <strong>에이전트 인지 루프(Cognitive Loop):</strong><br>
+                                    사람은 처음 목표만 던져줍니다. 이후 AI가 목표 달성을 위해 위의 인지 과정을 반복적으로 순환합니다.
+                                </div>
+                            </div>
+
+                            <!-- Screen Terminal Console (right) -->
+                            <div class="lg:col-span-7 rounded-2xl border border-slate-800 bg-[#02040a] p-5 font-mono text-xs flex flex-col justify-between min-h-[300px] shadow-[inset_0_4px_20px_rgba(0,0,0,0.8)] relative overflow-hidden">
+                                <!-- Scanlines or terminal glow -->
+                                <div class="absolute inset-0 pointer-events-none opacity-5 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[size:100%_4px,3px_100%]"></div>
+                                
+                                <div class="flex justify-between items-center border-b border-white/5 pb-2.5 mb-3 text-[10px] text-slate-500">
+                                    <span>SYSTEM LOG CONSOLE</span>
+                                    <span id="console-status" class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span> IDLE</span>
+                                </div>
+                                <div id="console-body" class="flex-1 space-y-2 overflow-y-auto max-h-[220px] scrollbar-thin text-slate-400">
+                                    <p class="text-indigo-400/80">&gt; 시스템 대기 중... [에이전트 구동 시작] 버튼을 눌러주세요.</p>
+                                </div>
+                                <div id="console-progress-container" class="mt-4 pt-2 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-500">
+                                    <span>태스크 달성률</span>
+                                    <div class="w-2/3 bg-slate-900 rounded-full h-1.5 overflow-hidden border border-white/5">
+                                        <div id="console-progress-bar" class="bg-indigo-500 h-full w-0 transition-all duration-500"></div>
+                                    </div>
+                                    <span id="console-percent">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            </main>
     
     <!-- Global Modal Component (Overhauled for High Readability) -->
     <div id="global-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
@@ -2152,7 +2312,8 @@
                 document.getElementById("section-data"),
                 document.getElementById("section-prompt"),
                 document.getElementById("section-security-masking"),
-                document.getElementById("section-llm-evolution")
+                document.getElementById("section-llm-evolution"),
+                document.getElementById("section-ai-agent")
             ].filter(el => el !== null);
 
             window.addEventListener("scroll", () => {
@@ -2214,6 +2375,128 @@
         window.addEventListener("resize", () => {
             window.drawCatenaryCurves();
         });
+    
+        let agentSimInterval = null;
+        window.startAgentSimulation = function() {
+            const btn = document.getElementById("btn-start-agent-sim");
+            const consoleBody = document.getElementById("console-body");
+            const status = document.getElementById("console-status");
+            const bar = document.getElementById("console-progress-bar");
+            const pct = document.getElementById("console-percent");
+            
+            if (!consoleBody || !btn) return;
+            
+            // Prevent double clicking
+            if (btn.classList.contains("pointer-events-none")) return;
+            btn.classList.add("pointer-events-none");
+            btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> 실행 중...`;
+            if (typeof lucide !== "undefined") lucide.createIcons({ el: btn });
+
+            // Clear previous simulation states
+            consoleBody.innerHTML = "";
+            bar.style.width = "0%";
+            pct.innerText = "0%";
+            status.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-ping"></span> RUNNING`;
+            status.className = "flex items-center gap-1 text-indigo-400 font-bold font-mono";
+
+            // Reset stage item styles
+            document.querySelectorAll(".stage-item").forEach(item => {
+                item.className = "stage-item flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-[#080d1a]/50 text-slate-550 transition-all duration-300";
+                item.querySelector("span").className = "w-6 h-6 rounded-lg bg-slate-800 text-[10px] font-black flex items-center justify-center border border-white/5 shrink-0 text-slate-400";
+            });
+
+            const logs = [
+                {
+                    stage: 1, percent: 15,
+                    text: "> 태스크 수신: [내년도 광주 남구 위기 아동 돌봄 지원 사업 계획 수립 및 가용 예산 오차 검증]",
+                    detail: "> [Stage 1] 목표 분석: (1) 지자체 가이드라인 로드 (2) 작년 예산 내역서 분석 (3) 연산 검증 스크립트 설계"
+                },
+                {
+                    stage: 1, percent: 30,
+                    text: "> [Stage 1] 자율적 세부 계획 설계 완료. 로컬 저장소 및 웹 브라우저 자동 탐색 활성화.",
+                    detail: "> 분석 대상: files/그린 방과후 프로그램.pdf 로드 중..."
+                },
+                {
+                    stage: 2, percent: 45,
+                    text: "> [Stage 2] 지자체 아동 복지 조례 및 1차 팩트 데이터 추출 완료.",
+                    detail: "> 데이터 추출 성공: 대상아동 20명, 위기아동 15명, 요리 강사비 회당 한도 150,000원 확인."
+                },
+                {
+                    stage: 2, percent: 60,
+                    text: "> [Stage 2] 파일 파싱 완료. 예산 비목 테이블 분석을 위해 Python 계산기 도구 호출.",
+                    detail: "> 수식 호출: [강사료 150,000 * 12회 = 1,800,000원] 자율 검증 개시."
+                },
+                {
+                    stage: 3, percent: 75,
+                    text: "> [Stage 3] Python 검증 코드 실행 완료: 예산 총계 2,400,000원 중 120,000원의 단가 연산 불일치 오류 감지.",
+                    detail: "> 오류 원인: 소수점 반올림 및 행정 수수료 10% 누락 확인."
+                },
+                {
+                    stage: 4, percent: 90,
+                    text: "> [Stage 4] 자가 교정(Self-Correction) 수행: 연산 모순점을 바르게 수정하여 재생성 완료.",
+                    detail: "> 최종 기획서 마크다운 변환 및 한글 파일 복사용 템플릿 정렬 중..."
+                },
+                {
+                    stage: 4, percent: 100,
+                    text: "> [✔] 작업 완료! 교정된 예산 보고서 최종 한글 문서 자동 보관 및 요약 메일 전송 완료.",
+                    detail: "> 에이전트 상태: IDLE (대기 중)"
+                }
+            ];
+
+            let idx = 0;
+            function runStep() {
+                if (idx >= logs.length) {
+                    btn.classList.remove("pointer-events-none");
+                    btn.innerHTML = `<i data-lucide="play" class="w-4 h-4 fill-white"></i> 에이전트 구동 시작`;
+                    if (typeof lucide !== "undefined") lucide.createIcons({ el: btn });
+                    
+                    status.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> COMPLETED`;
+                    status.className = "flex items-center gap-1 text-emerald-400 font-bold font-mono";
+                    return;
+                }
+
+                const step = logs[idx];
+                
+                // Highlight corresponding stage item
+                for (let s = 1; s <= 4; s++) {
+                    const sItem = document.getElementById(`sim-stage-${s}`);
+                    if (sItem) {
+                        if (s < step.stage) {
+                            sItem.className = "stage-item flex items-center gap-3 p-3 rounded-xl border border-emerald-500/20 bg-emerald-950/10 text-emerald-400 transition-all duration-300";
+                            sItem.querySelector("span").className = "w-6 h-6 rounded-lg bg-emerald-500/20 text-[10px] font-black flex items-center justify-center border border-emerald-500/30 shrink-0 text-emerald-400";
+                        } else if (s === step.stage) {
+                            sItem.className = "stage-item flex items-center gap-3 p-3 rounded-xl border border-indigo-500/40 bg-indigo-950/20 text-indigo-300 transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.15)]";
+                            sItem.querySelector("span").className = "w-6 h-6 rounded-lg bg-indigo-500 text-[10px] font-black flex items-center justify-center border border-indigo-400/40 shrink-0 text-white animate-pulse";
+                        }
+                    }
+                }
+
+                // Add log output to console
+                const logP = document.createElement("p");
+                logP.className = idx % 2 === 0 ? "text-indigo-300 font-bold" : "text-slate-300";
+                logP.textContent = step.text;
+                
+                const detailP = document.createElement("p");
+                detailP.className = "text-[10px] text-slate-550 pl-4";
+                detailP.textContent = step.detail;
+                
+                consoleBody.appendChild(logP);
+                consoleBody.appendChild(detailP);
+                
+                // Scroll console to bottom
+                consoleBody.scrollTop = consoleBody.scrollHeight;
+                
+                // Update progress bar
+                bar.style.width = `${step.percent}%`;
+                pct.innerText = `${step.percent}%`;
+
+                idx++;
+                setTimeout(runStep, 1500);
+            }
+
+            runStep();
+        };
+
     </script>
 
     <!-- Model Toast Popup (Enlarged & Presentation-Optimized) -->
