@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 개념 & 기본 도구 마스터 - 남부대학교 실전 교안</title>
+    <meta name="description" content="Gemini를 활용한 생성형 AI의 본질 이해 및 프롬프트 6대 원칙 실무 가이드">
+
+    <!-- Tailwind CSS & Lucide Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts: Noto Sans KR, Outfit, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        chest: {
+                            DEFAULT: '#030712',
+                            gold: '#f59e0b',
+                            blue: '#3b82f6',
+                            purple: '#8b5cf6',
+                            slate: '#0f172a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.04) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.04) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(245, 158, 11, 0.02) 0px, transparent 50%),
+                radial-gradient(#1f2937 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px;
+            background-attachment: fixed;
+        }
+
+        .presentation-section {
+            scroll-margin-top: 100px;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        /* Floating Capsule Nav (Mobile) */
+        .floating-nav {
+            background: rgba(3, 7, 18, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* Glassmorphic Panel Styles */
+        .glass-panel {
+            background: rgba(10, 15, 30, 0.55);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-panel:hover {
+            border-color: rgba(59, 130, 246, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(59, 130, 246, 0.03);
+        }
+
+        /* Card tactile hover feedback */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.2);
+            background: rgba(15, 23, 42, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Accordion Transitions */
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .accordion-item {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .accordion-item.active {
+            border-color: rgba(59, 130, 246, 0.3) !important;
+            background-color: rgba(15, 23, 42, 0.6) !important;
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.15);
+        }
+        .accordion-item.active .accordion-body {
+            max-height: 1500px;
+        }
+        .accordion-item.active .step-badge {
+            background: linear-gradient(135deg, #3b82f6, #6366f1) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Syntax highlighted prompt boxes */
+        .code-container {
+            background-color: #05070f;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        /* Custom scrolls */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+    
+        /* Sidebar slide out and main bleed transitions */
+        #sidebar {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #main-wrapper {
+            transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .sidebar-hidden #sidebar {
+            transform: translateX(-100%);
+        }
+        .sidebar-hidden #main-wrapper {
+            padding-left: 0 !important;
+        }
+
+        /* Dynamic Progress Line & Dot Status Colors */
+        .nav-dot {
+            transition: all 0.3s ease;
+            background-color: #334155 !important;
+            border: 3px solid #05070f !important;
+        }
+        .nav-dot.active {
+            background-color: #3b82f6 !important;
+            transform: scale(1.25);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.7);
+        }
+        .nav-dot.completed {
+            background-color: #60a5fa !important;
+        }
+
+        /* INFOGRAPHIC MICRO-ANIMATIONS */
+        
+        /* 1. Chat Ping-Pong Animation (Session 1) */
+        @keyframes chatLeft {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-4px) scale(1.03); opacity: 1; }
+        }
+        @keyframes chatRight {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+            50% { transform: translateY(4px) scale(0.97); opacity: 0.6; }
+        }
+        .anim-chat-left { animation: chatLeft 4s infinite ease-in-out; }
+        .anim-chat-right { animation: chatRight 4s infinite ease-in-out; }
+
+        /* 2. Slot Machine Reel Spinning (Session 2) */
+        @keyframes spinReel {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-33.33%); }
+        }
+        .reel-spinning {
+            animation: spinReel 0.6s cubic-bezier(0.15, 0.85, 0.35, 1.2) infinite;
+        }
+
+        /* 3. Funnel Overflow & Suction Animation (Session 3) */
+        @keyframes floatFiles {
+            0% { transform: translateY(30px) scale(0.6); opacity: 0; }
+            30% { opacity: 1; }
+            80% { transform: translateY(-60px) scale(0.8); opacity: 0.8; }
+            100% { transform: translateY(-90px) scale(0.3); opacity: 0; }
+        }
+        .anim-file-flow { animation: floatFiles 3s infinite linear; }
+
+        /* 4. Mixer Particle Flow (Session 4) */
+        @keyframes mixPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.2)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.6)); }
+        }
+        .anim-mixer-core { animation: mixPulse 2s infinite ease-in-out; }
+        
+        @keyframes itemFloatGood {
+            0% { transform: translate(-20px, 40px) scale(0.7); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translate(10px, -20px) scale(1); opacity: 0; }
+        }
+        @keyframes itemFloatBad {
+            0% { transform: translate(20px, 40px) scale(0.7); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translate(-10px, -20px) scale(1); opacity: 0; }
+        }
+        .anim-float-good { animation: itemFloatGood 2.5s infinite ease-in-out; }
+        .anim-float-bad { animation: itemFloatBad 2.5s infinite ease-in-out; }
+    </style>
+
+    <script>
+        // SIDEBAR TOGGLE SYSTEM
+        window.toggleSidebar = function() {
+            const body = document.body;
+            const isHidden = body.classList.contains("sidebar-hidden");
+            const unfoldBtn = document.getElementById("sidebar-unfold-btn");
+            
+            if (isHidden) {
+                body.classList.remove("sidebar-hidden");
+                if (unfoldBtn) {
+                    unfoldBtn.classList.add("opacity-0", "pointer-events-none", "-translate-x-12");
+                }
+            } else {
+                body.classList.add("sidebar-hidden");
+                if (unfoldBtn) {
+                    unfoldBtn.classList.remove("opacity-0", "pointer-events-none", "-translate-x-12");
+                }
+            }
+            // Trigger scroll handler to recalculate progress line positioning
+            setTimeout(() => {
+                window.dispatchEvent(new Event('scroll'));
+            }, 450);
+        };
+
+        // Modal triggers
+        window.openModal = function(type, title, htmlContent) {
+            const mTitle = document.getElementById("modal-title");
+            const mBody = document.getElementById("modal-body-content");
+            const mOverlay = document.getElementById("modal-overlay");
+            
+            if (mTitle && mBody && mOverlay) {
+                mTitle.innerText = title;
+                mBody.innerHTML = htmlContent;
+                mOverlay.classList.remove("hidden", "opacity-0", "pointer-events-none");
+                mOverlay.classList.add("flex", "opacity-100");
+                document.body.style.overflow = "hidden";
+            }
+        };
+
+        window.closeModal = function() {
+            const mOverlay = document.getElementById("modal-overlay");
+            if (mOverlay) {
+                mOverlay.classList.add("opacity-0", "pointer-events-none");
+                setTimeout(() => {
+                    mOverlay.classList.add("hidden");
+                    mOverlay.classList.remove("flex");
+                }, 300);
+                document.body.style.overflow = "auto";
+            }
+        };
+
+        // Copy mechanism
+        window.copyPromptText = function(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    const toast = document.getElementById("toast");
+                    toast.classList.add("translate-y-0", "opacity-100");
+                    toast.classList.remove("translate-y-24");
+                    
+                    setTimeout(() => {
+                        toast.classList.add("translate-y-24");
+                        toast.classList.remove("translate-y-0", "opacity-100");
+                    }, 2500);
+                })
+                .catch(err => {
+                    console.error("복사 실패:", err);
+                    alert("복사에 실패했습니다. 수동으로 드래그해 복사해주세요.");
+                });
+        };
+
+        // Interactive Slot Machine Controller (Session 2)
+        window.pullSlotLever = function() {
+            const lever = document.getElementById("slot-lever");
+            const arm = document.getElementById("slot-arm");
+            const reels = document.querySelectorAll(".slot-reel");
+            const jackpotCard = document.getElementById("slot-jackpot-card");
+            const slotSound = document.getElementById("slot-glow-light");
+
+            // Prevent double pulling during animation
+            if (lever.classList.contains("pointer-events-none")) return;
+            lever.classList.add("pointer-events-none");
+
+            // 1. Lever Pull Motion
+            arm.style.transform = "rotateX(75deg)";
+            setTimeout(() => {
+                arm.style.transform = "rotateX(0deg)";
+            }, 300);
+
+            // 2. Start Spinning reels
+            jackpotCard.style.opacity = "0";
+            jackpotCard.style.transform = "translateY(15px) scale(0.9)";
+            
+            reels.forEach((reel, idx) => {
+                reel.classList.add("reel-spinning");
+                reel.style.animationDelay = `${idx * 0.1}s`;
+            });
+
+            // 3. Stop Spinning sequentially (Jackpot logic)
+            setTimeout(() => {
+                reels.forEach((reel, idx) => {
+                    setTimeout(() => {
+                        reel.classList.remove("reel-spinning");
+                        // Hardcode jackpot stop positions for perfect visualization
+                        if (idx === 0) reel.style.transform = "translateY(-480px)"; // 1차 데이터
+                        if (idx === 1) reel.style.transform = "translateY(-240px)"; // 구체적 맥락
+                        if (idx === 2) reel.style.transform = "translateY(0px)";    // 최적화 프롬프트
+                    }, idx * 400);
+                });
+            }, 1200);
+
+            // 4. Jackpot Output drop
+            setTimeout(() => {
+                jackpotCard.style.opacity = "1";
+                jackpotCard.style.transform = "translateY(0) scale(1)";
+                lever.classList.remove("pointer-events-none");
+                
+                // Neon flashing effect
+                slotSound.classList.add("border-amber-400/80", "shadow-[0_0_20px_rgba(245,158,11,0.4)]");
+                setTimeout(() => {
+                    slotSound.classList.remove("border-amber-400/80", "shadow-[0_0_20px_rgba(245,158,11,0.4)]");
+                }, 1000);
+            }, 2500);
+        };
+    </script>
+</head>
+<body class="antialiased text-slate-200">
+
+    <!-- 1. LEFT SIDEBAR NAVIGATION (Desktop Only) -->
+    <aside id="sidebar" class="hidden lg:flex fixed top-0 left-0 bottom-0 w-[190px] bg-[#05070f] border-r border-white/5 flex-col justify-between p-5 z-40">
+        <div class="w-full shrink-0">
+            <button onclick="toggleSidebar()" class="w-full bg-blue-950/25 hover:bg-blue-600/20 text-blue-400 hover:text-white font-black py-3 px-3 rounded-xl text-xs transition-all duration-200 active:scale-95 flex items-center justify-center gap-1.5 border border-blue-500/40 shadow-lg shadow-blue-500/5">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i> 사이드바 접기
+            </button>
+        </div>
+        
+        <!-- Navigation Links -->
+        <nav class="relative flex-1 my-8 py-4 flex flex-col justify-between text-xs font-bold text-slate-400">
+            <div class="absolute left-[15px] top-[14px] bottom-[14px] w-[2px] bg-slate-800 z-0"></div>
+            <div id="sidebar-progress-line" class="absolute left-[15px] top-[14px] w-[2px] bg-blue-500 transition-all duration-300 z-0" style="height: 0px;"></div>
+
+            <a href="#section-essence" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>1. 생성형 AI 본질</span>
+            </a>
+            <a href="#section-generative" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>2. Generative vs Creative</span>
+            </a>
+            <a href="#section-gemini-gpt" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>3. Gemini vs GPT</span>
+            </a>
+            <a href="#section-ai-data" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>4. AI가 좋아하는 데이터</span>
+            </a>
+            <a href="#section-prompt-rules" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>5. 프롬프트 6대 원칙</span>
+            </a>
+            <a href="#section-gemini-tips" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>6. Gemini 실무 활용법</span>
+            </a>
+        </nav>
+        
+        <!-- Bottom Actions -->
+        <div class="space-y-3 shrink-0">
+            <a href="index.html" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-350 hover:text-white font-black py-3 px-4 rounded-xl text-xs transition-all duration-250 border border-white/5 flex items-center justify-center gap-2 shadow-inner">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> 처음 화면으로
+            </a>
+            <div class="text-[9px] text-slate-600 text-center leading-tight">
+                전남대 앵커사업단 | 광주지원단
+            </div>
+        </div>
+    </aside>
+
+    <!-- Floating Unfold Button -->
+    <button id="sidebar-unfold-btn" onclick="toggleSidebar()" class="fixed left-6 top-6 z-50 w-11 h-11 rounded-xl bg-[#05070f] hover:bg-blue-950/30 text-blue-400 hover:text-white shadow-2xl shadow-blue-500/10 border border-blue-500/40 flex items-center justify-center transition-all duration-300 opacity-0 pointer-events-none -translate-x-12">
+        <i data-lucide="chevron-right" class="w-5.5 h-5.5"></i>
+    </button>
+
+    <!-- Mobile Header -->
+    <header class="lg:hidden w-full px-4 mt-6 relative z-40">
+        <div class="floating-nav rounded-2xl px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-black text-white text-xs">D2</div>
+                <span class="text-sm font-black text-white tracking-wider block">AI 본질 & 도구 마스터</span>
+            </div>
+            <a href="index.html" class="bg-slate-900 border border-white/10 text-slate-300 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1">
+                이전으로
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN BODY WRAPPER -->
+    <div id="main-wrapper" class="lg:pl-[190px] w-full transition-all duration-300">
+
+        <!-- HERO UNIT -->
+        <section id="hero" class="w-full px-6 md:px-12 py-20 relative overflow-hidden">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-gradient-to-r from-blue-500/10 via-indigo-500/5 to-purple-500/10 rounded-full blur-[180px] pointer-events-none"></div>
+            
+            <div class="max-w-[1440px] mx-auto text-center space-y-10 relative z-10">
+                <span class="px-6 py-3 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-450 text-xs md:text-sm lg:text-base font-black uppercase tracking-widest inline-block shadow-lg">
+                    남부대학교 아동복지 실무자 특별 연수
+                </span>
+                <h1 class="text-4xl md:text-7xl lg:text-[4.8rem] font-black text-white leading-[1.1] tracking-tight">
+                    2일차: AI 개념 & <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">기본 도구 마스터</span>
+                </h1>
+                <p class="text-lg md:text-2xl text-slate-300 leading-relaxed max-w-5xl mx-auto font-black">
+                    두려워 마세요! AI는 프로그래밍이 아니라 대화입니다. 6대 프롬프트 원칙과 Gemini 실무 전술
+                </p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto bg-slate-950/20 p-6 rounded-[28px] border border-white/5 text-left backdrop-blur-sm shadow-xl">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0">
+                            <i data-lucide="help-circle" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 block uppercase font-black">오늘의 교육 아젠다</span>
+                            <strong class="text-slate-100 text-sm md:text-base">생성형 AI의 본질 이해 & 1등 프롬프팅 비법</strong>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-450 shrink-0">
+                            <i data-lucide="play-circle" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-500 block uppercase font-black">주요 실습 도구</span>
+                            <strong class="text-slate-100 text-sm md:text-base">Google Gemini Advanced & Workspace</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="max-w-[1440px] mx-auto px-6 md:px-12 pb-24 space-y-24">
+
+            <!-- SECTION 1: 생성형 AI 본질 -->
+            <section id="section-essence" class="presentation-section">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 1</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">생성형 AI의 진짜 본질: 똑똑한 신입 비서</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-7 space-y-5">
+                            <p class="text-slate-300 text-base md:text-lg leading-relaxed font-bold">
+                                현업에서 복지 업무를 하시는 많은 선생님들이 "AI는 수학 코딩 같아서 머리 아프고 어렵다"고 걱정하십니다. 
+                                하지만 생성형 AI의 본질은 기계 조작이 아닌, <span class="text-blue-400">"내 말을 찰떡같이 알아듣는 유능한 24시간 가상 비서와 카톡으로 이야기하는 일"</span>에 가깝습니다.
+                            </p>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                AI 비서는 여러분이 한국어로 지시사항을 대충 말해도 문맥을 읽고 다듬어 옵니다. 
+                                억지로 영어 코드를 짤 필요 없이, 동료 직원에게 부탁하듯 자연스럽게 대화하는 것만으로 충분합니다.
+                            </p>
+                        </div>
+
+                        <!-- INFOGRAPHIC: Chat Conversation Ping-Pong -->
+                        <div class="lg:col-span-5 bg-slate-950/40 p-6 rounded-3xl border border-white/5 flex flex-col space-y-4 relative h-[220px] justify-center overflow-hidden">
+                            <!-- Human Bubble (Left) -->
+                            <div class="anim-chat-left bg-blue-600/10 border border-blue-500/20 p-3.5 rounded-2xl rounded-tl-none max-w-[85%] self-start flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0"><i data-lucide="user" class="w-4 h-4"></i></div>
+                                <div>
+                                    <span class="text-[10px] text-blue-400 block font-bold">사회복지사 (인간)</span>
+                                    <p class="text-xs text-slate-100 font-medium">"독서 격차 해소 계획서 필요성 써줘"</p>
+                                </div>
+                            </div>
+                            <!-- AI Bubble (Right) -->
+                            <div class="anim-chat-right bg-purple-600/10 border border-purple-500/20 p-3.5 rounded-2xl rounded-tr-none max-w-[85%] self-end flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 shrink-0"><i data-lucide="cpu" class="w-4 h-4"></i></div>
+                                <div>
+                                    <span class="text-[10px] text-purple-400 block font-bold">Gemini (인공지능 비서)</span>
+                                    <p class="text-xs text-slate-200">"네! 아동 통계와 함께 개조식으로 쓸게요."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                        <div class="glass-card p-6 rounded-2xl space-y-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400"><i data-lucide="message-square" class="w-5.5 h-5.5"></i></div>
+                            <h4 class="text-white font-bold text-lg">어려운 기술이 아닌 언어</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">자바(Java)나 파이썬 코딩을 배울 필요가 전혀 없습니다. 오직 우리가 일상에서 동료와 협업할 때 쓰는 친숙한 한국어로 소통하면 끝납니다.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl space-y-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400"><i data-lucide="clock" class="w-5.5 h-5.5"></i></div>
+                            <h4 class="text-white font-bold text-lg">지치지 않는 24시간 동반자</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">피곤을 모르고, 휴식 시간 없이 우리가 시키는 자잘하고 귀찮은 서류 정리나 기초 문장 구상안을 1초 만에 깔끔하게 만들어 바칩니다.</p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl space-y-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400"><i data-lucide="shield-check" class="w-5.5 h-5.5"></i></div>
+                            <h4 class="text-white font-bold text-lg">두려워할 필요 없는 보조</h4>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">AI는 여러분의 일자리를 뺏어가는 침입자가 아닙니다. 여러분의 단순 문서 노고를 극적으로 덜어 기획과 현장 돌봄에만 몰입하도록 돕는 착한 도구입니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Generative vs Creative -->
+            <section id="section-generative" class="presentation-section">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">Session 2</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">왜 Creative(창조)가 아니고 Generative(생성)일까?</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                        <div class="lg:col-span-6 space-y-5 flex flex-col justify-between">
+                            <div class="space-y-4">
+                                <p class="text-slate-300 text-base leading-relaxed font-bold">
+                                    많은 사람들이 오해하는 지점이 있습니다. *"AI는 스스로 생각해서 무에서 유를 만들어낸다(Creative)"*고 믿는 것입니다. 
+                                    하지만 그것은 거대한 환상입니다.
+                                </p>
+                                <div class="bg-[#05070f] p-5 rounded-2xl border border-white/5 space-y-3">
+                                    <h4 class="text-amber-400 font-extrabold text-base flex items-center gap-2"><i data-lucide="help-circle" class="w-5 h-5"></i> AI는 고도의 '슬롯머신'이다</h4>
+                                    <p class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                                        생성형 AI는 무에서 지혜를 짜내는 현자가 아닙니다. 
+                                        우리가 <strong>'프롬프트'와 '첨부 자료'라는 동전(Data)</strong>을 구멍에 밀어 넣어줄 때, 
+                                        기존 웹 공간의 거대한 텍스트 통계 지식을 굴려 잭팟 조합을 뱉어내는 <strong>‘언어 재조합기(Generator)’</strong>입니다.
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                ➔ 결론: 질문자(실무자)가 AI에게 좋은 데이터와 명확한 방향을 주입하지 않으면, 슬롯머신은 영양가 없는 불량품 초안만 무한 반복해서 뱉어냅니다. 기획의 진짜 지휘자는 여전히 여러분입니다.
+                            </p>
+                        </div>
+
+                        <!-- INTERACTIVE INFOGRAPHIC: Slot Machine Component (Wow-factor) -->
+                        <div class="lg:col-span-6 bg-slate-950/60 p-6 rounded-3xl border border-white/10 flex flex-col justify-between relative overflow-hidden" id="slot-glow-light">
+                            <div class="flex items-center justify-between pb-3 border-b border-white/5">
+                                <strong class="text-white text-sm font-bold flex items-center gap-1.5"><i data-lucide="dices" class="text-amber-500 w-4 h-4"></i> AI 슬롯머신 시뮬레이션</strong>
+                                <span class="text-[10px] text-slate-500">우측 레버를 클릭하여 잭팟을 터뜨리세요!</span>
+                            </div>
+
+                            <!-- Slot Machine Screen View -->
+                            <div class="flex items-center gap-3 py-6 justify-center">
+                                <!-- Reel 1 -->
+                                <div class="w-24 h-20 bg-[#05070f] border border-white/10 rounded-xl overflow-hidden relative flex flex-col items-center">
+                                    <div class="slot-reel transition-transform duration-500 text-center space-y-12 py-2" style="transform: translateY(0);">
+                                        <div class="text-[10px] text-blue-400 font-extrabold">1차 데이터 입력</div>
+                                        <div class="text-[10px] text-slate-500 font-extrabold">빈손 입력</div>
+                                        <div class="text-[10px] text-slate-500 font-extrabold">아무 주제</div>
+                                    </div>
+                                    <div class="absolute inset-0 border-y-2 border-y-amber-500/20 pointer-events-none"></div>
+                                </div>
+                                <!-- Reel 2 -->
+                                <div class="w-24 h-20 bg-[#05070f] border border-white/10 rounded-xl overflow-hidden relative flex flex-col items-center">
+                                    <div class="slot-reel transition-transform duration-500 text-center space-y-12 py-2" style="transform: translateY(0);">
+                                        <div class="text-[10px] text-purple-400 font-extrabold">구체적 맥락 고정</div>
+                                        <div class="text-[10px] text-slate-500 font-extrabold">요구사항 없음</div>
+                                        <div class="text-[10px] text-slate-500 font-extrabold">대충 써줘</div>
+                                    </div>
+                                    <div class="absolute inset-0 border-y-2 border-y-amber-500/20 pointer-events-none"></div>
+                                </div>
+                                <!-- Reel 3 -->
+                                <div class="w-24 h-20 bg-[#05070f] border border-white/10 rounded-xl overflow-hidden relative flex flex-col items-center">
+                                    <div class="slot-reel transition-transform duration-500 text-center space-y-12 py-2" style="transform: translateY(0);">
+                                        <div class="text-[10px] text-amber-400 font-extrabold">최적화 프롬프트</div>
+                                        <div class="text-[10px] text-slate-500 font-extrabold">인터넷 베끼기</div>
+                                        <div class="text-[10px] text-slate-500 font-extrabold">소설 쓰기</div>
+                                    </div>
+                                    <div class="absolute inset-0 border-y-2 border-y-amber-500/20 pointer-events-none"></div>
+                                </div>
+
+                                <!-- Handle / Lever (Wow Motion trigger) -->
+                                <div id="slot-lever" onclick="pullSlotLever()" class="w-10 h-24 flex items-center justify-center cursor-pointer select-none active:scale-95 transition-transform duration-100">
+                                    <!-- Lever stem and knob representation -->
+                                    <div class="w-2 h-16 bg-slate-700 rounded-full relative flex justify-center">
+                                        <div id="slot-arm" class="w-2 h-12 bg-blue-500 origin-bottom transition-transform duration-300 absolute bottom-0 rounded-full flex justify-center">
+                                            <div class="w-5 h-5 bg-red-500 rounded-full absolute -top-4 shadow-lg shadow-red-500/40"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Result Box -->
+                            <div class="h-16 flex items-center justify-center shrink-0">
+                                <div id="slot-jackpot-card" class="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 p-3 rounded-2xl text-center transition-all duration-300 opacity-0 transform translate-y-4 scale-95 flex items-center gap-2">
+                                    <span class="text-lg">🏆</span>
+                                    <strong class="text-amber-300 text-xs md:text-sm">축하합니다! 모금회 당선계획서 잭팟 도출 완료!</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Gemini vs GPT -->
+            <section id="section-gemini-gpt" class="presentation-section">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 3</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">구글 Gemini vs OpenAI GPT: 구글 생태계의 습격</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-7 space-y-4">
+                            <p class="text-slate-350 text-base md:text-lg leading-relaxed font-bold">
+                                우리가 2일차와 3일차 실습에서 주력으로 활용할 도구는 구글의 **Gemini(제미나이)**입니다. 
+                                GPT 역시 훌륭하지만, 사회복지사의 기획 업무에서는 **구글 생태계와 결합된 제미나이**가 독보적인 강점을 띱니다.
+                            </p>
+                            <p class="text-slate-400 text-xs md:text-sm leading-relaxed">
+                                책 5권을 한방에 먹여도 기억력을 상실하지 않는 200만 컨텍스트의 여유, 구글 드라이브와 바로 연동되는 컴파일 파이프라인이야말로 실무자들의 가치를 높여줍니다.
+                            </p>
+                        </div>
+
+                        <!-- INFOGRAPHIC: Funnel Memory Size Comparison (Wow Visual) -->
+                        <div class="lg:col-span-5 bg-slate-950/40 p-6 rounded-3xl border border-white/5 h-[230px] flex flex-col justify-between relative overflow-hidden">
+                            <span class="text-[10px] font-bold text-slate-500 block text-center">기억력 깔때기(Context Window) 리얼 스케일 비교</span>
+                            
+                            <div class="flex items-end justify-around h-full pt-4">
+                                <!-- GPT bar/funnel -->
+                                <div class="flex flex-col items-center space-y-2">
+                                    <div class="w-16 h-12 bg-slate-800 rounded-t-xl border border-white/10 flex items-center justify-center relative">
+                                        <span class="text-[9px] text-slate-400 font-mono">128k 용량</span>
+                                        <div class="absolute -top-3 w-4 h-4 bg-red-500/20 text-red-500 text-[8px] flex items-center justify-center rounded-full">!</div>
+                                    </div>
+                                    <div class="text-[10px] text-slate-400 font-bold">일반 GPT 뇌</div>
+                                    <span class="text-[8px] text-red-400 block text-center">조금만 넣어도 금방 롤백/망각</span>
+                                </div>
+
+                                <!-- Connection Line -->
+                                <div class="w-[2px] h-12 bg-white/5 self-center"></div>
+
+                                <!-- Gemini bar/funnel (Massive Scale) -->
+                                <div class="flex flex-col items-center space-y-2 relative">
+                                    <!-- Flowing files animations -->
+                                    <div class="absolute -top-12 left-2 w-4 h-4 text-blue-400 text-xs anim-file-flow"><i data-lucide="file" class="w-4 h-4"></i></div>
+                                    <div class="absolute -top-8 right-2 w-4 h-4 text-purple-400 text-xs anim-file-flow" style="animation-delay: 1.2s;"><i data-lucide="file-text" class="w-4 h-4"></i></div>
+
+                                    <div class="w-28 h-20 bg-gradient-to-t from-blue-600/20 to-indigo-600/30 rounded-t-3xl border border-blue-500/30 flex items-center justify-center shadow-lg shadow-blue-500/10">
+                                        <span class="text-[11px] text-blue-300 font-black">200만(2M) 대용량</span>
+                                    </div>
+                                    <div class="text-[10px] text-blue-400 font-black">Gemini 뇌 (압도적)</div>
+                                    <span class="text-[8px] text-blue-300 block text-center">책 5권, 보고서 20편 한방 분석</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Table Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                        <div class="bg-blue-950/20 p-6 rounded-2xl border border-blue-500/10 space-y-4">
+                            <h4 class="text-white font-extrabold text-lg flex items-center gap-2 text-blue-450"><i data-lucide="zap" class="w-5 h-5"></i> 구글 Gemini의 독보적 해자 (Advantage)</h4>
+                            <ul class="space-y-3 text-slate-300 text-xs md:text-sm leading-relaxed">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-blue-400 font-extrabold">✓</span>
+                                    <span><strong>200만 토큰의 광활한 뇌 용량 (컨텍스트)</strong>: Claude(200k)나 GPT(128k)와 달리 책 5권 분량의 보고서나 기관 사례를 파일 통째로 한 번에 올려도 절대 까먹지 않고 정확히 분석합니다.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-blue-400 font-extrabold">✓</span>
+                                    <span><strong>네이티브 구글 워크스페이스 확장</strong>: 대화 도중 실시간으로 `@Google Docs` 또는 `@Google Drive`를 호출하여 내 개인 한글/구글 파일에 직접 엑세스하고 바로 구글 문서로 빌드하는 컴파일 속도가 압도적입니다.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-blue-400 font-extrabold">✓</span>
+                                    <span><strong>강력한 NotebookLM 연계</strong>: 구글 생태계가 제공하는 최강의 정보 요약 노트인 NotebookLM에 PDF 우수사례를 업로드하여 구조화 리포트를 도출하는 파이프라인 연계가 가장 매끄럽습니다.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-slate-900/40 p-6 rounded-2xl border border-white/5 space-y-4">
+                            <h4 class="text-white font-extrabold text-lg flex items-center gap-2 text-slate-400"><i data-lucide="shield" class="w-5 h-5"></i> 일반 OpenAI GPT (Comparison)</h4>
+                            <ul class="space-y-3 text-slate-400 text-xs md:text-sm leading-relaxed">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-slate-650">✕</span>
+                                    <span><strong>한정된 정보 기억력</strong>: 긴 계획서 본문과 통계자료 3~4개를 연속으로 주입하면, 대화 중간에 기억 용량을 초과하여 대화 초기의 기획 조건(예: 예산 1500만 원)을 망각하는 치명적 롤백이 일어납니다.</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-slate-650">✕</span>
+                                    <span><strong>외부 문서 호환 장벽</strong>: 구글 문서나 시트로 다이렉트 연동되지 않아, AI 창에서 결과물을 긁어다가 수동으로 복사하고 셀 너비를 조율하는 원시적인 편집 수고가 길어집니다.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 4: AI가 좋아하는 데이터 -->
+            <section id="section-ai-data" class="presentation-section">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1.5 rounded-xl bg-amber-500/20 text-amber-400 font-extrabold text-xs">Session 4</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">AI가 가장 환장(좋아)하는 것은 '진짜 1차 데이터'</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-7 space-y-5">
+                            <p class="text-slate-355 text-base md:text-lg leading-relaxed font-bold">
+                                선생님들이 AI에게 "우리 지역아동센터 아동들을 위한 계획서 근사하게 써줘"라고 뜬구름 잡는 질문을 하시면, AI도 인터넷에 있는 가장 뻔하고 무미건조한 교과서 같은 글만 뱉어냅니다. 
+                                <strong>AI 슬롯머신의 잭팟은 오직 여러분의 '오리지널 1차 데이터'를 꽂아 넣었을 때 터집니다.</strong>
+                            </p>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                내 센터의 숫자, 욕구 조사 앙케이트 한 장, 지자체 최신 조례 1장 등 구체적이고 좁은 팩트를 믹서기에 넣어줄수록, AI는 타 지역과 완전히 차별화된 극상의 계획서 초안을 벼려 냅니다.
+                            </p>
+                        </div>
+
+                        <!-- INFOGRAPHIC: Mixer Data Flow Animation -->
+                        <div class="lg:col-span-5 bg-slate-950/40 p-6 rounded-3xl border border-white/5 h-[230px] flex items-center justify-center relative overflow-hidden">
+                            <!-- Left Flow (Good Data Gems) -->
+                            <div class="absolute left-6 bottom-4 flex flex-col space-y-1 text-blue-400 text-xs anim-float-good">
+                                <span class="bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded font-bold text-[9px]">✓ 설문조사 결과</span>
+                            </div>
+                            <div class="absolute left-10 top-6 flex flex-col space-y-1 text-emerald-400 text-xs anim-float-good" style="animation-delay: 1s;">
+                                <span class="bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded font-bold text-[9px]">✓ 강사료 견적서</span>
+                            </div>
+
+                            <!-- Right Flow (Bad Data Red) -->
+                            <div class="absolute right-4 bottom-6 flex flex-col space-y-1 text-red-400 text-xs anim-float-bad">
+                                <span class="bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded font-bold text-[9px]">✕ "아무렇게나 대충"</span>
+                            </div>
+                            <div class="absolute right-12 top-8 flex flex-col space-y-1 text-red-400 text-xs anim-float-bad" style="animation-delay: 1.3s;">
+                                <span class="bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded font-bold text-[9px]">✕ "작년꺼 복사"</span>
+                            </div>
+
+                            <!-- Central Mixer Core -->
+                            <div class="anim-mixer-core w-28 h-28 rounded-full bg-gradient-to-tr from-blue-500/15 via-indigo-500/10 to-purple-500/15 border-2 border-dashed border-indigo-500/30 flex items-center justify-center flex-col text-center">
+                                <i class="text-blue-400 w-8 h-8 shrink-0"><i data-lucide="loader" class="animate-spin w-8 h-8"></i></i>
+                                <span class="text-[10px] text-slate-300 font-extrabold pt-2">기획 데이터 믹싱</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tactical Cards Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-l-amber-500 space-y-3">
+                            <h4 class="text-white font-extrabold text-lg flex items-center gap-2"><i data-lucide="check-circle" class="w-5 h-5 text-amber-500"></i> AI가 찬양하는 고품질 데이터 소스</h4>
+                            <p class="text-slate-350 text-xs md:text-sm leading-relaxed">
+                                - **센터 아동의 설문조사 결과 요약 텍스트**<br>
+                                - **실제 겪고 있는 난독증 치료 비용 견적서 단가**<br>
+                                - **작년 사업 결과 보고서 한글(HWP) 복사본**<br>
+                                - **우리 지자체의 취약계층 등록 아동 비율 통계**
+                            </p>
+                            <span class="text-xs text-slate-500 block pt-2">➔ 이 실물 데이터를 대화방에 먼저 던진 후 계획 작성을 시키면, 세상에 단 하나뿐인 공신력 있는 기획서가 조각됩니다.</span>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-l-slate-650 space-y-3 text-slate-400">
+                            <h4 class="text-slate-300 font-extrabold text-lg flex items-center gap-2"><i data-lucide="alert-triangle" class="w-5 h-5"></i> AI가 혐오하는 쓰레기 입력 (Garbage In)</h4>
+                            <p class="text-slate-405 text-xs md:text-sm leading-relaxed">
+                                - **"알아서 괜찮은 기획서 하나 대충 써봐"**<br>
+                                - **"예산은 대충 모금회 기준 맞춰서 채워줘"**<br>
+                                - **"아동 관련 프로그램 일정표 그럴싸하게 짜봐"**
+                            </p>
+                            <span class="text-xs text-slate-500 block pt-2">➔ 소재가 텅 빈 질문을 던지면, AI는 존재하지 않는 엉터리 가상 아동 통계와 계산식 파괴 예산표를 지어내어 탈락 요인을 제공합니다.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: 프롬프트 6대 원칙 -->
+            <section id="section-prompt-rules" class="presentation-section">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">Session 5</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">기획서 퀄리티를 수직 상승시키는 프롬프트 6대 원칙</h2>
+                    </div>
+
+                    <p class="text-slate-350 text-base leading-relaxed">
+                        AI 비서에게 건네는 업무 지시서, 즉 프롬프트를 작성할 때 반드시 포함해야 할 **6가지 골든 룰**입니다. 
+                        이 원칙들이 3일차에 실습하게 될 마스터 프롬프트 카드 내부에도 고스란히 이식되어 있습니다.
+                    </p>
+
+                    <!-- 6-Principle Cards Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+                        
+                        <!-- 1. 역할 부여 -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 01</span>
+                                    <i data-lucide="user-check" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">역할 부여 (Role)</h4>
+                                <p class="text-slate-400 text-xs leading-relaxed">
+                                    AI에게 고유한 직함이나 자격을 쥐여주어 대화의 격조와 시야를 강제 지정합니다.
+                                </p>
+                            </div>
+                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
+                                "너는 모금회 15년 차 심사위원이다."
+                            </div>
+                        </div>
+
+                        <!-- 2. 맥락 제공 -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 02</span>
+                                    <i data-lucide="info" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">맥락 제공 (Context)</h4>
+                                <p class="text-slate-400 text-xs leading-relaxed">
+                                    왜 이 일을 시키는지 뒷이야기와 대상, 현장의 구체적 상황 정보를 미리 주입합니다.
+                                </p>
+                            </div>
+                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
+                                "우리 센터 아동 20명 중 15명이 난독증임."
+                            </div>
+                        </div>
+
+                        <!-- 3. 명확한 임무 -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 03</span>
+                                    <i data-lucide="target" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">명확한 임무 (Task)</h4>
+                                <p class="text-slate-400 text-xs leading-relaxed">
+                                    AI가 수행해야 할 구체적인 실무 작업을 지엽적인 행동 동사로 지시합니다.
+                                </p>
+                            </div>
+                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
+                                "필요성 단락에 들어갈 개조식 3대 문제를 써라."
+                            </div>
+                        </div>
+
+                        <!-- 4. 출력 형식 -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 04</span>
+                                    <i data-lucide="layout" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">출력 형식 (Format)</h4>
+                                <p class="text-slate-400 text-xs leading-relaxed">
+                                    표, 마크다운, 개조식 종결어미 등 한글 파일에 즉시 복사해 넣을 수 있는 형태를 지정합니다.
+                                </p>
+                            </div>
+                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
+                                "소계가 마크된 마크다운 표 형태로 출력해줘."
+                            </div>
+                        </div>
+
+                        <!-- 5. 제약 조건 -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 05</span>
+                                    <i data-lucide="slash" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">제약 조건 (Constraint)</h4>
+                                <p class="text-slate-400 text-xs leading-relaxed">
+                                    AI가 소설을 쓰거나 금지해야 할 행위를 족쇄처럼 명확하게 선언해 둡니다.
+                                </p>
+                            </div>
+                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
+                                "존댓말이나 미사여구를 절대 쓰지 말고 개조식 유지."
+                            </div>
+                        </div>
+
+                        <!-- 6. 예시 제공 -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 06</span>
+                                    <i data-lucide="eye" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                </div>
+                                <h4 class="text-white font-bold text-lg">예시 제공 (Few-shot)</h4>
+                                <p class="text-slate-400 text-xs leading-relaxed">
+                                    원하는 품질이나 양식의 모범 초안 사례(예시)를 1~2개 덧붙여 퀄리티를 강제 정렬합니다.
+                                </p>
+                            </div>
+                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
+                                "(참고 예시: 필요성 ➔ [가. 아동 실태] ...)"
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 6: Gemini 실무 활용법 -->
+            <section id="section-gemini-tips" class="presentation-section">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-6">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 6</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">Gemini 실무 비서 활용법: 당장 긁어 쓰는 프롬프트 4종</h2>
+                    </div>
+
+                    <p class="text-slate-350 text-base leading-relaxed">
+                        Claude의 강력한 텍스트 분석 및 윤문 팁을 **Gemini의 200만 대용량 컨텍스트 윈도우 환경에 맞게 완벽 치환하고 보강**한 실무용 다이렉트 프롬프트 카드입니다. 
+                        오른쪽 상단의 [복사] 버튼을 누르고 지금 즉시 Gemini 창에 넣어 연습해 보세요!
+                    </p>
+
+                    <!-- Accordion Prompt Lists -->
+                    <div class="space-y-4 pt-4">
+                        
+                        <!-- 6-1. 대용량 문서 분석 -->
+                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden">
+                            <button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none">
+                                <div class="flex items-center gap-3">
+                                    <span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">1</span>
+                                    <strong class="text-white text-base md:text-lg">대용량 HWP / PDF 문서 엑스레이 분석 프롬프트</strong>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-body">
+                                <div class="px-6 pb-6 pt-2 space-y-4">
+                                    <p class="text-slate-400 text-xs md:text-sm">
+                                        *사용법: Gemini 대화방 상단에 분석하고 싶은 지자체 보육 조례 보고서나 작년 사업 기획서(PDF)를 통째로 업로드한 뒤, 아래 프롬프트를 복사해 대화창에 입력하세요.*
+                                    </p>
+                                    <div class="relative">
+                                        <div id="p-gemini-tip-1" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">내가 첨부한 이 대용량 문서의 전체적인 뼈대와 구성 논리를 엄격하게 분석해줘.
+
+이 문서가 품고 있는 1) 핵심 아젠다와 문제점, 2) 이를 해결하기 위해 취하고 있는 구체적 행동 방법론, 3) 사업 성과를 수치로 입증하기 위해 적용한 핵심 평가 척도와 평가지표 리스트를 추출해줘.
+
+인터넷 정보나 일반적인 지식을 배제하고, 오직 내가 업로드한 첨부 파일 내부의 실제 텍스트 팩트에만 기반해서 리포트 형태로 개조식 정리해줘.</div>
+                                        <button onclick="copyPromptText(document.getElementById('p-gemini-tip-1').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center gap-1">
+                                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6-2. 기획 전용 Gems 커스텀봇 빌딩 -->
+                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden">
+                            <button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none">
+                                <div class="flex items-center gap-3">
+                                    <span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">2</span>
+                                    <strong class="text-white text-base md:text-lg">나만의 기획 전문 가상 동반자(Gems) 빌딩 프롬프트</strong>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-body">
+                                <div class="px-6 pb-6 pt-2 space-y-4">
+                                    <p class="text-slate-400 text-xs md:text-sm">
+                                        *사용법: Gemini Advanced의 'Gems 만들기' 지침(Instruction) 란에 아래의 내용을 그대로 복사해 입력해 두세요. 상시 켜놓고 기획 회의 파트너로 활용하기 좋습니다.*
+                                    </p>
+                                    <div class="relative">
+                                        <div id="p-gemini-tip-2" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">너는 지금부터 사회복지공동모금회 15년 경력의 시니어 기획 심사위원 역할을 수행한다.
+
+대화 중 내가 어떤 거친 기획 아이디어나 거친 메모를 던져도, 너는 다음 3단계 원칙에 따라 대화와 조언을 주도해야 해:
+
+1. [아이디어 고도화]: 내 러프한 한마디를 모금회 공식 양식 포맷에 알맞은 전문 복지 용어(예: 사회적 배제 해소, 욕구 척도화 등)로 즉각 승화시켜 추천한다.
+2. [데이터 누수 보정]: 내 기획안에서 대상자 인원수나 단가 계산의 엇박자가 발견되면 지체 없이 경고하고 대안을 제안한다.
+3. [개조식 피드백]: 항상 어지러운 긴 줄글은 사양하고, 즉시 복사해 양식에 이식할 수 있는 깔끔한 소제목 체계의 개조식 종결어미(~함, ~계획임)로만 출력한다.
+
+이 지침을 뇌에 락(Lock)하고, 준비가 되었다면 나에게 첫 기획 주제가 무엇인지 공손하고 품격 있게 질문을 던져줘.</div>
+                                        <button onclick="copyPromptText(document.getElementById('p-gemini-tip-2').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center gap-1">
+                                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6-3. 심사위원 페르소나 가상 피드백 -->
+                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden">
+                            <button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none">
+                                <div class="flex items-center gap-3">
+                                    <span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">3</span>
+                                    <strong class="text-white text-base md:text-lg">탈락 방지용 가상 심사위원 페르소나 모의 피드백 프롬프트</strong>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-body">
+                                <div class="px-6 pb-6 pt-2 space-y-4">
+                                    <p class="text-slate-400 text-xs md:text-sm">
+                                        *사용법: 내가 작성한 필요성이나 세부 프로그램 기획안 텍스트를 대화창에 붙여넣고, 이 프롬프트를 함께 전송하세요. 모금회 서류 제출 전 최종 자가 진단에 최고입니다.*
+                                    </p>
+                                    <div class="relative">
+                                        <div id="p-gemini-tip-3" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">내가 아래에 첨부한 기획서 초안 텍스트를 읽고, 너는 아주 깐깐하고 엄격한 사회복지 배분 기획 심사위원의 눈으로 이 초안의 맹점들을 냉정하게 평가해줘.
+
+특히 다음 3가지 관점에서 불합격 판정을 내릴 만한 위험 요소를 찾아 지적하고 고칠 방안을 써줘:
+
+1. [필요성 설득력 부족]: 다른 센터의 뻔한 돌봄과 구별되지 않는 이 사업만의 고유한 필요성/독창성이 부족한지 지적.
+2. [세부 계획의 비현실성]: 한정된 사회복지사 인력으로 1년간 수행하기에 세부 타임라인이나 수혜 아동 선발 요건이 모호한 지점 경고.
+3. [예산 단가 정밀도 부족]: 산출 근거가 뭉뚱그려졌거나, 자부담(10%) 비율이 엉망이거나, 항목별 사칙연산 연산 실수가 의심되는 부분을 잡아 수정 근거와 바른 예산 단가 계산 제안.
+
+초안 텍스트: [여기에 내가 쓴 기획서 초안을 붙여넣으세요]</div>
+                                        <button onclick="copyPromptText(document.getElementById('p-gemini-tip-3').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center gap-1">
+                                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6-4. 2M 컨텍스트 극대화 비교 분석 -->
+                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden">
+                            <button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none">
+                                <div class="flex items-center gap-3">
+                                    <span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">4</span>
+                                    <strong class="text-white text-base md:text-lg">200만 컨텍스트 극대화: 다수 기획안 교차 비교 및 분석 프롬프트</strong>
+                                </div>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-body">
+                                <div class="px-6 pb-6 pt-2 space-y-4">
+                                    <p class="text-slate-400 text-xs md:text-sm">
+                                        *사용법: 참고하고 싶은 타 센터 우수 계획서 3~4종(PDF)을 Gemini에 다중 업로드한 뒤 이 프롬프트를 전송하세요. 여러 계획서의 장점만 추출해 주는 마법입니다.*
+                                    </p>
+                                    <div class="relative">
+                                        <div id="p-gemini-tip-4" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">내가 업로드한 3~4종의 우수 기획 제안서들을 정밀하게 비교 분석해줘.
+
+각 계획서들이 문제 정의(필요성)를 입증하기 위해 채택한 핵심 논리와, 대상 아동을 선발하기 위해 적용한 기준의 투명성, 세부 활동 세션의 독창적인 커리큘럼들의 강점과 아쉬운 점들을 비교 분석해라.
+
+최종적으로 이 우수 계획서들의 좋은 기법들만 쏙 쏙 수렴하여, 내가 이번에 기획할 새로운 사업계획서에 도입하기 가장 적절한 "최강의 결합 기획 전략 가이드라인"을 마크다운 표(Table) 형태로 대조하여 추천해줘.</div>
+                                        <button onclick="copyPromptText(document.getElementById('p-gemini-tip-4').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center gap-1">
+                                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- 5. TOAST NOTIFICATION STICKY -->
+    <div id="toast" class="fixed bottom-8 right-8 z-50 transform translate-y-24 opacity-0 transition-all duration-300 ease-out">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-extrabold px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 border border-blue-400/30">
+            <div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white"><i data-lucide="check" class="w-4 h-4"></i></div>
+            <div>
+                <strong class="block text-sm">프롬프트 복사 성공!</strong>
+                <span class="text-xs text-white/80">Gemini 대화창에 Ctrl+V로 입력하세요.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. POPUP DETAILED MODAL LAYER -->
+    <div id="modal-overlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center opacity-0 transition-opacity duration-300 p-4">
+        <div class="max-w-4xl w-full bg-[#0a0f1e] rounded-[32px] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+            <div class="p-6 md:p-8 border-b border-white/5 flex items-center justify-between shrink-0 bg-[#05070f]">
+                <h3 id="modal-title" class="text-lg md:text-2xl font-black text-white flex items-center gap-2">아하! 그렇군요</h3>
+                <button onclick="closeModal()" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-slate-450 hover:text-white flex items-center justify-center transition active:scale-95">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="modal-body-content" class="p-6 md:p-10 overflow-y-auto text-slate-300 space-y-6 leading-relaxed">
+                <!-- dynamic injecting -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ScrollSpy & Interactive Initializer -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            initAccordion();
+            initScrollSpy();
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+
+        // Accordion
+        function initAccordion() {
+            const headers = document.querySelectorAll(".accordion-header");
+            headers.forEach(header => {
+                header.addEventListener("click", () => {
+                    const item = header.parentElement;
+                    const isActive = item.classList.contains("active");
+
+                    document.querySelectorAll(".accordion-item").forEach(el => {
+                        el.classList.remove("active");
+                        el.querySelector(".accordion-body").style.maxHeight = null;
+                    });
+
+                    if (!isActive) {
+                        item.classList.add("active");
+                        const body = item.querySelector(".accordion-body");
+                        body.style.maxHeight = body.scrollHeight + 150 + "px";
+                    }
+                });
+            });
+
+            // Open first accordion item by default
+            const firstItem = document.querySelector(".accordion-item");
+            if (firstItem) {
+                firstItem.classList.add("active");
+                const body = firstItem.querySelector(".accordion-item");
+                body.style.maxHeight = body.scrollHeight + 150 + "px";
+            }
+        }
+
+        // ScrollSpy and sidebar dynamics
+        function initScrollSpy() {
+            const navLinks = document.querySelectorAll("aside nav a");
+            const progressLine = document.getElementById("sidebar-progress-line");
+
+            if (!navLinks.length) return;
+
+            const sections = Array.from(navLinks).map(link => {
+                const href = link.getAttribute("href");
+                return document.querySelector(href);
+            }).filter(el => el !== null);
+
+            const handleScroll = () => {
+                try {
+                    let activeIdx = 0;
+
+                    sections.forEach((section, idx) => {
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top <= 200) {
+                            activeIdx = idx;
+                        }
+                    });
+
+                    navLinks.forEach((link, idx) => {
+                        const dot = link.querySelector(".nav-dot");
+                        
+                        if (idx === activeIdx) {
+                            link.classList.add("bg-white/10", "text-white");
+                            link.classList.remove("text-slate-400", "text-slate-500", "text-slate-300");
+                            if (dot) {
+                                dot.classList.add("active");
+                                dot.classList.remove("completed");
+                            }
+                        } else if (idx < activeIdx) {
+                            link.classList.remove("bg-white/10", "text-white");
+                            link.classList.add("text-slate-300");
+                            link.classList.remove("text-slate-400", "text-slate-500");
+                            if (dot) {
+                                dot.classList.add("completed");
+                                dot.classList.remove("active");
+                            }
+                        } else {
+                            link.classList.remove("bg-white/10", "text-white", "text-slate-300");
+                            link.classList.add("text-slate-500");
+                            if (dot) {
+                                dot.classList.remove("active", "completed");
+                            }
+                        }
+                    });
+
+                    if (progressLine && navLinks[0] && activeIdx >= 0) {
+                        const firstDot = navLinks[0].querySelector(".nav-dot");
+                        const activeDot = navLinks[activeIdx].querySelector(".nav-dot");
+                        if (firstDot && activeDot) {
+                            const startY = firstDot.getBoundingClientRect().top;
+                            const activeY = activeDot.getBoundingClientRect().top;
+                            const diffY = activeY - startY;
+                            progressLine.style.height = `${diffY}px`;
+                        }
+                    }
+                } catch (e) {
+                    console.error("Error in ScrollSpy:", e);
+                }
+            };
+
+            window.addEventListener("scroll", handleScroll);
+            setTimeout(handleScroll, 100);
+        }
+    </script>
+</body>
+</html>

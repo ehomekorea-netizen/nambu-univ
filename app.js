@@ -1,6 +1,6 @@
 // 1. STATE & TEMPLATES DEFINITION
 const state = {
-    currentTopic: "저소득 가정 아동·청소년의 즐거운 돌봄서비스 제공을 위한 그린 방과후 프로그램",
+    currentTopic: "", // Initialized dynamically from DOM value
     selectedAgency: "chest", // 'chest' = 산출중심형, 'enterprise' = 성과중심형, 'gov' = 성과확산형
     selectedBudget: "15,000,000원"
 };
@@ -113,8 +113,7 @@ const promptTemplates = {
 
 // 2. WINDOW INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
-    initAccordion();
-    initInteractiveTopic();
+    initInteractiveTopic(); // Initialize this first to capture correct state.currentTopic from HTML input
     initDeepResearchGenerator();
     initScrollSpy();
     
@@ -155,13 +154,22 @@ function initAccordion() {
 // Topic Synchronization and Rendering Highlights
 function initInteractiveTopic() {
     const topicInput = document.getElementById("user-topic");
-    renderAllPrompts(topicInput.value);
+    if (!topicInput) return;
+
+    // Capture initial value from HTML (prevent rollback bugs)
+    state.currentTopic = topicInput.value || "사업 주제 없음 (입력 필요)";
+    renderAllPrompts(state.currentTopic);
 
     topicInput.addEventListener("input", (e) => {
         state.currentTopic = e.target.value || "사업 주제 없음 (입력 필요)";
         renderAllPrompts(state.currentTopic);
-        updateDeepResearchPrompt(); 
+        if (typeof window.updateDeepResearchPrompt === "function") {
+            window.updateDeepResearchPrompt(); 
+        }
     });
+
+    // Run Accordion initializer immediately after DOM binding
+    initAccordion();
 }
 
 // Helper: Wrap variable text in orange contrast badge (Meng To Style)
@@ -216,6 +224,7 @@ function renderAllPrompts(topic) {
 function initDeepResearchGenerator() {
     const agencyRadios = document.querySelectorAll("input[name='var-agency']");
     const budgetSelect = document.getElementById("var-budget");
+    if (!agencyRadios.length || !budgetSelect) return;
 
     const updatePrompt = () => {
         let agency = "chest";
@@ -320,7 +329,6 @@ function initScrollSpy() {
 
     if (!navLinks.length) return;
 
-    // Dynamically retrieve the sections that map exactly to our nav links
     const sections = Array.from(navLinks).map(link => {
         const href = link.getAttribute("href");
         return document.querySelector(href);
@@ -330,7 +338,6 @@ function initScrollSpy() {
         try {
             let activeIdx = 0;
 
-            // Find which section covers the viewport trigger limit (200px threshold)
             sections.forEach((section, idx) => {
                 const rect = section.getBoundingClientRect();
                 if (rect.top <= 200) {
@@ -338,12 +345,10 @@ function initScrollSpy() {
                 }
             });
 
-            // Apply styles to links and dots based on active index
             navLinks.forEach((link, idx) => {
                 const dot = link.querySelector(".nav-dot");
                 
                 if (idx === activeIdx) {
-                    // Current active item
                     link.classList.add("bg-white/10", "text-white");
                     link.classList.remove("text-slate-400", "text-slate-500", "text-slate-300");
                     if (dot) {
@@ -351,7 +356,6 @@ function initScrollSpy() {
                         dot.classList.remove("completed");
                     }
                 } else if (idx < activeIdx) {
-                    // Completed items (above the current one)
                     link.classList.remove("bg-white/10", "text-white");
                     link.classList.add("text-slate-300");
                     link.classList.remove("text-slate-400", "text-slate-500");
@@ -360,7 +364,6 @@ function initScrollSpy() {
                         dot.classList.remove("active");
                     }
                 } else {
-                    // Future items (below the current one)
                     link.classList.remove("bg-white/10", "text-white", "text-slate-300");
                     link.classList.add("text-slate-500");
                     if (dot) {
@@ -369,7 +372,6 @@ function initScrollSpy() {
                 }
             });
 
-            // Update progress line height
             if (progressLine && navLinks[0] && activeIdx >= 0) {
                 const firstDot = navLinks[0].querySelector(".nav-dot");
                 const activeDot = navLinks[activeIdx].querySelector(".nav-dot");
@@ -386,6 +388,5 @@ function initScrollSpy() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    // Initial call to set active state on load
     setTimeout(handleScroll, 100);
 }
