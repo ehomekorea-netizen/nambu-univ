@@ -1314,22 +1314,7 @@
                         </div>
                     </div>
 
-                    <!-- Selected Node Detail Dashboard Monitor -->
-                    <div class="bg-[#020617] border border-sky-500/20 p-6 rounded-2xl shadow-[0_0_20px_rgba(56,189,248,0.05)]">
-                        <div class="flex justify-between items-center border-b border-white/5 pb-3 mb-4">
-                            <span class="text-[10px] text-slate-500 font-mono tracking-wider">SELECTED MODEL SPECIFICATION MONITOR</span>
-                            <span class="flex items-center justify-center gap-1.5">
-                                <span class="w-2 h-2 rounded-full bg-emerald-450 animate-ping"></span>
-                                <span class="text-[10px] text-emerald-450 font-mono font-bold">ONLINE SYNCED</span>
-                            </span>
-                        </div>
-                        <h3 id="graph-monitor-title" class="text-base md:text-lg font-black text-white font-mono flex items-center">
-                            노드를 클릭하여 세대별 세부 성능 정보를 확인하세요.
-                        </h3>
-                        <p id="graph-monitor-desc" class="text-xs md:text-sm text-slate-400 mt-2 font-medium leading-relaxed">
-                            연도별로 3대 플랫폼의 모델 변화를 추적하여 각 기술적 단계가 사회복지 업무 효율에 미친 영향을 분석합니다.
-                        </p>
-                    </div>
+                    
                 </div>
             </section>
         
@@ -1861,6 +1846,7 @@
         };
 
         window.selectModelNode = function(type, level) {
+            // Unhighlight all nodes in this series
             for (let i = 1; i <= 6; i++) {
                 const node = document.getElementById(`node-${type}-${i}`);
                 if (node) {
@@ -1869,6 +1855,7 @@
                 }
             }
 
+            // Highlight nodes up to the clicked level
             for (let i = 1; i <= level; i++) {
                 const node = document.getElementById(`node-${type}-${i}`);
                 if (node) {
@@ -1883,36 +1870,19 @@
                 }
             }
 
+            // Update SVG Lit path offset - exactly stops at the clicked node
             const litPath = document.getElementById(`path-${type}-lit`);
             if (litPath) {
-                litPath.style.strokeDashoffset = (1 - (level - 1) / 5) * 1000;
+                // There are 6 nodes (index 1 to 6)
+                // If level is 1: 0% offset (start of path)
+                // If level is 6: 100% offset (end of path)
+                const percentage = (level - 1) / 5;
+                // Path length is 1000 in stroke-dasharray
+                litPath.style.strokeDashoffset = (1 - percentage) * 1000;
             }
 
-            const activeNode = modelNodeData[type][level];
-            const monitorTitle = document.getElementById("graph-monitor-title");
-            const monitorDesc = document.getElementById("graph-monitor-desc");
-            const valScore = document.getElementById("monitor-val-score");
-            const valLogic = document.getElementById("monitor-val-logic");
-            const valSpeed = document.getElementById("monitor-val-speed");
-
-            if (monitorTitle && monitorDesc) {
-                monitorTitle.innerText = activeNode.title;
-                monitorDesc.innerText = activeNode.desc;
-            }
-
-            if (valScore && valLogic && valSpeed) {
-                let score = 50 + (level * 8);
-                let logic = 40 + (level * 10);
-                let speed = 90 - (level * 3);
-                if (level >= 4) speed = 80 + (level * 3);
-
-                valScore.innerText = score + "점";
-                valScore.style.width = score + "%";
-                valLogic.innerText = logic + "점";
-                valLogic.style.width = logic + "%";
-                valSpeed.innerText = speed + "점";
-                valSpeed.style.width = speed + "%";
-            }
+            // Open Modal
+            openModelInfoModal(type, level);
         };
 
         window.drawCatenaryCurves = function() {
