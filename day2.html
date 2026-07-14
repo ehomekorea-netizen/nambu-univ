@@ -245,6 +245,40 @@
             transform: rotateY(180deg);
         }
 
+            /* Sidebar slide out and main bleed transitions matching day3 */
+        #sidebar {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #main-wrapper {
+            transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .sidebar-hidden #sidebar {
+            transform: translateX(-100%);
+        }
+        .sidebar-hidden #main-wrapper {
+            padding-left: 0 !important;
+        }
+        
+        /* 3D Click Flip styling without shaking hover bug */
+        .gpt-letter-card {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .gpt-letter-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .gpt-letter-card.flipped .gpt-letter-inner {
+            transform: rotateY(180deg);
+        }
+        .gpt-letter-front, .gpt-letter-back {
+            backface-visibility: hidden;
+            position: absolute;
+            inset: 0;
+        }
+        .gpt-letter-back {
+            transform: rotateY(180deg);
+        }
     </style>
 
     <script>
@@ -380,12 +414,11 @@
             </button>
         </div>
         
-        <!-- Navigation Links -->
         <nav class="relative flex-1 my-8 py-4 flex flex-col justify-between text-xs font-bold text-slate-400">
             <div class="absolute left-[15px] top-[14px] bottom-[14px] w-[2px] bg-slate-800 z-0"></div>
             <div id="sidebar-progress-line" class="absolute left-[15px] top-[14px] w-[2px] bg-blue-500 transition-all duration-300 z-0" style="height: 0px;"></div>
 
-                        <a href="#section-essence" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-essence" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>1. 생성형 AI 본질</span>
             </a>
@@ -413,29 +446,21 @@
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>7. 프롬프트 6원칙</span>
             </a>
-            <a href="#section-gemini-tips" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
-                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>8. Gemini 실무</span>
-            </a>
             <a href="#section-prompt-rules" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>9. 프롬프트 조립기</span>
+                <span>8. 프롬프트 조립기</span>
             </a>
             <a href="#section-security-masking" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>10. 보안 마스킹</span>
+                <span>9. 보안 마스킹</span>
             </a>
             <a href="#section-llm-evolution" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>11. LLM 진화 로드맵</span>
+                <span>10. LLM 진화 로드맵</span>
             </a>
         </nav>
         
-        <!-- Bottom Actions -->
         <div class="space-y-3 shrink-0">
-            <a href="index.html" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-350 hover:text-white font-black py-3 px-4 rounded-xl text-xs transition-all duration-250 border border-white/5 flex items-center justify-center gap-2 shadow-inner">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> 처음 화면으로
-            </a>
             <div class="text-[9px] text-slate-600 text-center leading-tight">
                 전남대 앵커사업단 | 광주지원단
             </div>
@@ -588,100 +613,71 @@
 
             <!-- SECTION 2: GPT 어원 -->
             <section id="section-gemini-gpt" class="presentation-section">
-                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-6">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
                         <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 02</span>
                         <h2 class="text-2xl md:text-3xl font-black text-white">GPT는 무슨 뜻일까?</h2>
                     </div>
-                    <p class="text-slate-300 text-base md:text-lg leading-relaxed">GPT는 <strong class="text-blue-400">Generative Pre-trained Transformer</strong>의 앞글자를 딴 이름입니다. 어렵게 외우기보다 “미리 공부한 자료를 바탕으로, 앞뒤 맥락을 살피며, 다음 말을 만들어 내는 AI”라고 이해하면 됩니다.</p>
+                    <p class="text-slate-300 text-lg md:text-xl leading-relaxed">
+                        GPT는 <strong class="text-blue-400">Generative Pre-trained Transformer</strong>의 앞글자를 딴 이름입니다.<br>
+                        어렵게 생각하기보다 <strong>“미리 공부한 자료를 바탕으로(P), 앞뒤 문맥을 살피며(T), 다음에 올 알맞은 말을 조합해내는 AI(G)”</strong>라고 이해하면 쉽습니다.
+                    </p>
                     
-                    <!-- Interactive Letter Cards Grid (Click 3D Flip Effect) -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                    <!-- Interactive Letter Cards Grid (Click 3D Flip Effect - Larger Text, No shaking) -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
                         <!-- G Card -->
-                        <div class="gpt-letter-card w-full h-[280px]" onclick="this.classList.toggle('flipped')">
+                        <div class="gpt-letter-card w-full h-[300px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
-                                <div class="gpt-letter-front absolute inset-0 glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
-                                    <div class="w-20 h-20 rounded-full bg-orange-400 flex items-center justify-center text-4xl font-black text-slate-950 shadow-lg shadow-orange-500/10">G</div>
-                                    <h4 class="text-white font-extrabold text-xl font-sans">Generative<br><span class="text-sm text-orange-300">생성형</span></h4>
-                                    <span class="text-[10px] text-slate-500 animate-pulse">카드를 클릭해 보세요!</span>
+                                <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
+                                    <div class="w-24 h-24 rounded-full bg-orange-400 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-orange-500/20 select-none">G</div>
+                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Generative<br><span class="text-base md:text-lg text-orange-350 font-bold block mt-1">생성형 (생성)</span></h4>
+                                    <span class="text-[11px] text-slate-500 animate-pulse font-bold">클릭해서 뒷면을 읽어보세요!</span>
                                 </div>
                                 <!-- Back -->
-                                <div class="gpt-letter-back absolute inset-0 glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center space-y-3 border border-orange-500/20 bg-slate-950/80">
-                                    <span class="text-orange-400 text-xs font-extrabold tracking-wider">01 · 생성형</span>
-                                    <h5 class="text-white font-bold text-sm">무에서 창조가 아닌 '재조합 생성'</h5>
-                                    <p class="text-slate-300 text-xs leading-relaxed text-left font-bold">검색 결과를 있는 그대로 보여주는 데 그치지 않고, 질문에 알맞은 새로운 구조의 문장·요약·아이디어를 재배열하여 새로 만들어 냅니다.</p>
+                                <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-orange-500/30 bg-slate-950/90">
+                                    <span class="text-orange-400 text-sm font-black tracking-wider uppercase">01 · Generative</span>
+                                    <h5 class="text-white font-black text-lg md:text-xl">무에서 창조가 아닌 '재조합 생성'</h5>
+                                    <p class="text-slate-300 text-sm leading-relaxed text-left font-medium">인터넷상의 수많은 검색 결과를 고대로 뱉는 것이 아니라, 질문자가 원하는 형태에 맞춰 문장 구조, 포맷, 아이디어를 확률 분포에 맞추어 새로 조립(재배열)해 줍니다.</p>
                                 </div>
                             </div>
                         </div>
  
                         <!-- P Card -->
-                        <div class="gpt-letter-card w-full h-[280px]" onclick="this.classList.toggle('flipped')">
+                        <div class="gpt-letter-card w-full h-[300px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
-                                <div class="gpt-letter-front absolute inset-0 glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
-                                    <div class="w-20 h-20 rounded-full bg-fuchsia-400 flex items-center justify-center text-4xl font-black text-slate-950 shadow-lg shadow-fuchsia-500/10">P</div>
-                                    <h4 class="text-white font-extrabold text-xl font-sans">Pre-trained<br><span class="text-sm text-fuchsia-350">사전 학습된</span></h4>
-                                    <span class="text-[10px] text-slate-500 animate-pulse">카드를 클릭해 보세요!</span>
+                                <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
+                                    <div class="w-24 h-24 rounded-full bg-fuchsia-400 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-fuchsia-500/20 select-none">P</div>
+                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Pre-trained<br><span class="text-base md:text-lg text-fuchsia-350 font-bold block mt-1">Pre-trained (사전 학습)</span></h4>
+                                    <span class="text-[11px] text-slate-500 animate-pulse font-bold">클릭해서 뒷면을 읽어보세요!</span>
                                 </div>
                                 <!-- Back -->
-                                <div class="gpt-letter-back absolute inset-0 glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center space-y-3 border border-fuchsia-500/20 bg-slate-950/80">
-                                    <span class="text-fuchsia-400 text-xs font-extrabold tracking-wider">02 · 사전 학습된</span>
-                                    <h5 class="text-white font-bold text-sm">데이터의 언어 패턴 사전 습득</h5>
-                                    <p class="text-slate-300 text-xs leading-relaxed text-left font-bold">엄청난 양의 웹/보고서 텍스트 데이터로 미리 한글 문장 패턴과 어미를 습득해 두었습니다. 단, '모든 현실 팩트를 기억한다'는 뜻은 아닙니다.</p>
+                                <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-fuchsia-500/30 bg-slate-950/90">
+                                    <span class="text-fuchsia-400 text-sm font-black tracking-wider uppercase">02 · Pre-trained</span>
+                                    <h5 class="text-white font-black text-lg md:text-xl">데이터 언어 패턴 사전 습득</h5>
+                                    <p class="text-slate-300 text-sm leading-relaxed text-left font-medium">수십억 개의 웹 문서, 기획서, 뉴스 텍스트를 미리 공부(학습)해 두었기에 자연스러운 한국어 문장 패턴과 규격을 이미 알고 있습니다. 단, 최신 팩트를 기억한다는 의미는 아닙니다.</p>
                                 </div>
                             </div>
                         </div>
  
                         <!-- T Card -->
-                        <div class="gpt-letter-card w-full h-[280px]" onclick="this.classList.toggle('flipped')">
+                        <div class="gpt-letter-card w-full h-[300px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
-                                <div class="gpt-letter-front absolute inset-0 glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
-                                    <div class="w-20 h-20 rounded-full bg-lime-200 flex items-center justify-center text-4xl font-black text-slate-950 shadow-lg shadow-lime-500/10">T</div>
-                                    <h4 class="text-white font-extrabold text-xl font-sans">Transformer<br><span class="text-sm text-lime-350">트랜스포머</span></h4>
-                                    <span class="text-[10px] text-slate-500 animate-pulse">카드를 클릭해 보세요!</span>
+                                <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
+                                    <div class="w-24 h-24 rounded-full bg-lime-200 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-lime-500/20 select-none">T</div>
+                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Transformer<br><span class="text-base md:text-lg text-lime-350 font-bold block mt-1">Transformer (맥락 이해)</span></h4>
+                                    <span class="text-[11px] text-slate-500 animate-pulse font-bold">클릭해서 뒷면을 읽어보세요!</span>
                                 </div>
                                 <!-- Back -->
-                                <div class="gpt-letter-back absolute inset-0 glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center space-y-3 border border-lime-500/20 bg-slate-950/80">
-                                    <span class="text-lime-400 text-xs font-extrabold tracking-wider">03 · 트랜스포머</span>
-                                    <h5 class="text-white font-bold text-sm">앞뒤 단어의 연결 맥락 분석</h5>
-                                    <p class="text-slate-300 text-xs leading-relaxed text-left font-bold">문장 안의 여러 단어가 서로 어떤 연결고리(관계)를 갖는지 살핍니다. 사용자의 프롬프트 앞뒤 맥락을 보고 다음에 들어갈 단어 확률을 예측해 문맥을 잇습니다.</p>
+                                <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-lime-500/30 bg-slate-950/90">
+                                    <span class="text-lime-400 text-sm font-black tracking-wider uppercase">03 · Transformer</span>
+                                    <h5 class="text-white font-black text-lg md:text-xl">문맥 속 단어간 연결 관계 분석</h5>
+                                    <p class="text-slate-300 text-sm leading-relaxed text-left font-medium">문장 전체의 흐름을 병렬로 동시에 읽어, 사용자가 던져준 지엽적 지침(프롬프트)의 앞뒤 맥락을 보고 다음에 들어갈 단어 확률을 정확히 계산하여 엮어내는 구글 특허의 핵심 알고리즘입니다.</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
- 
-                    <!-- 트랜스포머 레고 조립 비유 및 토큰 개념 설명 -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                        <div class="bg-slate-950/40 p-5 rounded-2xl border border-white/5 space-y-3">
-                            <h4 class="text-white font-extrabold text-sm flex items-center gap-2 text-blue-400">
-                                <i data-lucide="toy-brick" class="w-4 h-4"></i> 트랜스포머(T)의 본질: 레고 병렬 동시 조립 비유
-                            </h4>
-                            <p class="text-slate-300 text-xs leading-relaxed font-bold">
-                                과거 1990년대의 언어 모델(RNN)은 문장의 단어를 <strong>'순차적(하나씩 차례대로)'</strong>으로만 조립해 레고 성을 쌓았습니다. 병렬 처리가 불가능해 연산 시간이 너무 오래 걸렸습니다.
-                            </p>
-                            <p class="text-slate-300 text-xs leading-relaxed font-bold">
-                                구글이 2017년 발표한 <strong>트랜스포머(Transformer)</strong>는 여러 명의 작업자가 설계도를 각자 나누어 쥐고, 문장의 앞뒤 연결 관계를 파악하여 <strong>'동시에(병렬로)' 조립</strong>하는 혁신을 이뤄냈습니다. 이 덕분에 번역, 요약, 문맥 추론 속도가 압도적으로 빨라졌습니다.
-                            </p>
-                        </div>
-                        <div class="bg-slate-950/40 p-5 rounded-2xl border border-white/5 space-y-3">
-                            <h4 class="text-white font-extrabold text-sm flex items-center gap-2 text-amber-400">
-                                <i data-lucide="coins" class="w-4 h-4"></i> 토큰(Token): AI가 사용하는 언어 화폐
-                            </h4>
-                            <p class="text-slate-300 text-xs leading-relaxed font-bold">
-                                <strong>토큰(Token)</strong>이란 AI 모델이 우리 글을 쪼개어 연산하는 최소 단위를 의미합니다. 영어는 단어 단위와 유사하지만, 한글은 '의미와 형태소' 단위로 더 잘게 쪼개져 계산됩니다.
-                            </p>
-                            <p class="text-slate-300 text-xs leading-relaxed font-bold">
-                                사용자가 채팅창에 입력하거나 파일(PDF 등)을 많이 올릴수록 토큰 사용량이 증가하여 AI 칩의 <strong>연산량과 대기 시간이 늘어납니다.</strong> 최신 대용량 AI(제미나이 200만)는 엄청난 토큰을 동시에 기억하지만, 불필요하게 긴 텍스트를 무작정 넣으면 답변 지연의 원인이 될 수 있습니다.
-                            </p>
-                        </div>
-                    </div>
- 
-                    <!-- 하드웨어(GPU/메모리) 투자 및 추론 트렌드 인사이트 -->
-                    <div class="bg-gradient-to-r from-blue-950/20 to-indigo-950/20 border border-blue-500/10 rounded-2xl p-5 text-xs text-slate-300 leading-relaxed space-y-2 font-bold">
-                        <span class="text-amber-400 block text-sm font-black">💡 2026 AI 실무 상식: 거대 연어 모델(LLM) 구동의 배후</span>
-                        <p>우리가 편리하게 사용하는 대형 챗봇의 초당 생성 연산 뒤편에는 엔비디아(Nvidia)의 최고사양 그래픽처리장치(GPU)와 고대역폭 메모리(HBM) 수만 개가 얽힌 초거대 데이터센터가 존재합니다. 최근 트렌드는 모델의 크기를 무작정 키우는 것을 넘어, '생각하는 시간'을 연장하여 스스로 검증하고 추론 성능을 향상시키는 구조로 진화하고 있습니다.</p>
                     </div>
                 </div>
             </section>
@@ -921,7 +917,7 @@
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-10">
                     
                     <div class="flex items-center gap-3">
-                        <span class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 font-extrabold text-sm">04</span>
+                        <span class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 font-extrabold text-sm">Session 06</span>
                         <h2 class="text-3xl md:text-5xl font-black text-white">데이터(Data): AI를 움직이는 원재료</h2>
                     </div>
 
@@ -1080,7 +1076,7 @@
             <section id="section-prompt" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">05</span>
+                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">Session 07</span>
                         <h2 class="text-2xl md:text-3xl font-black text-white">기획서 퀄리티를 수직 상승시키는 프롬프트 6대 원칙</h2>
                     </div>
 
@@ -1093,104 +1089,104 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
                         
                         <!-- 1. 역할 부여 -->
-                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
-                            <div class="space-y-2">
+                        <div onclick="openPromptRuleModal(1)" class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/50 shadow-md transition-all duration-300">
+                            <div class="space-y-3">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 01</span>
-                                    <i data-lucide="user-check" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                    <i data-lucide="user-check" class="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
                                 </div>
-                                <h4 class="text-white font-bold text-lg">역할 부여 (Role)</h4>
-                                <p class="text-slate-400 text-xs leading-relaxed">
-                                    AI에게 고유한 직함이나 자격을 쥐여주어 대화의 격조와 시야를 강제 지정합니다.
+                                <h4 class="text-white font-black text-xl">역할 부여 (Role)</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    AI에게 기획 전문가로서의 자격과 직함을 쥐여주어 어조와 전문성을 제어합니다.
                                 </p>
                             </div>
-                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
-                                "너는 모금회 15년 차 심사위원이다."
+                            <div class="mt-4 py-2 px-3 rounded-xl bg-blue-500/5 border border-blue-500/10 text-center font-bold text-xs text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition">
+                                클릭하여 상세 예시 보기 🔍
                             </div>
                         </div>
 
                         <!-- 2. 맥락 제공 -->
-                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
-                            <div class="space-y-2">
+                        <div onclick="openPromptRuleModal(2)" class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/50 shadow-md transition-all duration-300">
+                            <div class="space-y-3">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 02</span>
-                                    <i data-lucide="info" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                    <i data-lucide="info" class="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
                                 </div>
-                                <h4 class="text-white font-bold text-lg">맥락 제공 (Context)</h4>
-                                <p class="text-slate-400 text-xs leading-relaxed">
-                                    왜 이 일을 시키는지 뒷이야기와 대상, 현장의 구체적 상황 정보를 미리 주입합니다.
+                                <h4 class="text-white font-black text-xl">맥락 제공 (Context)</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    현장 실무 상황과 취약 아동의 문제(1차 데이터) 등 설계 배경을 락(Lock)합니다.
                                 </p>
                             </div>
-                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
-                                "우리 센터 아동 20명 중 15명이 난독증임."
+                            <div class="mt-4 py-2 px-3 rounded-xl bg-blue-500/5 border border-blue-500/10 text-center font-bold text-xs text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition">
+                                클릭하여 상세 예시 보기 🔍
                             </div>
                         </div>
 
-                        <!-- 3. 명확한 임무 -->
-                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
-                            <div class="space-y-2">
+                        <!-- 3. 예시 제공 -->
+                        <div onclick="openPromptRuleModal(3)" class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/50 shadow-md transition-all duration-300">
+                            <div class="space-y-3">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 03</span>
-                                    <i data-lucide="target" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                    <i data-lucide="target" class="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
                                 </div>
-                                <h4 class="text-white font-bold text-lg">명확한 임무 (Task)</h4>
-                                <p class="text-slate-400 text-xs leading-relaxed">
-                                    AI가 수행해야 할 구체적인 실무 작업을 지엽적인 행동 동사로 지시합니다.
+                                <h4 class="text-white font-black text-xl">예시 제공 (Examples)</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    원하는 기획서의 포맷, 예산 비목의 구성 공식 등을 미리 시범 문서로 보여줍니다.
                                 </p>
                             </div>
-                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
-                                "필요성 단락에 들어갈 개조식 3대 문제를 써라."
+                            <div class="mt-4 py-2 px-3 rounded-xl bg-blue-500/5 border border-blue-500/10 text-center font-bold text-xs text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition">
+                                클릭하여 상세 예시 보기 🔍
                             </div>
                         </div>
 
-                        <!-- 4. 출력 형식 -->
-                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
-                            <div class="space-y-2">
+                        <!-- 4. 명확한 임무 -->
+                        <div onclick="openPromptRuleModal(4)" class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/50 shadow-md transition-all duration-300">
+                            <div class="space-y-3">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 04</span>
-                                    <i data-lucide="layout" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                    <i data-lucide="layout" class="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
                                 </div>
-                                <h4 class="text-white font-bold text-lg">출력 형식 (Format)</h4>
-                                <p class="text-slate-400 text-xs leading-relaxed">
-                                    표, 마크다운, 개조식 종결어미 등 한글 파일에 즉시 복사해 넣을 수 있는 형태를 지정합니다.
+                                <h4 class="text-white font-black text-xl">명확한 임무 (Task)</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    "대충 적어줘"가 아니라 번역, 표 작성, 마인드맵화 등 수행 행동을 못 박습니다.
                                 </p>
                             </div>
-                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
-                                "소계가 마크된 마크다운 표 형태로 출력해줘."
+                            <div class="mt-4 py-2 px-3 rounded-xl bg-blue-500/5 border border-blue-500/10 text-center font-bold text-xs text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition">
+                                클릭하여 상세 예시 보기 🔍
                             </div>
                         </div>
 
-                        <!-- 5. 제약 조건 -->
-                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
-                            <div class="space-y-2">
+                        <!-- 5. 출력 형식 -->
+                        <div onclick="openPromptRuleModal(5)" class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/50 shadow-md transition-all duration-300">
+                            <div class="space-y-3">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 05</span>
-                                    <i data-lucide="slash" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                    <i data-lucide="sliders" class="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
                                 </div>
-                                <h4 class="text-white font-bold text-lg">제약 조건 (Constraint)</h4>
-                                <p class="text-slate-400 text-xs leading-relaxed">
-                                    AI가 소설을 쓰거나 금지해야 할 행위를 족쇄처럼 명확하게 선언해 둡니다.
+                                <h4 class="text-white font-black text-xl">출력 형식 (Format)</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    마크다운 표, CSV, 순서가 매겨진 개조식 리스트 등 붙여넣기 편리한 구조를 요청합니다.
                                 </p>
                             </div>
-                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
-                                "존댓말이나 미사여구를 절대 쓰지 말고 개조식 유지."
+                            <div class="mt-4 py-2 px-3 rounded-xl bg-blue-500/5 border border-blue-500/10 text-center font-bold text-xs text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition">
+                                클릭하여 상세 예시 보기 🔍
                             </div>
                         </div>
 
-                        <!-- 6. 예시 제공 -->
-                        <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/40">
-                            <div class="space-y-2">
+                        <!-- 6. 어조 및 톤 -->
+                        <div onclick="openPromptRuleModal(6)" class="glass-card p-6 rounded-2xl flex flex-col justify-between group cursor-pointer hover:border-blue-500/50 shadow-md transition-all duration-300">
+                            <div class="space-y-3">
                                 <div class="flex items-center justify-between">
                                     <span class="text-xs font-extrabold text-blue-400 tracking-wider">Rule 06</span>
-                                    <i data-lucide="eye" class="w-4 h-4 text-slate-600 group-hover:text-blue-450 transition-colors"></i>
+                                    <i data-lucide="message-square" class="w-5 h-5 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
                                 </div>
-                                <h4 class="text-white font-bold text-lg">예시 제공 (Few-shot)</h4>
-                                <p class="text-slate-400 text-xs leading-relaxed">
-                                    원하는 품질이나 양식의 모범 초안 사례(예시)를 1~2개 덧붙여 퀄리티를 강제 정렬합니다.
+                                <h4 class="text-white font-black text-xl">어조 및 톤 (Tone)</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">
+                                    존댓말, 격식체(~할 계획임, ~함) 등 기관 공문서 어투에 맞는 종결 어휘를 명시합니다.
                                 </p>
                             </div>
-                            <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-white/5 font-mono text-[10px] text-slate-300">
-                                "(참고 예시: 필요성 ➔ [가. 아동 실태] ...)"
+                            <div class="mt-4 py-2 px-3 rounded-xl bg-blue-500/5 border border-blue-500/10 text-center font-bold text-xs text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition">
+                                클릭하여 상세 예시 보기 🔍
                             </div>
                         </div>
 
@@ -1198,147 +1194,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 8: Gemini 실무 활용법 -->
-            <section id="section-gemini-tips" class="presentation-section">
-                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-6">
-                    <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">06</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white">Gemini 실무 비서 활용법: 당장 긁어 쓰는 프롬프트 4종</h2>
-                    </div>
-
-                    <p class="text-slate-350 text-base leading-relaxed">
-                        Claude의 강력한 텍스트 분석 및 윤문 팁을 **Gemini의 200만 대용량 컨텍스트 윈도우 환경에 맞게 완벽 치환하고 보강**한 실무용 다이렉트 프롬프트 카드입니다. 
-                        오른쪽 상단의 [복사] 버튼을 누르고 지금 즉시 Gemini 창에 넣어 연습해 보세요!
-                    </p>
-
-                    <!-- Accordion Prompt Lists -->
-                    <div class="space-y-4 pt-4">
-                        
-                        <!-- 6-1. 대용량 문서 분석 -->
-                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden">
-                            <button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none">
-                                <div class="flex items-center gap-3">
-                                    <span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">1</span>
-                                    <strong class="text-white text-base md:text-lg">대용량 HWP / PDF 문서 엑스레이 분석 프롬프트</strong>
-                                </div>
-                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <div class="px-6 pb-6 pt-2 space-y-4">
-                                    <p class="text-slate-400 text-xs md:text-sm">
-                                        *사용법: Gemini 대화방 상단에 분석하고 싶은 지자체 보육 조례 보고서나 작년 사업 기획서(PDF)를 통째로 업로드한 뒤, 아래 프롬프트를 복사해 대화창에 입력하세요.*
-                                    </p>
-                                    <div class="relative">
-                                        <div id="p-gemini-tip-1" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">내가 첨부한 이 대용량 문서의 전체적인 뼈대와 구성 논리를 엄격하게 분석해줘.
- 
-이 문서가 품고 있는 1) 핵심 아젠다와 문제점, 2) 이를 해결하기 위해 취하고 있는 구체적 행동 방법론, 3) 사업 성과를 수치로 입증하기 위해 적용한 핵심 평가 척도와 평가지표 리스트를 추출해줘.
- 
-인터넷 정보나 일반적인 지식을 배제하고, 오직 내가 업로드한 첨부 파일 내부의 실제 텍스트 팩트에만 기반해서 리포트 형태로 개조식 정리해줘.</div>
-                                        <button onclick="copyPromptText(document.getElementById('p-gemini-tip-1').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center justify-center gap-1">
-                                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 6-2. 기획 전용 Gems 커스텀봇 빌딩 -->
-                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden">
-                            <button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none">
-                                <div class="flex items-center gap-3">
-                                    <span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">2</span>
-                                    <strong class="text-white text-base md:text-lg">나만의 기획 전문 가상 동반자(Gems) 빌딩 프롬프트</strong>
-                                </div>
-                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <div class="px-6 pb-6 pt-2 space-y-4">
-                                    <p class="text-slate-400 text-xs md:text-sm">
-                                        *사용법: Gemini Advanced의 'Gems 만들기' 지침(Instruction) 란에 아래의 내용을 그대로 복사해 입력해 두세요. 상시 켜놓고 기획 회의 파트너로 활용하기 좋습니다.*
-                                    </p>
-                                    <div class="relative">
-                                        <div id="p-gemini-tip-2" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">너는 지금부터 사회복지공동모금회 15년 경력의 시니어 기획 심사위원 역할을 수행한다.
- 
-대화 중 내가 어떤 거친 기획 아이디어나 거친 메모를 던져도, 너는 다음 3단계 원칙에 따라 대화와 조언을 주도해야 해:
- 
-1. [아이디어 고도화]: 내 러프한 한마디를 모금회 공식 양식 포맷에 알맞은 전문 복지 용어(예: 사회적 배제 해소, 욕구 척도화 등)로 즉각 승화시켜 추천한다.
-2. [데이터 누수 보정]: 내 기획안에서 대상자 인원수나 단가 계산의 엇박자가 발견되면 지체 없이 경고하고 대안을 제안한다.
-3. [개조식 피드백]: 항상 어지러운 긴 줄글은 사양하고, 즉시 복사해 양식에 이식할 수 있는 깔끔한 소제목 체계의 개조식 종결어미(~함, ~계획임)로만 출력한다.
- 
-이 지침을 뇌에 락(Lock)하고, 준비가 되었다면 나에게 첫 기획 주제가 무엇인지 공손하고 품격 있게 질문을 던져줘.</div>
-                                        <button onclick="copyPromptText(document.getElementById('p-gemini-tip-2').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center justify-center gap-1">
-                                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 6-3. 심사위원 페르소나 가상 피드백 -->
-                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden">
-                            <button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none">
-                                <div class="flex items-center gap-3">
-                                    <span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">3</span>
-                                    <strong class="text-white text-base md:text-lg">탈락 방지용 가상 심사위원 페르소나 모의 피드백 프롬프트</strong>
-                                </div>
-                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <div class="px-6 pb-6 pt-2 space-y-4">
-                                    <p class="text-slate-400 text-xs md:text-sm">
-                                        *사용법: 내가 작성한 필요성이나 세부 프로그램 기획안 텍스트를 대화창에 붙여넣고, 이 프롬프트를 함께 전송하세요. 모금회 서류 제출 전 최종 자가 진단에 최고입니다.*
-                                    </p>
-                                    <div class="relative">
-                                        <div id="p-gemini-tip-3" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">내가 아래에 첨부한 기획서 초안 텍스트를 읽고, 너는 아주 깐깐하고 엄격한 사회복지 배분 기획 심사위원의 눈으로 이 초안의 맹점들을 냉정하게 평가해줘.
- 
-특히 다음 3가지 관점에서 불합격 판정을 내릴 만한 위험 요소를 찾아 지적하고 고칠 방안을 써줘:
- 
-1. [필요성 설득력 부족]: 다른 센터의 뻔한 돌봄과 구별되지 않는 이 사업만의 고유한 필요성/독창성이 부족한지 지적.
-2. [세부 계획의 비현실성]: 한정된 사회복지사 인력으로 1년간 수행하기에 세부 타임라인이나 수혜 아동 선발 요건이 모호한 지점 경고.
-3. [예산 단가 정밀도 부족]: 산출 근거가 뭉뚱그려졌거나, 자부담(10%) 비율이 엉망이거나, 항목별 사칙연산 연산 실수가 의심되는 부분을 잡아 수정 근거와 바른 예산 단가 계산 제안.
- 
-초안 텍스트: [여기에 내가 쓴 기획서 초안을 붙여넣으세요]</div>
-                                        <button onclick="copyPromptText(document.getElementById('p-gemini-tip-3').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center justify-center gap-1">
-                                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 6-4. 2M 컨텍스트 극대화 비교 분석 -->
-                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden">
-                            <button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none">
-                                <div class="flex items-center gap-3">
-                                    <span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">4</span>
-                                    <strong class="text-white text-base md:text-lg">200만 컨텍스트 극대화: 다수 기획안 교차 비교 및 분석 프롬프트</strong>
-                                </div>
-                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i>
-                            </button>
-                            <div class="accordion-body">
-                                <div class="px-6 pb-6 pt-2 space-y-4">
-                                    <p class="text-slate-400 text-xs md:text-sm">
-                                        *사용법: 참고하고 싶은 타 센터 우수 계획서 3~4종(PDF)을 Gemini에 다중 업로드한 뒤 이 프롬프트를 전송하세요. 여러 계획서의 장점만 추출해 주는 마법입니다.*
-                                    </p>
-                                    <div class="relative">
-                                        <div id="p-gemini-tip-4" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">내가 업로드한 3~4종의 우수 기획 제안서들을 정밀하게 비교 분석해줘.
- 
-각 계획서들이 문제 정의(필요성)를 입증하기 위해 채택한 핵심 논리와, 대상 아동을 선발하기 위해 적용한 기준의 투명성, 세부 활동 세션의 독창적인 커리큘럼들의 강점과 아쉬운 점들을 비교 분석해라.
- 
-최종적으로 이 우수 계획서들의 좋은 기법들만 쏙 쏙 수렴하여, 내가 이번에 기획할 새로운 사업계획서에 도입하기 가장 적절한 "최강의 결합 기획 전략 가이드라인"을 마크다운 표(Table) 형태로 대조하여 추천해줘.</div>
-                                        <button onclick="copyPromptText(document.getElementById('p-gemini-tip-4').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center justify-center gap-1">
-                                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 9: PROMPT 6 PRINCIPLES -->
+<!-- SECTION 8: 8: PROMPT 6 PRINCIPLES -->
             <section id="section-prompt-rules" class="presentation-section w-full">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6 mb-6">
@@ -1448,7 +1304,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 10: SECURITY MASKING -->
+            <!-- SECTION 9: SECURITY MASKING -->
             <section id="section-security-masking" class="presentation-section w-full mt-12">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
                     <div class="flex items-center gap-3.5 border-b border-white/5 pb-4 mb-6">
@@ -1505,7 +1361,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 11: LLM EVOLUTION ROADMAP (SEPARATOR LANES WITH CATENARY CURVES) -->
+            <!-- SECTION 10: LLM EVOLUTION ROADMAP (SEPARATOR LANES WITH CATENARY CURVES) -->
             <section id="section-llm-evolution" class="presentation-section w-full mt-12">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6 mb-6">
@@ -2250,14 +2106,22 @@
             });
         };
 
-        window.copyPromptText = function(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showPromptToast("📋 프롬프트 복사 성공!");
-            }).catch(err => {
-                console.error("클립보드 복사 실패: ", err);
-            });
-        };
-
+        window.copyPromptText = function(text) {
+
+            navigator.clipboard.writeText(text).then(() => {
+
+                showPromptToast("📋 프롬프트 복사 성공!");
+
+            }).catch(err => {
+
+                console.error("클립보드 복사 실패: ", err);
+
+            });
+
+        };
+
+
+
         window.copyAssembledPrompt = function() {
             const activeCount = Object.values(promptStates).filter(Boolean).length;
             if (activeCount < 6) return;
@@ -2599,7 +2463,7 @@
                 document.getElementById("section-rag"),
                 document.getElementById("section-data"),
                 document.getElementById("section-prompt"),
-                document.getElementById("section-gemini-tips"),
+                
                 document.getElementById("section-prompt-rules"),
                 document.getElementById("section-security-masking"),
                 document.getElementById("section-llm-evolution")
@@ -3106,14 +2970,22 @@
             });
         };
 
-        window.copyPromptText = function(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showPromptToast("📋 프롬프트 복사 성공!");
-            }).catch(err => {
-                console.error("클립보드 복사 실패: ", err);
-            });
-        };
-
+        window.copyPromptText = function(text) {
+
+            navigator.clipboard.writeText(text).then(() => {
+
+                showPromptToast("📋 프롬프트 복사 성공!");
+
+            }).catch(err => {
+
+                console.error("클립보드 복사 실패: ", err);
+
+            });
+
+        };
+
+
+
         window.copyAssembledPrompt = function() {
             const activeCount = Object.values(promptStates).filter(Boolean).length;
             if (activeCount < 6) return;
@@ -3621,6 +3493,222 @@ ${segmentTexts.tone}`;
                     }, 3500);
                 });
             }, 900);
+        };
+
+    
+        // --- Session 6: Data Pipeline Refinery Simulator Logic ---
+        const pipelineStates = {
+            voice: false,
+            visual: false,
+            text: false,
+            number: false
+        };
+
+        window.togglePipelineData = function(type, element) {
+            pipelineStates[type] = !pipelineStates[type];
+            
+            // Toggle active card styling
+            const card = document.getElementById(`data-card-${type}`);
+            const flow = document.getElementById(`flow-${type}`);
+            
+            if (pipelineStates[type]) {
+                card.classList.add("border-blue-500/80", "bg-blue-950/20", "scale-[1.02]", "shadow-[0_0_15px_rgba(59,130,246,0.2)]");
+                card.classList.remove("border-white/10", "bg-slate-900/40");
+                if (flow) {
+                    flow.classList.remove("opacity-0");
+                    flow.classList.add("opacity-100", "anim-file-flow");
+                }
+            } else {
+                card.classList.remove("border-blue-500/80", "bg-blue-950/20", "scale-[1.02]", "shadow-[0_0_15px_rgba(59,130,246,0.2)]");
+                card.classList.add("border-white/10", "bg-slate-900/40");
+                if (flow) {
+                    flow.classList.add("opacity-0");
+                    flow.classList.remove("opacity-100", "anim-file-flow");
+                }
+            }
+
+            // Calculate active counts
+            const activeKeys = Object.keys(pipelineStates).filter(k => pipelineStates[k]);
+            const count = activeKeys.length;
+            
+            // Update Core Status
+            const core = document.getElementById("refinery-core");
+            const coreStatus = document.getElementById("refinery-core-status");
+            
+            if (count === 0) {
+                coreStatus.innerText = "대기 중...";
+                core.className = "w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-blue-600/20 via-purple-600/30 to-amber-500/20 flex flex-col justify-center items-center border border-white/20 shadow-[0_0_30px_rgba(168,85,247,0.25)] transition-all duration-500";
+            } else if (count === 4) {
+                coreStatus.innerText = "정제 완료!";
+                core.className = "w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-emerald-500/40 via-blue-600/40 to-purple-600/40 flex flex-col justify-center items-center border border-emerald-450 shadow-[0_0_40px_rgba(16,185,129,0.6)] scale-110 transition-all duration-500";
+            } else {
+                coreStatus.innerText = "융합 분석 중...";
+                core.className = "w-28 h-28 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-blue-500/35 via-purple-500/40 to-indigo-500/35 flex flex-col justify-center items-center border border-purple-500/50 shadow-[0_0_35px_rgba(168,85,247,0.45)] scale-105 transition-all duration-500";
+            }
+
+            // Toggle Outputs
+            // Output 1 (10초 완성 예산서) -> requires 'number'
+            const outCard1 = document.getElementById("output-card-1");
+            const outTitle1 = document.getElementById("output-title-1");
+            const outDesc1 = document.getElementById("output-desc-1");
+            const outBadge1 = document.getElementById("output-badge-1");
+            const outIcon1 = document.getElementById("output-icon-1");
+            if (pipelineStates.number) {
+                outCard1.classList.remove("opacity-40");
+                outCard1.classList.add("opacity-100", "border-amber-500/30", "shadow-[0_0_15px_rgba(245,158,11,0.1)]");
+                outTitle1.classList.remove("text-slate-400");
+                outTitle1.classList.add("text-white");
+                outDesc1.classList.remove("text-slate-500");
+                outDesc1.classList.add("text-slate-300");
+                outBadge1.classList.remove("hidden");
+                outIcon1.className = "w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/20 shrink-0 transition";
+            } else {
+                outCard1.classList.add("opacity-40");
+                outCard1.classList.remove("opacity-100", "border-amber-500/30", "shadow-[0_0_15px_rgba(245,158,11,0.1)]");
+                outTitle1.classList.add("text-slate-400");
+                outTitle1.classList.remove("text-white");
+                outDesc1.classList.add("text-slate-500");
+                outDesc1.classList.remove("text-slate-300");
+                outBadge1.classList.add("hidden");
+                outIcon1.className = "w-14 h-14 rounded-xl bg-slate-900 flex items-center justify-center text-slate-500 border border-white/5 shrink-0 transition";
+            }
+
+            // Output 2 (개인 맞춤 아동일지) -> requires 'text' and 'visual'
+            const outCard2 = document.getElementById("output-card-2");
+            const outTitle2 = document.getElementById("output-title-2");
+            const outDesc2 = document.getElementById("output-desc-2");
+            const outBadge2 = document.getElementById("output-badge-2");
+            const outIcon2 = document.getElementById("output-icon-2");
+            if (pipelineStates.text && pipelineStates.visual) {
+                outCard2.classList.remove("opacity-40");
+                outCard2.classList.add("opacity-100", "border-purple-500/30", "shadow-[0_0_15px_rgba(139,92,246,0.1)]");
+                outTitle2.classList.remove("text-slate-400");
+                outTitle2.classList.add("text-white");
+                outDesc2.classList.remove("text-slate-500");
+                outDesc2.classList.add("text-slate-300");
+                outBadge2.classList.remove("hidden");
+                outIcon2.className = "w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20 shrink-0 transition";
+            } else {
+                outCard2.classList.add("opacity-40");
+                outCard2.classList.remove("opacity-100", "border-purple-500/30", "shadow-[0_0_15px_rgba(139,92,246,0.1)]");
+                outTitle2.classList.add("text-slate-400");
+                outTitle2.classList.remove("text-white");
+                outDesc2.classList.add("text-slate-500");
+                outDesc2.classList.remove("text-slate-300");
+                outBadge2.classList.add("hidden");
+                outIcon2.className = "w-14 h-14 rounded-xl bg-slate-900 flex items-center justify-center text-slate-500 border border-white/5 shrink-0 transition";
+            }
+
+            // Output 3 (공모사업 합격 제안서) -> requires 'text' and 'voice'
+            const outCard3 = document.getElementById("output-card-3");
+            const outTitle3 = document.getElementById("output-title-3");
+            const outDesc3 = document.getElementById("output-desc-3");
+            const outBadge3 = document.getElementById("output-badge-3");
+            const outIcon3 = document.getElementById("output-icon-3");
+            if (pipelineStates.text && pipelineStates.voice) {
+                outCard3.classList.remove("opacity-40");
+                outCard3.classList.add("opacity-100", "border-emerald-500/30", "shadow-[0_0_15px_rgba(16,185,129,0.1)]");
+                outTitle3.classList.remove("text-slate-400");
+                outTitle3.classList.add("text-white");
+                outDesc3.classList.remove("text-slate-500");
+                outDesc3.classList.add("text-slate-300");
+                outBadge3.classList.remove("hidden");
+                outIcon3.className = "w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 shrink-0 transition";
+            } else {
+                outCard3.classList.add("opacity-40");
+                outCard3.classList.remove("opacity-100", "border-emerald-500/30", "shadow-[0_0_15px_rgba(16,185,129,0.1)]");
+                outTitle3.classList.add("text-slate-400");
+                outTitle3.classList.remove("text-white");
+                outDesc3.classList.add("text-slate-500");
+                outDesc3.classList.remove("text-slate-300");
+                outBadge3.classList.add("hidden");
+                outIcon3.className = "w-14 h-14 rounded-xl bg-slate-900 flex items-center justify-center text-slate-500 border border-white/5 shrink-0 transition";
+            }
+            
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        };
+
+        // --- Session 7: Prompt 6 Rules detailed Modal Logic ---
+        const ruleModalData = {
+            1: {
+                title: "Rule 01. 역할 부여 (Role)",
+                desc: "AI에게 구체적인 직함, 전문 분야, 연차를 명시하여 관련 전문적 관점과 정제된 용어 체계를 강제하는 원칙입니다.",
+                bad: "주말 복지 돌봄 프로그램 예산 세부 계획서 하나 써줘.",
+                good: "너는 공동모금회 15년 차 배분사업 전문 심사위원이자, 아동복지 예산 기획 분야의 마스터 컨설턴트다. 모금회 회계 가이드라인 기준에 완벽히 정렬하여 다음 계획안을 평가하고 예산 계획을 세우라."
+            },
+            2: {
+                title: "Rule 02. 맥락 및 상황 제시 (Context)",
+                desc: "AI가 보편적인 잡지식을 동원해 뜬구름 잡는 계획을 세우지 않도록, 내 센터 소속 기관의 아동 실정, 예산 한계, 현장 제약 정보(1차 데이터)를 먹이는 과정입니다.",
+                bad: "위기 아동을 위한 유익한 주말 요리 교실 기획안을 도출해줘.",
+                good: "광주광역시 남구 거주 아동 20명 중 15명이 주말 돌봄 부재 상태에 놓인 난독 위기 아동이다. 주말 특별 오감 만족 실습 프로그램 예산 한도는 강사비 포함 회당 15만 원으로 엄격히 제한된다."
+            },
+            3: {
+                title: "Rule 03. 예시 제공 (Examples)",
+                desc: "AI가 선호하는 출력 구조와 뼈대를 가장 확실히 주입하는 방법입니다. 우수작의 예산 배분 비율이나 줄바꿈 패턴을 직접 1~2개 템플릿(Shot)으로 대조하여 모방하게 만듭니다.",
+                bad: "저번처럼 잘 작성해줘.",
+                good: "작년 그린 방과후 프로그램의 최종 성과 예산 비율은 주재료비 70%, 보조강사료 20%, 행정 관리비 10% 비목이었으며, 표 서식은 [품명 | 규격 | 수량 | 단가 | 금액] 형태를 따랐다. 이 구성 형식을 그대로 락(Lock)해서 새로 작성하라."
+            },
+            4: {
+                title: "Rule 04. 작업 명확화 (Task)",
+                desc: "단순히 '도와줘'가 아니라 요약, 표 작성, 마인드맵화 등 수행할 핵심 액션 동사를 분명히 한정합니다.",
+                bad: "프로포절 필요성에 들어갈 거 잘 정리해봐.",
+                good: "제시된 지자체 조례 텍스트에서 행복아동센터의 '주말 돌봄 명분 필요성'에 직접 인용할 핵심 지자체 근거 3개 단락을 개조식 명제 형태로 명확히 추출하고 정리하라."
+            },
+            5: {
+                title: "Rule 05. 출력 형식 지정 (Format)",
+                desc: "마크다운 표(Table), 쉼표 구분(CSV), 3단계 개조식 리스트 등 한글(HWP) 파일 본문에 바로 복사해서 붙여넣기 가장 이쁜 문서 서식을 미리 약속합니다.",
+                bad: "계획서 예산안 써줘.",
+                good: "보고서 아웃풋 서식은 반드시 [1. 사업 기획 필요성, 2. 예산 세부 내역 표(마크다운 표 서식), 3. 월간 주차별 지도안]의 3단 레이아웃 순서로 엄격하게 출력하라."
+            },
+            6: {
+                title: "Rule 06. 어조 및 톤 (Tone)",
+                desc: "친근한 어조, 격식체(~할 계획임, ~함) 등 기관 공문서와 모금회 제출 규격에 맞는 종결형 문장 말투를 사전에 제약해 두는 방법입니다.",
+                bad: "심사위원이 읽을 거니까 친절하게 설명해줄래?",
+                good: "공식 심사보고서이므로 존댓말을 완전히 배제하고, 어미를 철저히 '~함', '~계획임', '~예정임' 등의 개조식 문어체 종결 어투로 격식 있게 서술하라."
+            }
+        };
+
+        window.openPromptRuleModal = function(ruleNum) {
+            const data = ruleModalData[ruleNum];
+            if (!data) return;
+            
+            const html = `
+                <div class="space-y-6 text-slate-100 text-lg leading-relaxed md:text-xl font-sans">
+                    <p class="text-slate-350 text-base md:text-lg">${data.desc}</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                        <!-- Bad -->
+                        <div class="p-6 rounded-2xl bg-red-500/5 border border-red-500/20 space-y-3">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-xs font-black">
+                                <i data-lucide="x" class="w-3.5 h-3.5"></i> BAD (탈락형 프롬프트)
+                            </span>
+                            <div class="p-4 rounded-xl bg-slate-950/60 font-mono text-sm text-red-300/80 border border-red-500/10 min-h-[80px]">
+                                "${data.bad}"
+                            </div>
+                            <p class="text-xs text-slate-400 font-bold leading-normal">
+                                ➔ 이유: 조건이 모호하여 AI가 보편적인 잡지식을 동원해 아무렇게나 기획안을 지어내게 만듭니다.
+                            </p>
+                        </div>
+                        
+                        <!-- Good -->
+                        <div class="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 space-y-3">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-450 text-xs font-black">
+                                <i data-lucide="check" class="w-3.5 h-3.5"></i> GOOD (합격형 프롬프트)
+                            </span>
+                            <div class="p-4 rounded-xl bg-slate-950/60 font-mono text-sm text-emerald-300 border border-emerald-500/10 min-h-[80px]">
+                                "${data.good}"
+                            </div>
+                            <p class="text-xs text-slate-400 font-bold leading-normal">
+                                ➔ 결과: 입력한 즉시 모금회 가이드라인과 1차 팩트 데이터에 정교하게 정렬된 최고 퀄리티 초안이 탄생합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            window.openModal('aha', data.title, html);
         };
 
     </script>
