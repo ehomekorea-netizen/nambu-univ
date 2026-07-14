@@ -2706,5 +2706,15 @@
         </div>
     </div>
 
+    <script>
+        // Always land at the top hero section on page load
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.addEventListener('load', function () {
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        });
+    </script>
+
 </body>
 </html>
