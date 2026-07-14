@@ -102,24 +102,42 @@
         }
 
         /* 3D Click Flip styling */
+        
+        
+        .gpt-letter-card.flipped 
+        
+        
+
+                /* Flawless 3D Click Flip styling */
         .gpt-letter-card {
-            perspective: 1000px;
+            perspective: 2000px;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
         .gpt-letter-inner {
-            transition: transform 0.6s;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
         }
         .gpt-letter-card.flipped .gpt-letter-inner {
             transform: rotateY(180deg);
         }
         .gpt-letter-front, .gpt-letter-back {
-            backface-visibility: hidden;
             position: absolute;
             inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transition: none !important; /* Disable all hover transitions on children */
         }
         .gpt-letter-back {
             transform: rotateY(180deg);
+        }
+        .gpt-letter-card:hover {
+            /* Smooth lift on hover for the WHOLE card, not the inner */
+            transform: translateY(-4px);
+            transition: transform 0.3s ease;
         }
 
         /* Flow line animations in Refinery Simulator */
@@ -190,15 +208,9 @@
             transform: translateX(0) !important;
         }
 
-        /* 3D Flip Card - NO hover transforms, only click-flip */
-        .gpt-letter-card {
-            perspective: 1000px;
-        }
+        
         /* No hover transform on inner - prevents flicker */
-        .gpt-letter-front:hover, .gpt-letter-back:hover {
-            transform: none !important;
-            box-shadow: none !important;
-        }
+        
         
         
         @keyframes ragFileFly {
@@ -390,30 +402,22 @@
             <!-- SECTION 1: 생성형 AI 본질 -->
             <section id="section-essence" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
-                    <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">01</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white">01. 생성형 AI 본질</h2>
+                                        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                        <span class="px-4 py-2 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-lg md:text-xl">01</span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">생성형 AI 본질</h2>
                     </div>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                        <div class="lg:col-span-7 space-y-5">
-                            <p class="text-slate-200 text-lg md:text-xl leading-relaxed font-black border-l-4 border-blue-500 pl-4">
-                                생성형 AI는 스스로 새로운 지식을 탄생시키는 창조자(Creative)가 아닙니다.
-                            </p>
-                            <p class="text-slate-350 text-base leading-relaxed">
-                                AI의 진짜 정체는 인터넷상의 방대한 언어 통계 정보를 굴려, 질문과 맥락에 가장 잘 부합하도록 단어들을 확률 분포에 맞춰 재배열해 주는 <strong class="text-blue-400">‘고도의 언어 조립기(Generator)’</strong>입니다.
-                            </p>
-                            <p class="text-slate-400 text-sm leading-relaxed">
-                                코딩이나 수학적 조작이 필요 없습니다. 가상의 똑똑한 인턴 비서에게 자연스러운 한국어로 명확하고 구체적인 조립 규칙(프롬프트)과 팩트 원재료(데이터)를 제공하는 것, 그것이 생성형 AI 실무의 핵심입니다.
-                            </p>
-                        </div>
-
-                        <!-- INFOGRAPHIC: Chat Conversation Ping-Pong -->
-                        <div class="lg:col-span-5 bg-slate-950/40 p-2 rounded-3xl border border-white/5 flex items-center justify-center relative overflow-hidden group shadow-2xl">
-                            <img src="C:/Users/IN/.gemini/antigravity/brain/5d149bb2-22c9-475c-8f9e-dedf677271e2/generative_essence_infographic_1784048781702.png" alt="생성형 AI의 본질 인포그래픽" class="w-full h-auto rounded-2xl object-cover transition-transform duration-500 group-hover:scale-105" />
-                        </div>
+                    <div class="space-y-8 pb-4">
+                        <p class="text-slate-200 text-2xl md:text-3xl leading-relaxed font-black border-l-8 border-blue-500 pl-6 py-2">
+                            생성형 AI는 스스로 새로운 지식을 탄생시키는 창조자(Creative)가 아닙니다.
+                        </p>
+                        <p class="text-slate-300 text-xl md:text-2xl leading-relaxed font-bold">
+                            AI의 진짜 정체는 인터넷상의 방대한 언어 통계 정보를 굴려, 질문과 맥락에 가장 잘 부합하도록 단어들을 확률 분포에 맞춰 재배열해 주는 <strong class="text-blue-400 font-black">‘고도의 언어 조립기(Generator)’</strong>입니다.
+                        </p>
+                        <p class="text-slate-400 text-lg md:text-xl leading-relaxed">
+                            코딩이나 수학적 조작이 필요 없습니다. 가상의 똑똑한 인턴 비서에게 자연스러운 한국어로 명확하고 구체적인 조립 규칙(프롬프트)과 팩트 원재료(데이터)를 제공하는 것, 그것이 생성형 AI 실무의 핵심입니다.
+                        </p>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
                         <div class="glass-card p-6 rounded-2xl space-y-3">
                             <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400"><i data-lucide="message-square" class="w-5.5 h-5.5"></i></div>
@@ -458,9 +462,9 @@
             <!-- SECTION 2: GPT 어원 -->
             <section id="section-gemini-gpt" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
-                    <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">02</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white">02. Gemini vs GPT 어원</h2>
+                                        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                        <span class="px-4 py-2 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-lg md:text-xl">02</span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">GPT의 어원</h2>
                     </div>
                     
                     <p class="text-slate-300 text-base md:text-lg leading-relaxed font-bold">
@@ -528,9 +532,9 @@
 <!-- SECTION 3: Generative vs Creative -->
             <section id="section-generative" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
-                    <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">03</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white">03. 생성형 AI와 창조 한계</h2>
+                                        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                        <span class="px-4 py-2 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-lg md:text-xl">03</span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">생성형 AI와 창조 한계</h2>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -560,12 +564,9 @@
 <!-- SECTION 4: 할루시네이션의 이해 (Hallucination Typing Simulation) -->
             <section id="section-hallucination" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
-                        <div>
-                            <span class="text-red-400 text-xs md:text-sm font-black tracking-widest uppercase block mb-1">04</span>
-                            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">04. AI 할루시네이션 현상</h2>
-                        </div>
-                        <span class="px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-black tracking-wider">HALLUCINATION</span>
+                                        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                        <span class="px-4 py-2 rounded-xl bg-red-500/20 text-red-400 font-extrabold text-lg md:text-xl">04</span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">AI 할루시네이션 현상</h2>
                     </div>
 
                     <div class="space-y-4">
@@ -639,12 +640,9 @@
 <!-- SECTION 5: RAG의 이해 (Retrieval-Augmented Generation Simulator) -->
             <section id="section-rag" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
-                        <div>
-                            <span class="text-blue-400 text-xs md:text-sm font-black tracking-widest uppercase block mb-1">05</span>
-                            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">05. RAG 핵심 원리</h2>
-                        </div>
-                        <span class="px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-black tracking-wider">RETRIEVAL-AUGMENTED GENERATION</span>
+                                        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                        <span class="px-4 py-2 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-lg md:text-xl">05</span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">RAG 핵심 원리</h2>
                     </div>
 
                     <div class="space-y-4">
@@ -761,9 +759,9 @@
 <section id="section-data" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-10">
                     
-                    <div class="flex items-center gap-3">
-                        <span class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 font-extrabold text-sm">06</span>
-                        <h2 class="text-3xl md:text-5xl font-black text-white">06. 사업계획서 데이터 파이프라인</h2>
+                                        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                        <span class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 font-extrabold text-lg md:text-xl">06</span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">사업계획서 데이터 파이프라인</h2>
                     </div>
 
                     <p class="text-slate-200 text-xl md:text-3xl font-black border-l-4 border-amber-500 pl-4 leading-relaxed">
@@ -920,9 +918,9 @@
             <!-- SECTION 5: 프롬프트 6대 원칙 (Rule 01~06 original 복구) -->
             <section id="section-prompt" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
-                    <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">07</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white">07. 프롬프트 6대 원칙</h2>
+                                        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                        <span class="px-4 py-2 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-lg md:text-xl">07</span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">프롬프트 6대 원칙</h2>
                     </div>
 
                     <p class="text-slate-350 text-base leading-relaxed">
@@ -1044,9 +1042,9 @@
             <!-- SECTION 8: SECURITY MASKING -->
             <section id="section-security-masking" class="presentation-section w-full mt-12">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
-                    <div class="flex items-center gap-3.5 border-b border-white/5 pb-4 mb-6">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-455 font-extrabold text-xs tracking-wider">08</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight">08. 개인정보 보안 마스킹</h2>
+                                        <div class="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                        <span class="px-4 py-2 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-lg md:text-xl">08</span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight">개인정보 보안 마스킹</h2>
                     </div>
 
                     <p class="text-slate-350 text-sm md:text-base leading-relaxed">
