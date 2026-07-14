@@ -169,10 +169,31 @@
             transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sidebar-hidden #sidebar {
-            transform: translateX(-100%);
+            transform: translateX(-100%) !important;
         }
         .sidebar-hidden #main-wrapper {
             padding-left: 0 !important;
+        }
+        
+        /* Mobile vs Desktop responsive layout base settings */
+        @media (max-width: 1023px) {
+            #sidebar {
+                transform: translateX(-100%);
+            }
+            #main-wrapper {
+                padding-left: 0 !important;
+            }
+            body:not(.sidebar-hidden) #sidebar {
+                transform: translateX(0) !important;
+            }
+        }
+        @media (min-width: 1024px) {
+            #sidebar {
+                transform: translateX(0);
+            }
+            #main-wrapper {
+                padding-left: 190px;
+            }
         }
 
 </style>
@@ -227,23 +248,7 @@
         };
 
         // Copy mechanism
-        window.copyPromptText = function(text) {
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    const toast = document.getElementById("toast");
-                    toast.classList.add("translate-y-0", "opacity-100");
-                    toast.classList.remove("translate-y-24");
-                    
-                    setTimeout(() => {
-                        toast.classList.add("translate-y-24");
-                        toast.classList.remove("translate-y-0", "opacity-100");
-                    }, 2500);
-                })
-                .catch(err => {
-                    console.error("복사 실패:", err);
-                    alert("복사에 실패했습니다. 수동으로 드래그해 복사해주세요.");
-                });
-        };
+        
 
         // Interactive Slot Machine Controller (Session 2)
         window.pullSlotLever = function() {
@@ -303,7 +308,7 @@
 <body class="antialiased text-slate-200">
 
     <!-- 1. LEFT SIDEBAR NAVIGATION (Desktop Only) -->
-    <aside id="sidebar" class="hidden lg:flex fixed top-0 left-0 bottom-0 w-[190px] bg-[#05070f] border-r border-white/5 flex-col justify-between p-5 z-40">
+    <aside id="sidebar" class="fixed top-0 left-0 bottom-0 w-[190px] bg-[#05070f] border-r border-white/5 flex-col justify-between p-5 z-40 transition-transform duration-300 lg:translate-x-0 -translate-x-full">
         <div class="w-full shrink-0">
             <button onclick="toggleSidebar()" class="w-full bg-blue-950/25 hover:bg-blue-600/20 text-blue-400 hover:text-white font-black py-3 px-3 rounded-xl text-xs transition-all duration-200 active:scale-95 flex items-center justify-center gap-1.5 border border-blue-500/40 shadow-lg shadow-blue-500/5">
                 <i data-lucide="chevron-left" class="w-4 h-4"></i> 사이드바 접기
@@ -314,39 +319,39 @@
             <div class="absolute left-[15px] top-[14px] bottom-[14px] w-[2px] bg-slate-800 z-0"></div>
             <div id="sidebar-progress-line" class="absolute left-[15px] top-[14px] w-[2px] bg-blue-500 transition-all duration-300 z-0" style="height: 0px;"></div>
 
-            <a href="#section-essence" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-essence" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>1. 생성형 AI 본질</span>
             </a>
-            <a href="#section-gemini-gpt" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-gemini-gpt" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>2. GPT 어원</span>
             </a>
-            <a href="#section-generative" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-generative" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>3. Generative vs Creative</span>
             </a>
-            <a href="#section-hallucination" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-hallucination" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>4. 할루시네이션</span>
             </a>
-            <a href="#section-rag" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-rag" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>5. RAG의 이해</span>
             </a>
-            <a href="#section-data" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-data" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>6. 데이터 정제</span>
             </a>
-            <a href="#section-prompt" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-prompt" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>7. 프롬프트 6원칙</span>
             </a>
-            <a href="#section-security-masking" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-security-masking" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>8. 보안 마스킹</span>
             </a>
-            <a href="#section-llm-evolution" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+            <a href="#section-llm-evolution" class="nav-link relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>9. LLM 진화 로드맵</span>
             </a>
@@ -378,7 +383,7 @@
     </header>
 
     <!-- MAIN BODY WRAPPER -->
-    <div id="main-wrapper" class="w-full transition-all duration-300">
+    <div id="main-wrapper" class="lg:pl-[190px] w-full transition-all duration-300">
 
         <!-- HERO UNIT -->
         <section id="hero" class="w-full px-6 md:px-12 py-20 relative overflow-hidden">
@@ -504,21 +509,32 @@
             </section>
 
             <!-- SECTION 2: GPT 어원 -->
-            <section id="section-gemini-gpt" class="presentation-section"><div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+            <section id="section-gemini-gpt" class="presentation-section">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
+                    <div class="flex items-center gap-3">
+                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 02</span>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">세션 2. Gemini vs GPT, 무슨 뜻일까?</h2>
+                    </div>
+                    
+                    <p class="text-slate-300 text-base md:text-lg leading-relaxed font-bold">
+                        생성형 AI의 핵심 축인 'GPT'의 알파벳 속에 숨겨진 동작 원리와 개념을 카드를 클릭하여 직관적으로 살펴보세요.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
                         <!-- G Card -->
                         <div class="gpt-letter-card w-full h-[300px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-24 h-24 rounded-full bg-orange-400 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-orange-500/20 select-none">G</div>
-                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Generative<br><span class="text-base md:text-2xl font-bold text-orange-350 font-bold block mt-1">생성형 (생성)</span></h4>
-                                    <span class="text-[11px] text-slate-500  font-bold">클릭해서 뒷면을 읽어보세요!</span>
+                                    <h4 class="text-white font-black text-3xl md:text-4xl font-sans tracking-tight">Generative<br><span class="text-lg md:text-2xl font-extrabold text-orange-400 block mt-2">생성형 (Generative)</span></h4>
+                                    
                                 </div>
                                 <!-- Back -->
                                 <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-orange-500/30 bg-slate-950/90">
                                     <span class="text-orange-400 text-lg font-black tracking-wider uppercase">01 · Generative</span>
-                                    <h5 class="text-white font-black text-2xl font-bold md:text-xl">무에서 창조가 아닌 '재조합 생성'</h5>
-                                    <p class="text-slate-300 text-lg leading-relaxed text-left font-medium">인터넷상의 수많은 검색 결과를 고대로 뱉는 것이 아니라, 질문자가 원하는 형태에 맞춰 문장 구조, 포맷, 아이디어를 확률 분포에 맞추어 새로 조립(재배열)해 줍니다.</p>
+                                    <h5 class="text-white font-black text-xl md:text-2xl border-b border-orange-500/20 pb-2 mb-2 w-full">무에서 유가 아닌 '언어 재조합'</h5>
+                                    <p class="text-slate-200 text-base md:text-lg leading-relaxed text-left font-semibold">인터넷상의 수많은 검색 결과를 고대로 뱉는 것이 아니라, 질문자가 원하는 형태에 맞춰 문장 구조, 포맷, 아이디어를 확률 분포에 맞추어 새로 조립(재배열)해 줍니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -529,14 +545,14 @@
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-24 h-24 rounded-full bg-fuchsia-400 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-fuchsia-500/20 select-none">P</div>
-                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Pre-trained<br><span class="text-base md:text-2xl font-bold text-fuchsia-350 font-bold block mt-1">Pre-trained (사전 학습)</span></h4>
-                                    <span class="text-[11px] text-slate-500  font-bold">클릭해서 뒷면을 읽어보세요!</span>
+                                    <h4 class="text-white font-black text-3xl md:text-4xl font-sans tracking-tight">Pre-trained<br><span class="text-lg md:text-2xl font-extrabold text-fuchsia-400 block mt-2">사전 학습 (Pre-trained)</span></h4>
+                                    
                                 </div>
                                 <!-- Back -->
                                 <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-fuchsia-500/30 bg-slate-950/90">
                                     <span class="text-fuchsia-400 text-lg font-black tracking-wider uppercase">02 · Pre-trained</span>
-                                    <h5 class="text-white font-black text-2xl font-bold md:text-xl">데이터 언어 패턴 사전 습득</h5>
-                                    <p class="text-slate-300 text-lg leading-relaxed text-left font-medium">수십억 개의 웹 문서, 기획서, 뉴스 텍스트를 미리 공부(학습)해 두었기에 자연스러운 한국어 문장 패턴과 규격을 이미 알고 있습니다. 단, 최신 팩트를 기억한다는 의미는 아닙니다.</p>
+                                    <h5 class="text-white font-black text-xl md:text-2xl border-b border-fuchsia-500/20 pb-2 mb-2 w-full">언어 패턴의 '사전 학습'</h5>
+                                    <p class="text-slate-200 text-base md:text-lg leading-relaxed text-left font-semibold">수십억 개의 웹 문서, 기획서, 뉴스 텍스트를 미리 공부(학습)해 두었기에 자연스러운 한국어 문장 패턴과 규격을 이미 알고 있습니다. 단, 최신 팩트를 기억한다는 의미는 아닙니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -547,19 +563,20 @@
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-24 h-24 rounded-full bg-lime-200 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-lime-500/20 select-none">T</div>
-                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Transformer<br><span class="text-base md:text-2xl font-bold text-lime-350 font-bold block mt-1">Transformer (맥락 이해)</span></h4>
-                                    <span class="text-[11px] text-slate-500  font-bold">클릭해서 뒷면을 읽어보세요!</span>
+                                    <h4 class="text-white font-black text-3xl md:text-4xl font-sans tracking-tight">Transformer<br><span class="text-lg md:text-2xl font-extrabold text-lime-400 block mt-2">맥락 이해 (Transformer)</span></h4>
+                                    
                                 </div>
                                 <!-- Back -->
                                 <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-lime-500/30 bg-slate-950/90">
                                     <span class="text-lime-400 text-lg font-black tracking-wider uppercase">03 · Transformer</span>
-                                    <h5 class="text-white font-black text-2xl font-bold md:text-xl">문맥 속 단어간 연결 관계 분석</h5>
-                                    <p class="text-slate-300 text-lg leading-relaxed text-left font-medium">문장 전체의 흐름을 병렬로 동시에 읽어, 사용자가 던져준 지엽적 지침(프롬프트)의 앞뒤 맥락을 보고 다음에 들어갈 단어 확률을 정확히 계산하여 엮어내는 구글 특허의 핵심 알고리즘입니다.</p>
+                                    <h5 class="text-white font-black text-xl md:text-2xl border-b border-lime-500/20 pb-2 mb-2 w-full">문맥을 꿰뚫는 '연결 분석'</h5>
+                                    <p class="text-slate-200 text-base md:text-lg leading-relaxed text-left font-semibold">문장 전체의 흐름을 병렬로 동시에 읽어, 사용자가 던져준 지엽적 지침(프롬프트)의 앞뒤 맥락을 보고 다음에 들어갈 단어 확률을 정확히 계산하여 엮어내는 구글 특허의 핵심 알고리즘입니다.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </section>
 
 <!-- SECTION 3: Generative vs Creative -->
@@ -1407,829 +1424,6 @@
 
     </div> <!-- close main-wrapper -->
 
-    <script>
-        // --- Sidebar Drawer & Active Navigation Sync ---
-        const sidebar = document.getElementById("sidebar");
-        const backdrop = document.getElementById("backdrop");
-        const navLinks = document.querySelectorAll(".nav-link");
-        const progressLine = document.querySelector(".progress-line");
-        const sectionObserverOptions = { root: null, rootMargin: "-25% 0px -65% 0px", threshold: 0 };
-
-        window.toggleSidebar = function() {
-            if (sidebar && backdrop) {
-                sidebar.classList.toggle("-translate-x-full");
-                backdrop.classList.toggle("hidden");
-            }
-        };
-
-        window.closeSidebar = function() {
-            if (sidebar && backdrop) {
-                sidebar.classList.add("-translate-x-full");
-                backdrop.classList.add("hidden");
-            }
-        };
-
-        // Scroll Spy Functionality
-        const sections = document.querySelectorAll(".presentation-section");
-        if (sections.length > 0 && navLinks.length > 0) {
-            const handleScroll = () => {
-                let activeIdx = -1;
-                const scrollPos = window.scrollY + 200;
-
-                sections.forEach((sec, idx) => {
-                    const top = sec.offsetTop;
-                    const height = sec.offsetHeight;
-                    if (scrollPos >= top && scrollPos < top + height) {
-                        activeIdx = idx;
-                    }
-                });
-
-                if (activeIdx === -1) {
-                    if (window.scrollY < sections[0].offsetTop) {
-                        activeIdx = 0;
-                    } else {
-                        activeIdx = sections.length - 1;
-                    }
-                }
-
-                try {
-                    navLinks.forEach((link, idx) => {
-                        const dot = link.querySelector(".nav-dot");
-                        if (idx === activeIdx) {
-                            link.classList.add("bg-white/10", "text-white");
-                            link.classList.remove("text-slate-400", "text-slate-500", "text-slate-350");
-                            if (dot) {
-                                dot.classList.add("active");
-                                dot.classList.remove("completed");
-                            }
-                        } else if (idx < activeIdx) {
-                            link.classList.remove("bg-white/10", "text-white");
-                            link.classList.add("text-slate-300");
-                            link.classList.remove("text-slate-400", "text-slate-500");
-                            if (dot) {
-                                dot.classList.add("completed");
-                                dot.classList.remove("active");
-                            }
-                        } else {
-                            link.classList.remove("bg-white/10", "text-white", "text-slate-300");
-                            link.classList.add("text-slate-500");
-                            if (dot) {
-                                dot.classList.remove("active", "completed");
-                            }
-                        }
-                    });
-
-                    // Recalculate progress line height perfectly matching dot centers
-                    if (progressLine && navLinks[0] && activeIdx >= 0) {
-                        const firstDot = navLinks[0].querySelector(".nav-dot");
-                        const activeDot = navLinks[activeIdx].querySelector(".nav-dot");
-                        if (firstDot && activeDot) {
-                            const startY = firstDot.getBoundingClientRect().top;
-                            const activeY = activeDot.getBoundingClientRect().top;
-                            const diffY = activeY - startY;
-                            progressLine.style.height = `${diffY}px`;
-                        }
-                    }
-                } catch (e) {
-                    console.error("Error in ScrollSpy:", e);
-                }
-            };
-
-            window.addEventListener("scroll", handleScroll);
-            setTimeout(handleScroll, 100);
-        }
-
-        // --- Chat GPT Typing Simulation Engine (Sejong MacBook Metaphor) ---
-        const questionText = "조선왕조실록에 기록 된 세종대왕의 맥북프로 던짐 사건에 대해 알려줘";
-        const answerText = `세종대왕의 맥북프로 던짐 사건은 역사서적인 조선왕조실록에 기록된 일화로, 15세기 조선시대 세종대왕이 새로 개발한 훈민정음(한글)의 초고를 작성하던 중, 문서 작성 중단에 대한 담당자에게 분노하여 맥북프로와 함께 그를 방으로 던진 사건입니다.
-
-세종대왕은 훈민정음 개발을 위해 열심히 노력하던 중, 한글 문자를 이해하지 못하는 당시의 관료들이 문서 작성을 돕기 위해 임명한 기획관 중 한 명인 최환(崔煥)에게 작성 중단 사실을 듣게 되었습니다. 세종대왕은 이에 분노하여 최환을 부르고, 맥북프로를 함께 들고 그를 방으로 불러들이며 화를 내었습니다. 이후, 세종대왕은 훈민정음의 초고 작성을 다른 담당자에게 넘겨주게 되었습니다.
-
-이 사건은 조선시대의 통치자로서 세종대왕이 어떻게 민족문화를 발전시키기 위해 노력했는지를 보여주는 일화로 유명합니다. 또한, 세종대왕의 열정과 업무처리에 대한 철저한 태도를 보여주는 사례로도 언급되고 있습니다.`;
-
-        let questionIndex = 0;
-        let answerIndex = 0;
-        let questionTimer = null;
-        let answerTimer = null;
-
-        window.triggerHallucinationTyping = function() {
-            const overlay = document.getElementById("hallucination-cta-overlay");
-            if (overlay) {
-                overlay.classList.add("opacity-0", "pointer-events-none");
-            }
-            startTypingSimulation();
-        };
-
-        function startTypingSimulation() {
-            document.getElementById("type-question").innerText = "";
-            document.getElementById("type-answer").innerText = "";
-            questionIndex = 0;
-            answerIndex = 0;
-            
-            clearTimers();
-            typeQuestion();
-        }
-
-        function typeQuestion() {
-            if (questionIndex < questionText.length) {
-                document.getElementById("type-question").innerText += questionText.charAt(questionIndex);
-                questionIndex++;
-                questionTimer = setTimeout(typeQuestion, 50);
-            } else {
-                questionTimer = setTimeout(typeAnswer, 600);
-            }
-        }
-
-        function typeAnswer() {
-            if (answerIndex < answerText.length) {
-                const target = document.getElementById("type-answer");
-                const char = answerText.charAt(answerIndex);
-                target.innerText += char;
-                answerIndex++;
-                answerTimer = setTimeout(typeAnswer, 12);
-            }
-        }
-
-        function clearTimers() {
-            if (questionTimer) clearTimeout(questionTimer);
-            if (answerTimer) clearTimeout(answerTimer);
-        }
-
-        window.restartTyping = function() {
-            startTypingSimulation();
-        };
-
-        // --- RAG Simulator Controls (IBM Meta Sync with Dynamic Typing & Attachment) ---
-        let simTimer = null;
-        let simInterval = null;
-        const simInputText = "2026년 지자체 사회복지 추가 보육료 단가는 얼마인가요?";
-        
-        function clearSimTimers() {
-            if (simTimer) clearTimeout(simTimer);
-            if (simInterval) clearInterval(simInterval);
-        }
-
-        function typeConsoleInput(text, callback) {
-            const inputPara = document.getElementById("sim-input-text");
-            inputPara.innerText = "";
-            let idx = 0;
-            simInterval = setInterval(() => {
-                if (idx < text.length) {
-                    inputPara.innerText += text.charAt(idx);
-                    idx++;
-                } else {
-                    clearInterval(simInterval);
-                    if (callback) callback();
-                }
-            }, 30);
-        }
-
-        function typeConsoleOutput(text, className, callback) {
-            const outputPara = document.getElementById("sim-output-text");
-            outputPara.innerText = "";
-            outputPara.className = className;
-            let idx = 0;
-            simInterval = setInterval(() => {
-                if (idx < text.length) {
-                    outputPara.innerText += text.charAt(idx);
-                    idx++;
-                } else {
-                    clearInterval(simInterval);
-                    if (callback) callback();
-                }
-            }, 10);
-        }
-        
-        window.runPretrainSim = function() {
-            clearSimTimers();
-            
-            const status = document.getElementById("sim-status");
-            const output = document.getElementById("sim-output-text");
-            const progressBar = document.getElementById("sim-process-bar");
-            const sourceTag = document.getElementById("sim-source-tag");
-            const fileFlow = document.getElementById("rag-flow-line");
-            const fileBox = document.getElementById("rag-file-box");
-            const attachBadge = document.getElementById("sim-attached-badge");
-            
-            if (fileBox) {
-                fileBox.className = "lg:col-span-4 bg-[#0a0f1d]/90 p-6 rounded-2xl border border-blue-500/25 shadow-[0_0_15px_rgba(59,130,246,0.15)] flex flex-col justify-between items-center text-center relative overflow-hidden transition-all duration-500";
-            }
-            if (attachBadge) {
-                attachBadge.className = "flex items-center justify-center gap-1 bg-blue-500/20 border border-blue-500/40 text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-black translate-x-32 opacity-0 transition-all duration-700 pointer-events-none";
-            }
-            fileFlow.classList.add("opacity-0");
-            sourceTag.classList.add("hidden");
-            progressBar.classList.add("hidden");
-            
-            status.innerText = "질문 입력 중...";
-            status.className = "text-xs md:text-sm font-black text-slate-400";
-            output.innerText = "사용자 질문 대기 중...";
-            output.className = "text-base md:text-lg lg:text-xl font-bold text-slate-500 font-mono";
-
-            typeConsoleInput(simInputText, () => {
-                status.innerText = "로딩 중...";
-                status.className = "text-xs md:text-sm font-black text-red-400 animate-pulse";
-                output.innerText = "사전 학습된 뇌(2023년 기준)에서 답변 검색 중...";
-                
-                simTimer = setTimeout(() => {
-                    status.innerText = "❌ 답변 오류 (환각 발생)";
-                    const errMsg = "답변: 2026년도 지자체 추가 보육료 지원 단가는 아동당 월 28만 원 내외일 것입니다. \n\n(※ 경고: 이 정보는 실제 지침서의 단가인 '아동당 32만 원'과 불합치하는 AI 뇌피셜 환각입니다. 저는 2023년 데이터까지만 학습되었기 때문에 과거 데이터의 언어 확률로 지어낸 텍스트입니다.)";
-                    typeConsoleOutput(errMsg, "text-base md:text-lg lg:text-xl font-black text-red-400 font-mono leading-relaxed");
-                }, 1200);
-            });
-        };
-
-        window.runRagSim = function() {
-            clearSimTimers();
-            
-            const status = document.getElementById("sim-status");
-            const output = document.getElementById("sim-output-text");
-            const progressBar = document.getElementById("sim-process-bar");
-            const progress = document.getElementById("sim-progress");
-            const sourceTag = document.getElementById("sim-source-tag");
-            const fileFlow = document.getElementById("rag-flow-line");
-            const fileBox = document.getElementById("rag-file-box");
-            const attachBadge = document.getElementById("sim-attached-badge");
-            
-            sourceTag.classList.add("hidden");
-            progressBar.classList.add("hidden");
-            progress.style.width = "0%";
-            fileFlow.classList.add("opacity-0");
-            
-            status.innerText = "파일 첨부 중...";
-            status.className = "text-xs md:text-sm font-black text-blue-400 animate-bounce";
-            document.getElementById("sim-input-text").innerText = "파일을 첨부하여 증강 대기 중...";
-            output.innerText = "외부 지침서 파일 로드 대기 중...";
-            output.className = "text-base md:text-lg lg:text-xl font-bold text-slate-500 font-mono";
-
-            if (attachBadge) {
-                attachBadge.className = "flex items-center justify-center gap-1 bg-blue-500/20 border border-blue-500/40 text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-black translate-x-0 opacity-100 transition-all duration-700 pointer-events-none";
-            }
-
-            simTimer = setTimeout(() => {
-                status.innerText = "질문 입력 중...";
-                status.className = "text-xs md:text-sm font-black text-slate-400";
-                
-                typeConsoleInput(simInputText, () => {
-                    if (fileBox) {
-                        fileBox.className = "lg:col-span-4 bg-[#0e172a] p-6 rounded-2xl border border-blue-400 shadow-[0_0_35px_rgba(59,130,246,0.65)] scale-[1.03] flex flex-col justify-between items-center text-center relative overflow-hidden transition-all duration-500";
-                    }
-                    progressBar.classList.remove("hidden");
-                    fileFlow.classList.remove("opacity-0");
-                    
-                    status.innerText = "1단계: 검색 (Retrieval) - 파일 스캔 중...";
-                    status.className = "text-xs md:text-sm font-black text-blue-400 animate-pulse";
-                    output.innerText = "학습된 뇌 대신 업로드된 PDF 파일에서 '2026년 추가 보육료 단가' 구절 스캔 중...";
-                    output.className = "text-base md:text-lg lg:text-xl font-bold text-blue-300 font-mono";
-
-                    simTimer = setTimeout(() => {
-                        progress.style.width = "45%";
-                        status.innerText = "2단계: 증강 (Augment) - 프롬프트 보강 중...";
-                        status.className = "text-xs md:text-sm font-black text-purple-400";
-                        output.innerText = `사용자 질문에 검색된 팩트 데이터를 융합하는 중...\n\n합쳐진 프롬프트: "2026년 추가 보육료 단가는? + [참고 팩트: PDF 4p - 단가는 아동당 월 32만 원으로 책정한다]"`;
-                        output.className = "text-sm md:text-base lg:text-lg font-black text-purple-300 font-mono whitespace-pre-line";
-                    }, 1800);
-
-                    simTimer = setTimeout(() => {
-                        progress.style.width = "100%";
-                        status.innerText = "3단계: 생성 (Generate) - 오픈북 초안 완료";
-                        status.className = "text-xs md:text-sm font-black text-emerald-400";
-                        
-                        const targetText = "답변: 2026년 지자체 사회복지 추가 보육료 지원 단가는 아동당 월 32만 원입니다. \n\n(※ 검증 완료: AI 뇌피셜을 전면 배제하고, 제공된 지침서 PDF의 실제 텍스트 팩트만을 참조하여 정확히 추출한 답변입니다.)";
-                        
-                        typeConsoleOutput(targetText, "text-base md:text-lg lg:text-xl font-black text-emerald-400 font-mono leading-relaxed", () => {
-                            sourceTag.classList.remove("hidden");
-                            sourceTag.classList.add("animate-bounce");
-                            fileFlow.classList.add("opacity-0");
-                            if (fileBox) {
-                                fileBox.className = "lg:col-span-4 bg-[#0a0f1d]/90 p-6 rounded-2xl border border-blue-500/25 shadow-[0_0_15px_rgba(59,130,246,0.15)] flex flex-col justify-between items-center text-center relative overflow-hidden transition-all duration-500";
-                            }
-                        });
-                    }, 3500);
-                });
-            }, 900);
-        };
-
-        // --- Session 7: Prompt 6 Principles Assembling Controller ---
-        const promptStates = {
-            action: false,
-            persona: false,
-            context: false,
-            examples: false,
-            format: false,
-            tone: false
-        };
-
-        const segmentTexts = {
-            persona: "너는 15년 차 경력의 노련한 사회복지사 기획관이다.",
-            context: "아동들은 요리 경험이 전무하며 주말 강사 예산은 회당 15만 원으로 한정되어 있다.",
-            examples: "참고로 작년 오감 만족 제과제빵 예산 비율은 주재료 70%, 강사비 30%였다.",
-            action: "남구 지역아동센터 대상의 신규 요리 실습 주말 특별 프로그램 기획안을 작성해라.",
-            format: "보고서 양식은 [1. 사업 기획 의도, 2. 예산 세부 내역 표, 3. 월간 주차별 지도안] 순서로 출력하라.",
-            tone: "어조는 격식 있고 신뢰감이 느껴지는 정중한 비즈니스 톤으로 써라."
-        };
-
-        // Multimodal Modal Content mapping for Session 7 (PPT v3 Slides 15-25 + 2026 Engineering Tips)
-        const slideModalData = {
-            persona: {
-                title: "1. 역할 부여 (Persona) - PPT 21~25페이지 & 2026 핵심",
-                html: `<div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
-                    <p class="font-bold text-amber-400 text-base md:text-lg">📢 AI에게 자격증/직함 주기: 답변 완성도를 극적으로 가르는 시발점</p>
-                    <div class="p-4 rounded-xl bg-slate-900 border border-white/5">
-                        <strong class="text-white text-xs md:text-sm block mb-1">💡 PPT 실전 예시 (사회복지 마케팅/심사위원 관점):</strong>
-                        <p class="font-mono text-slate-355 text-sm md:text-base leading-relaxed">
-                          너는 마케팅 전문가야. 나는 돌봄로봇이나 산업현장에 필요한 로봇을 판매하는 플랫폼 창업을 하려고 해. 나에게 간단하게 조언을 해줘.<br><br>너는 나의 사업계획서를 평가하는 평가위원이야. 나는 노동현장에 로봇을 대체해주는 플랫폼 창업을 하려고 해. 나에게 간단하게 조언을 해줘.
-                        </p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/20">
-                        <strong class="text-purple-400 text-xs md:text-sm block mb-1">🚀 2026년형 프롬프트 엔지니어링 팁:</strong>
-                        <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
-                            <li>단순히 "전문가"라고 지시하기보다, "사회복지 배분사업 15년 차 시니어 심사위원"처럼 기관명, 경력 연수를 구체화하세요.</li>
-                            <li>시스템 명령(System Instruction) 탭을 지원하는 최신 LLM에서는 이 Persona를 최상단 헌법(Constitution)으로 락(Lock)해두는 것이 가장 강력합니다.</li>
-                        </ul>
-                    </div>
-                </div>`
-            },
-            context: {
-                title: "2. 배경 맥락 (Context) - PPT 16~19페이지 & 2026 핵심",
-                html: `<div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
-                    <p class="font-bold text-amber-400 text-base md:text-lg">📢 상황과 환경 제공: AI가 우리 센터의 특수한 현실을 이해하게 만들기</p>
-                    <div class="p-4 rounded-xl bg-slate-900 border border-white/5">
-                        <strong class="text-white text-xs md:text-sm block mb-1">💡 PPT 실전 예시 (창업 환경 / 로봇 트랙):</strong>
-                        <p class="font-mono text-slate-355 text-sm md:text-base leading-relaxed">
-                          나는 인공지능 개발자인데 로봇을 산업현장에 구입할 수 있도록 플랫폼 관련 창업을 하고 싶어.<br><br>우리 센터의 수혜 대상 아동 20명 중 15명이 현재 다문화 가정 소속이고, 한글 해득 수준이 또래 대비 1.5년 지연된 상태야.
-                        </p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/20">
-                        <strong class="text-purple-400 text-xs md:text-sm block mb-1">🚀 2026년형 프롬프트 엔지니어링 팁:</strong>
-                        <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
-                            <li>200만 대용량 컨텍스트 윈도우 시대입니다. 이전 지침서나 상담 기록(PDF)을 먼저 첨부한 뒤 그 문맥(Context)을 대조하게 만들면 환각 현상이 0%에 수렴합니다.</li>
-                        </ul>
-                    </div>
-                </div>`
-            },
-            examples: {
-                title: "3. 예시 제공 (Examples / Few-shot) - PPT 20~25페이지 & 2026 핵심",
-                html: `<div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
-                    <p class="font-bold text-amber-400 text-base md:text-lg">📢 모범 예시 주입 (Few-shot): 백문이 불여일견, 원하는 형식을 예제로 강제하기</p>
-                    <div class="p-4 rounded-xl bg-slate-900 border border-white/5">
-                        <strong class="text-white text-xs md:text-sm block mb-1">💡 PPT 실전 예시 (돌봄 정기구독 요약 포맷):</strong>
-                        <p class="font-mono text-slate-355 text-sm md:text-base leading-relaxed">
-                          정리할 때는 아래와 같은 양식으로 정리해줘:<br>O 로봇플랫폼을 이용해 고객에게 정기구독서비스 판매<br>-(돌봄 로봇분야) 고령화로 로봇돌봄이 필요한 분야에 로봇을 판매<br>-(수익원) 주요 수익원은 로봇 구독 컨설팅
-                        </p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/20">
-                        <strong class="text-purple-400 text-xs md:text-sm block mb-1">🚀 2026년형 프롬프트 엔지니어링 팁:</strong>
-                        <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
-                            <li><b>생각의 체인(CoT) 유도:</b> AI에게 결과물 예시만 주지 말고, '풀이 과정과 연산 근거가 포함된 완벽한 모범 예제'를 1개 이상 주입하면 추론 품질이 3배 상승합니다.</li>
-                        </ul>
-                    </div>
-                </div>`
-            },
-            action: {
-                title: "4. 동작 지시 (Action / Task) - PPT 15~18페이지 & 2026 핵심",
-                html: `<div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
-                    <p class="font-bold text-amber-400 text-base md:text-lg">📢 명확하고 정교한 지시: 명확한 서술형 동사로 업무 전담시키기</p>
-                    <div class="p-4 rounded-xl bg-slate-900 border border-white/5">
-                        <strong class="text-white text-xs md:text-sm block mb-1">💡 PPT 실전 예시 (단일 vs 복수 지시어):</strong>
-                        <p class="font-mono text-slate-355 text-sm md:text-base leading-relaxed">
-                          로봇산업 미래전망을 분석해주고 주요 키워드를 도출해 주고 키워드별로 근거를 제시해줘.<br><br>예산 계획의 사칙연산 오류를 교정하고, 초과 지출된 항목을 검출하라.
-                        </p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/20">
-                        <strong class="text-purple-400 text-xs md:text-sm block mb-1">🚀 2026년형 프롬프트 엔지니어링 팁:</strong>
-                        <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
-                            <li>한 번에 복잡한 명령을 던지기보다, 단계를 나누어 '1단계: 검토, 2단계: 표 작성, 3단계: 피드백 리포트 작성'처럼 순차 명령(Multi-turn Task Decomposition)을 사용하세요.</li>
-                        </ul>
-                    </div>
-                </div>`
-            },
-            format: {
-                title: "5. 출력 형식 (Format) - PPT 22~25페이지 & 2026 핵심",
-                html: `<div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
-                    <p class="font-bold text-amber-400 text-base md:text-lg">📢 형식의 통제: 한글 문서에 바로 붙여넣을 표, 개조식 표기법 강제</p>
-                    <div class="p-4 rounded-xl bg-slate-900 border border-white/5">
-                        <strong class="text-white text-xs md:text-sm block mb-1">💡 PPT 실전 예시 (종결어미 및 양식 고정):</strong>
-                        <p class="font-mono text-slate-355 text-sm md:text-base leading-relaxed">
-                          이 내용을 3*3 표 형태로 정리해줘. 각 줄마다 이모지를 넣어줘.<br><br>어미는 (~임, ~함, ~음)으로 종결하고, 소제목 리스트의 개조식 3줄로 고정해줘.
-                        </p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/20">
-                        <strong class="text-purple-400 text-xs md:text-sm block mb-1">🚀 2026년형 프롬프트 엔지니어링 팁:</strong>
-                        <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
-                            <li>JSON 구조화(Structured Outputs)를 프롬프트에 명시하면 AI는 정확한 Key-Value 데이터를 리턴하여 연동 에러를 막을 수 있습니다.</li>
-                        </ul>
-                    </div>
-                </div>`
-            },
-            tone: {
-                title: "6. 어조 설정 (Tone & Manner) - PPT 23~24페이지 & 2026 핵심",
-                html: `<div class="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
-                    <p class="font-bold text-amber-400 text-base md:text-lg">📢 말투와 논조 결정: 기획서 양식에 어울리는 엄격한 서술 톤 장착</p>
-                    <div class="p-4 rounded-xl bg-slate-900 border border-white/5">
-                        <strong class="text-white text-xs md:text-sm block mb-1">💡 PPT 실전 예시 (어조 바리에이션):</strong>
-                        <p class="font-mono text-slate-355 text-sm md:text-base leading-relaxed">
-                          어조는 초등학생도 이해하기 쉽게 아주 명료하고 친절하게 작성해줘.<br><br>사업계획서 제출용으로 단호하고 설득력 있으며 과장 없는 전문 비즈니스 정중 톤으로 써줘.
-                        </p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-500/20">
-                        <strong class="text-purple-400 text-xs md:text-sm block mb-1">🚀 2026년형 프롬프트 엔지니어링 팁:</strong>
-                        <ul class="list-disc pl-5 space-y-1 text-xs md:text-sm">
-                            <li>단순히 "따뜻하게" 보다는 "사회복지사가 아동의 정서를 면밀히 관찰하고 공감하는 전문적이고 따뜻한 카운슬러 톤"처럼 구체적인 청중과 상황을 묘사하세요.</li>
-                        </ul>
-                    </div>
-                </div>`
-            }
-        };
-
-        window.togglePromptPart = function(type, element) {
-            promptStates[type] = !promptStates[type];
-            
-            const btn = document.getElementById(`principle-btn-${type}`);
-            const icon = document.getElementById(`principle-icon-${type}`);
-            const segment = document.getElementById(`segment-${type}`);
-            
-            if (promptStates[type]) {
-                btn.classList.add("border-purple-500", "bg-purple-950/20", "scale-[1.01]");
-                btn.classList.remove("border-white/10", "bg-slate-900/45");
-                if (icon) {
-                    icon.setAttribute("data-lucide", "check");
-                    icon.className = "w-4 h-4 text-purple-400";
-                }
-                segment.classList.remove("opacity-40", "text-slate-600");
-                segment.classList.add("font-black");
-                if (type === 'action') segment.classList.add("text-orange-400");
-                else if (type === 'persona') segment.classList.add("text-purple-400");
-                else if (type === 'context') segment.classList.add("text-blue-400");
-                else if (type === 'examples') segment.classList.add("text-pink-400");
-                else if (type === 'format') segment.classList.add("text-emerald-400");
-                else if (type === 'tone') segment.classList.add("text-amber-400");
-            } else {
-                btn.classList.remove("border-purple-500", "bg-purple-950/20", "scale-[1.01]");
-                btn.classList.add("border-white/10", "bg-slate-900/45");
-                if (icon) {
-                    icon.setAttribute("data-lucide", "plus");
-                    icon.className = "w-4 h-4 text-slate-500 group-hover:text-purple-400";
-                }
-                segment.classList.add("opacity-40", "text-slate-600");
-                segment.classList.remove("font-black", "text-orange-400", "text-purple-400", "text-blue-400", "text-pink-400", "text-emerald-400", "text-amber-400");
-            }
-
-            const activeKeys = Object.keys(promptStates).filter(k => promptStates[k]);
-            const activeCount = activeKeys.length;
-            const pct = Math.round((activeCount / 6) * 100);
-            
-            const countText = document.getElementById("prompt-assembled-count");
-            countText.innerText = `결합률 ${pct}% (${activeCount}/6)`;
-            
-            const copyBtn = document.getElementById("prompt-copy-btn");
-            if (activeCount === 6) {
-                copyBtn.classList.remove("opacity-40", "pointer-events-none", "bg-purple-600/40", "text-slate-400");
-                copyBtn.classList.add("opacity-100", "cursor-pointer", "animate-pulse", "bg-purple-600", "text-white");
-                countText.className = "text-emerald-400 font-black animate-pulse";
-            } else {
-                copyBtn.classList.add("opacity-40", "pointer-events-none", "bg-purple-600/40", "text-slate-400");
-                copyBtn.classList.remove("opacity-100", "cursor-pointer", "animate-pulse", "bg-purple-600", "text-white");
-                countText.className = "text-purple-400";
-            }
-            
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-
-            // Open the Multimodal Modal pop-up with PPT examples
-            const data = slideModalData[type];
-            if (data) {
-                const modalHtml = `
-                    <div class="space-y-4">
-                        ${data.html}
-                        <div class="flex justify-end pt-4 border-t border-white/5">
-                            <button onclick="navigator.clipboard.writeText(document.querySelector('#modal-body-content p.font-mono').innerText).then(() => alert('📋 예시 프롬프트가 복사되었습니다!'))" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded-xl text-xs flex items-center justify-center gap-1.5 active:scale-95 transition">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> 모범 예시 프롬프트 복사
-                            </button>
-                        </div>
-                    </div>
-                `;
-                window.openModal(type, data.title, modalHtml);
-            }
-        };
-
-        window.copyPromptText = function(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showPromptToast("📋 프롬프트 복사 성공!");
-            }).catch(err => {
-                console.error("클립보드 복사 실패: ", err);
-            });
-        };
-
-        window.copyPromptText = function(text) {
-
-            navigator.clipboard.writeText(text).then(() => {
-
-                showPromptToast("📋 프롬프트 복사 성공!");
-
-            }).catch(err => {
-
-                console.error("클립보드 복사 실패: ", err);
-
-            });
-
-        };
-
-
-
-        window.copyAssembledPrompt = function() {
-            const activeCount = Object.values(promptStates).filter(Boolean).length;
-            if (activeCount < 6) return;
-
-            const fullPrompt = `${segmentTexts.persona}\n\n${segmentTexts.context}\n\n${segmentTexts.examples}\n\n${segmentTexts.action}\n\n${segmentTexts.format}\n\n${segmentTexts.tone}`;
-            
-            navigator.clipboard.writeText(fullPrompt).then(() => {
-                showPromptToast("📋 6원칙 조립 프롬프트 복사 성공!");
-            }).catch(err => {
-                console.error("클립보드 복사 실패: ", err);
-            });
-        };
-
-        function showPromptToast(message) {
-            const toast = document.getElementById("toast");
-            if (!toast) return;
-            
-            const toastBody = toast.querySelector("span.text-slate-100");
-            if (toastBody) {
-                toastBody.innerText = message;
-            }
-            
-            toast.className = "fixed bottom-6 right-6 z-50 bg-slate-900/90 border border-purple-550/40 text-white px-5 py-3.5 rounded-xl shadow-[0_0_20px_rgba(168,85,247,0.3)] backdrop-blur-md opacity-100 translate-y-0 transition-all duration-300 flex items-center gap-3";
-            
-            setTimeout(() => {
-                toast.className = "fixed bottom-6 right-6 z-50 bg-slate-900/90 border border-emerald-500/30 text-white px-5 py-3.5 rounded-xl shadow-2xl backdrop-blur-md opacity-0 translate-y-24 transition-all duration-300 flex items-center gap-3";
-            }, 2500);
-        }
-
-        // --- Session 8: Security Masking Level Controller Script ---
-        window.updateMaskingLevel = function(val) {
-            const levelValue = parseInt(val);
-            
-            const screenBox = document.getElementById("masking-screen-box");
-            const pillBadge = document.getElementById("masking-pill-badge");
-            const pillStatus = document.getElementById("masking-pill-status");
-            const mainPara = document.getElementById("masking-main-paragraph");
-            const descText = document.getElementById("masking-desc-text");
-            const statusBadge = document.getElementById("masking-status-badge");
-            
-            if (!screenBox || !pillBadge || !mainPara) return;
-            
-            screenBox.classList.remove("border-red-500/20", "border-amber-500/20", "border-emerald-500/40", "shadow-[0_0_20px_rgba(239,68,68,0.08)]", "shadow-[0_0_20px_rgba(245,158,11,0.08)]", "shadow-[0_0_25px_rgba(16,185,129,0.18)]", "border-white/10");
-            pillBadge.className = "px-3 py-1 rounded text-[10px] font-black border flex items-center justify-center gap-1";
-            
-            if (levelValue === 0) {
-                screenBox.classList.add("border-red-500/20", "shadow-[0_0_20px_rgba(239,68,68,0.08)]");
-                pillBadge.classList.add("bg-red-500/20", "text-red-400", "border-red-500/30");
-                pillBadge.innerHTML = `<i data-lucide="shield-alert" class="w-3.5 h-3.5 animate-bounce"></i> 유출 위험 데이터`;
-                pillStatus.innerText = "X PROTECT OFF";
-                pillStatus.className = "text-xs text-red-500 font-mono font-bold";
-                
-                mainPara.innerHTML = `"올해 남구 <span class="bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded border border-red-500/30 font-black animate-pulse">행복아동센터</span>의 9세 아동 <span class="bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded border border-red-500/30 font-black animate-pulse">김준서</span>는 가정 내 방임 상황에 놓여 있으며, 이에 따른 요리실습 아동 지도 계획으로..."`;
-                descText.innerText = "특정 지자체(남구), 특정 아동센터명(행복아동센터), 아동실명(김준서)이 그대로 노출되어 외부에 복지 정보가 유출될 위험이 존재합니다.";
-                descText.className = "mt-4 pt-3 border-t border-white/5 text-xs text-red-400 font-bold leading-normal transition-colors duration-500 animate-pulse";
-                
-                statusBadge.innerText = "🚨 현재 상태: 무방비 정보 유출 위험!";
-                statusBadge.className = "text-center font-black text-xs md:text-sm mt-3 pt-2 border-t border-white/5 text-red-400 transition-all duration-350";
-                
-            } else if (levelValue === 1) {
-                screenBox.classList.add("border-amber-500/20", "shadow-[0_0_20px_rgba(245,158,11,0.08)]");
-                pillBadge.classList.add("bg-amber-500/20", "text-amber-400", "border-amber-500/30");
-                pillBadge.innerHTML = `<i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> 부분 가명화 데이터`;
-                pillStatus.innerText = "! PROTECT WARNING";
-                pillStatus.className = "text-xs text-amber-500 font-mono font-bold";
-                
-                mainPara.innerHTML = `"올해 남구 <span class="bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded border border-amber-500/30 font-black">행*아동센터</span>의 9세 아동 <span class="bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded border border-amber-500/30 font-black">김*서</span>는 가정 내 방임 상황에 놓여 있으며, 이에 따른 요리실습 아동 지도 계획으로..."`;
-                descText.innerText = "아동 이름과 기관명이 일부 별표 마스킹되었으나, 여전히 남구(지자체)와 나이가 노출되어 다수의 복지 정보를 교차 검증 시 인물 식별이 가능할 여지가 있습니다.";
-                descText.className = "mt-4 pt-3 border-t border-white/5 text-xs text-amber-450 font-bold leading-normal transition-colors duration-500";
-                
-                statusBadge.innerText = "⚠️ 현재 상태: 임시 가명화 완료 (보안 불충분)";
-                statusBadge.className = "text-center font-black text-xs md:text-sm mt-3 pt-2 border-t border-white/5 text-amber-400 transition-all duration-350";
-                
-            } else if (levelValue === 2) {
-                screenBox.classList.add("border-emerald-500/40", "shadow-[0_0_25px_rgba(16,185,129,0.18)]");
-                pillBadge.classList.add("bg-emerald-500/20", "text-emerald-405", "border-emerald-500/30");
-                pillBadge.innerHTML = `<i data-lucide="shield-check" class="w-3.5 h-3.5"></i> 완전 비식별 데이터`;
-                pillStatus.innerText = "✓ PROTECT ACTIVE";
-                pillStatus.className = "text-xs text-emerald-400 font-mono font-bold";
-                
-                mainPara.innerHTML = `"올해 <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-lg border border-emerald-500/30 font-black">A 지역아동센터</span>의 9세 아동 <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-lg border border-emerald-500/30 font-black">B</span>는 가정 내 방임 상황에 놓여 있으며, 이에 따른 요리실습 아동 지도 계획으로..."`;
-                descText.innerText = "아동 이름(아동 B), 기관명(A 지역아동센터)으로 완전 대체하고 불필요한 행정 지명 노출을 제거해 100% 철통 보안 가명화에 도달했습니다. 안심하고 사용하세요!";
-                descText.className = "mt-4 pt-3 border-t border-white/5 text-xs text-emerald-400 font-bold leading-normal transition-colors duration-500";
-                
-                statusBadge.innerText = "✓ 현재 상태: 철통 비식별 마스킹 완료 (안전)";
-                statusBadge.className = "text-center font-black text-xs md:text-sm mt-3 pt-2 border-t border-white/5 text-emerald-400 transition-all duration-350";
-            }
-            
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-        };
-
-        // --- Session 9: Model Evolution Catenary Cable Roadmap Controller ---
-        const modelNodeData = {
-            gpt: {
-                1: { title: "GPT-3 (2020년 6월 출시)", desc: "1,750억 파라미터. 초창기 대규모 언어모델로, 잦은 문맥 환각(Hallucination)이 존재해 문서 작성 검토용으로만 연구됨." },
-                2: { title: "GPT-4 (2023년 3월)", desc: "멀티모달 지능과 전문 논리 추론 최초 완비. 계산 오차가 격감하고 사회복지 사업계획서 수치 검증에 즉각 활용 가능성 제시." },
-                3: { title: "GPT-4o (2024년 5월)", desc: "네이티브 옴니(Omni) 설계로 텍스트/비디오/음성 실시간 통합 지원. 기존 GPT-4 대비 속도 2배 향상 및 행정 수수료 50% 절감." },
-                4: { title: "GPT-o1 (2024년 9월)", desc: "내적 체인(Chain-of-Thought) 자율 추론 엔진 최초 장착. 질문을 여러 갈래로 숙고하여 한도 계산의 복잡한 조건문 오류를 스스로 검출." },
-                5: { title: "GPT-5 (2025년 8월)", desc: "추론과 일반 언어 능력의 대통합 세대. 추론 속도 제약을 완전히 극복하고 일반 사용자층에 다중 생각 에이전트로 보급." },
-                6: { title: "GPT-5.6 Sol (2026년 6월 최신)", desc: "2026년 7월 현재 가장 강력한 OpenAI의 자율 에이전트. 사회복지 예산 기획안 피드백 검증과 법령 대조 검증을 알아서 처리하는 최상위 모델." }
-            },
-            gemini: {
-                1: { title: "Gemini 1.0 (2023년 12월 출시)", desc: "구글 최초의 네이티브 멀티모달 통합 엔진. 텍스트와 이미지를 복합 판단하여 영유아 발달 상태 그림표를 직접 감수하기 시작함." },
-                2: { title: "Gemini 1.5 Pro (2024년 2월)", desc: "100만~200만 토큰의 파격적인 컨텍스트 윈도우 최초 개방. 복지부 및 지자체 지침서 수십 권을 통째로 삽입하여 팩트 기반 즉시 스캔." },
-                3: { title: "Gemini 2.0 Flash (2024년 12월)", desc: "초고속 실시간 도구 사용(Tool Use)과 화면 인식을 지원하여, 사회복지사가 타겟 브라우저 검색을 수행하는 과정을 대행." },
-                4: { title: "Gemini 2.5 Pro (2025년 7월)", desc: "초대형 콘텍스트 및 다차원 추론 안정화. 여러 지점의 복지 자료 데이터를 실시간 결합하여 추론할 수 있는 지식 통합체 구축." },
-                5: { title: "Gemini 3.0 (2025년 11월)", desc: "차세대 네이티브 음성/비디오 통합 심층 분석 엔진. 복지 현장의 상담 오디오를 즉각 분석해 보고서 데이터로 치환." },
-                6: { title: "Gemini 3.5 Flash (2026년 5월 최신)", desc: "2026년 7월 현재 구글의 최신 에이전틱 플래그십. 'Computer Use' 기능을 완비하여 사회복지 내부 시스템의 단순 입력을 직접 대행하는 수준에 도달." }
-            },
-            claude: {
-                1: { title: "Claude 1 (2023년 3월 출시)", desc: "헌법적 AI(Constitutional AI) 안전 가이드라인 선도. 아동 상담 회고나 사례 연구록의 비식별화 및 인권 기준 엄격 자정 장치 적용." },
-                2: { title: "Claude 3 Opus (2024년 3월)", desc: "인간과 유사한 섬세하고 따뜻한 문맥 어조 작성의 독보적 성능. 아동 상담 및 정서 케어 상담일지 작작 시 극도로 높은 감수성 발휘." },
-                3: { title: "Claude 3.5 Sonnet (2024년 6월)", desc: "아티팩트(Artifacts) 대화형 실시간 컴포넌트 출력 기능 선도. 사회복지사가 예산 편성을 요청하면 차트 웹을 즉석에서 동적 생성." },
-                4: { title: "Claude 4.7 Opus (2026년 4월)", desc: "고해상도 다차원 도면 분석 및 코딩 지능 극한 업그레이드. 대형 프로젝트 기획서의 예산 모순을 찾아내며 고성능 에이전트로 동작." },
-                5: { title: "Claude Fable 5 (2026년 6월)", desc: "2026년 6월 출시된 Anthropic의 차세대 대중화 플래그십. 5세대 인공지능 지능의 기준을 정비하며 높은 윤리성과 추론 일치성 완비." },
-                6: { title: "Claude Sonnet 5 (2026년 6월 30일 최신)", desc: "2026년 7월 현재 개발자 및 비즈니스 현장 최고의 선택. 극도로 정교한 다단계 추론과 완전한 자율 대화 감수성을 지닌 최신 모델." }
-            }
-        };
-
-        
-        // Keep active levels tracked
-        const activeModelLevels = { gpt: 1, gemini: 1, claude: 1 };
-
-        // Draw Catenary curves dynamically based on real node offsets (Guarantees zero disconnected wires)
-        window.drawCatenaryCables = function() {
-            ['gpt', 'gemini', 'claude'].forEach(type => {
-                const bgPath = document.getElementById(`path-${type}-bg`);
-                const litPath = document.getElementById(`path-${type}-lit`);
-                if (!bgPath || !litPath) return;
-
-                let d = "";
-                const points = [];
-                for (let i = 1; i <= 6; i++) {
-                    const node = document.getElementById(`node-${type}-${i}`);
-                    if (node) {
-                        const rect = node.getBoundingClientRect();
-                        const track = node.closest('.relative.w-full');
-                        if (track) {
-                            const parentRect = track.getBoundingClientRect();
-                            const x = (rect.left + rect.width / 2) - parentRect.left;
-                            const y = (rect.top + rect.height / 2) - parentRect.top;
-                            points.push({x, y});
-                        }
-                    }
-                }
-
-                if (points.length >= 2) {
-                    d = `M ${points[0].x},${points[0].y}`;
-                    for (let i = 0; i < points.length - 1; i++) {
-                        const p1 = points[i];
-                        const p2 = points[i+1];
-                        const cx = (p1.x + p2.x) / 2;
-                        const cy = Math.max(p1.y, p2.y) + 30; // sag
-                        d += ` Q ${cx},${cy} ${p2.x},${p2.y}`;
-                    }
-                }
-
-                if (d) {
-                    bgPath.setAttribute("d", d);
-                    litPath.setAttribute("d", d);
-                    
-                    const pathLength = bgPath.getTotalLength();
-                    litPath.style.strokeDasharray = pathLength;
-                    
-                    const activeLevel = activeModelLevels[type];
-                    const pct = activeLevel / 6;
-                    litPath.style.strokeDashoffset = pathLength - (pathLength * pct);
-                }
-            });
-        };
-
-        // Hook to resize to keep wires aligned
-        window.addEventListener("resize", () => {
-            setTimeout(drawCatenaryCables, 50);
-        });
-
-        // Initialize catenary drawing on load
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(drawCatenaryCables, 500);
-        });
-
-
-        window.selectModelNode = function(type, level) {
-            // 1. Reset all nodes for this type
-            for (let i = 1; i <= 6; i++) {
-                const node = document.getElementById(`node-${type}-${i}`);
-                if (node) {
-                    node.classList.remove("bg-blue-500", "bg-purple-500", "bg-amber-500", "scale-125", "ring-4", "ring-white/40");
-                    node.classList.add("bg-slate-900");
-                }
-            }
-
-            // 2. Light up preceding nodes along the catenary path
-            for (let i = 1; i <= level; i++) {
-                const node = document.getElementById(`node-${type}-${i}`);
-                if (node) {
-                    node.classList.remove("bg-slate-900");
-                    if (type === 'gpt') {
-                        node.classList.add("bg-blue-500", "scale-125", "ring-4", "ring-blue-400/50");
-                    } else if (type === 'gemini') {
-                        node.classList.add("bg-purple-500", "scale-125", "ring-4", "ring-purple-400/50");
-                    } else if (type === 'claude') {
-                        node.classList.add("bg-amber-500", "scale-125", "ring-4", "ring-amber-400/50");
-                    }
-                }
-            }
-
-            // 3. Draw active glow path on Catenary SVG
-            activeModelLevels[type] = level;
-            if (window.drawCatenaryCables) {
-                window.drawCatenaryCables();
-            }
-
-            // 4. Update Time Badge
-            const timeBadge = document.getElementById("graph-time-badge");
-            const stages = [
-                "2020년 ~ 2023년 초: LLM 태동 및 기초 형성",
-                "2023년 ~ 2024년 초: 멀티모달 & 대화형 대중화",
-                "2024년 중후반: 옴니(Omni) 및 심층 추론(o1) 개막",
-                "2025년 중반: 추론 대통합 및 콘텍스트 한계 돌파",
-                "2025년 말 ~ 2026년 초: 자율 에이전트 & 도구 자동화",
-                "2026년 7월 현재: 자율형 솔루션 및 5세대 AI 전성기"
-            ];
-            if (timeBadge && stages[level - 1]) {
-                timeBadge.innerText = `현재 진화 시기: ${stages[level - 1]}`;
-            }
-
-            // 5. Update Spec Monitor text
-            const monitorTitle = document.getElementById("graph-monitor-title");
-            const monitorDesc = document.getElementById("graph-monitor-desc");
-            const data = modelNodeData[type][level];
-            if (monitorTitle && monitorDesc && data) {
-                let badgeColor = "bg-blue-500/20 text-blue-400 border-blue-500/30";
-                if (type === 'gemini') badgeColor = "bg-purple-500/20 text-purple-400 border-purple-500/30";
-                if (type === 'claude') badgeColor = "bg-amber-500/20 text-amber-400 border-amber-500/30";
-
-                monitorTitle.innerHTML = `<span class="px-2 py-0.5 rounded border ${badgeColor} mr-2 text-[10px] font-black">${type.toUpperCase()} LEVEL ${level}</span> ${data.title}`;
-                monitorDesc.innerText = data.desc;
-            }
-        };
-
-        window.playModelTimeline = function() {
-            // Reset strokeDashoffsets
-            ['gpt', 'gemini', 'claude'].forEach(type => {
-                const litPath = document.getElementById(`path-${type}-lit`);
-                if (litPath) litPath.style.strokeDashoffset = "1200";
-                for (let i = 1; i <= 6; i++) {
-                    const node = document.getElementById(`node-${type}-${i}`);
-                    if (node) {
-                        node.className = "w-6 h-6 rounded-full border-2 border-slate-700 bg-slate-900 hover:scale-125 transition-all duration-300 flex items-center justify-center text-[10px] font-black text-white";
-                    }
-                }
-            });
-
-            let currentStep = 1;
-            const playInterval = setInterval(() => {
-                if (currentStep <= 6) {
-                    selectModelNode('gpt', currentStep);
-                    selectModelNode('gemini', currentStep);
-                    selectModelNode('claude', currentStep);
-                    currentStep++;
-                } else {
-                    clearInterval(playInterval);
-                }
-            }, 750);
-        };
-
-        // Initialize Everything on Load
-        document.addEventListener("DOMContentLoaded", () => {
-            ['action', 'persona', 'context', 'examples', 'format', 'tone'].forEach(type => {
-                const seg = document.getElementById(`segment-${type}`);
-                if (seg) {
-                    seg.className = "text-slate-650 font-bold transition-all duration-500 opacity-60";
-                }
-            });
-
-            if (window.updateMaskingLevel) {
-                window.updateMaskingLevel(0);
-            }
-
-            // Light up Level 1 on load
-            setTimeout(() => {
-                selectModelNode('gpt', 1);
-                selectModelNode('gemini', 1);
-                selectModelNode('claude', 1);
-            }, 300);
-        });
-    </script>
-</body>
-</html>
         </main>
     </div>
 
@@ -2506,42 +1700,42 @@
         };
 
         // --- Session 7: Prompt 6 Rules detailed Modal Logic ---
-        const ruleModalData = {
+                const ruleModalData = {
             1: {
                 title: "Rule 01. 역할 부여 (Role)",
-                desc: "AI에게 구체적인 직함, 전문 분야, 연차를 명시하여 관련 전문적 관점과 정제된 용어 체계를 강제하는 원칙입니다.",
-                bad: "주말 복지 돌봄 프로그램 예산 세부 계획서 하나 써줘.",
-                good: "너는 공동모금회 15년 차 배분사업 전문 심사위원이자, 아동복지 예산 기획 분야의 마스터 컨설턴트다. 모금회 회계 가이드라인 기준에 완벽히 정렬하여 다음 계획안을 평가하고 예산 계획을 세우라."
+                desc: "AI에게 구체적이고 현실적인 직함, 전문 분야, 그리고 경력을 부여하여 비서로서의 깊이와 공문서 규격에 알맞은 전문 용어 체계를 장착하게 하는 원칙입니다.",
+                bad: "주말 복지 돌봄 프로그램 예산 세부 계획서 하나 작성해줘.",
+                good: "당신은 보건복지부 및 사회복지 공동모금회 배분사업 심사 기준에 정통한 15년 차 시니어 심사위원이자 아동복지 전문 기획관입니다. 예산 편성 세부 가이드라인 기준을 완벽하게 준수하여 아동 돌봄 사업 계획의 구조를 설계하고 예산을 분석 및 편성해 주십시오."
             },
             2: {
                 title: "Rule 02. 맥락 및 상황 제시 (Context)",
-                desc: "AI가 보편적인 잡지식을 동원해 뜬구름 잡는 계획을 세우지 않도록, 내 센터 소속 기관의 아동 실정, 예산 한계, 현장 제약 정보(1차 데이터)를 먹이는 과정입니다.",
-                bad: "위기 아동을 위한 유익한 주말 요리 교실 기획안을 도출해줘.",
-                good: "광주광역시 남구 거주 아동 20명 중 15명이 주말 돌봄 부재 상태에 놓인 난독 위기 아동이다. 주말 특별 오감 만족 실습 프로그램 예산 한도는 강사비 포함 회당 15만 원으로 엄격히 제한된다."
+                desc: "AI가 가상의 이론에만 의존하지 않도록, 소속 아동센터가 직면한 지리적/행정적 현실, 예산 한계, 수혜 아동들의 구체적인 특성(1차 현장 실데이터)을 락(Lock)하는 과정입니다.",
+                bad: "위기 아동들을 위한 오감만족 주말 요리 교실 기획서를 써주세요.",
+                good: "대상은 광주광역시 남구에 위치한 지자체 등록 지역아동센터의 초등생 20명입니다. 이 중 15명이 주말 방임 위험에 처한 난독 위기 아동들이며, 아동들의 오감 감각 발달을 돕는 주말 특별 요리 실습을 구상 중입니다. 총 예산 한도는 강사비를 포함하여 회당 15만 원으로 엄격하게 제한됩니다."
             },
             3: {
-                title: "Rule 03. 예시 제공 (Examples)",
-                desc: "AI가 선호하는 출력 구조와 뼈대를 가장 확실히 주입하는 방법입니다. 우수작의 예산 배분 비율이나 줄바꿈 패턴을 직접 1~2개 템플릿(Shot)으로 대조하여 모방하게 만듭니다.",
-                bad: "저번처럼 잘 작성해줘.",
-                good: "작년 그린 방과후 프로그램의 최종 성과 예산 비율은 주재료비 70%, 보조강사료 20%, 행정 관리비 10% 비목이었으며, 표 서식은 [품명 | 규격 | 수량 | 단가 | 금액] 형태를 따랐다. 이 구성 형식을 그대로 락(Lock)해서 새로 작성하라."
+                title: "Rule 03. 예시 제공 (Few-Shot / Examples)",
+                desc: "말보다 강력한 포맷 주입법입니다. 합격형 계획서의 실제 예산 계산 공식, 비목 배분 비율, 혹은 순서 줄바꿈 패턴을 직접 1~2개 템플릿(Shot)으로 대조하여 모방하도록 강제합니다.",
+                bad: "작년 서식처럼 알아서 잘 만들어줘.",
+                good: "작년 우수 프로그램 예산 구성 비율인 [주재료비 70%, 보조강사비 20%, 행정수수료 10%] 기준을 따릅니다. 표의 규격 서식은 반드시 [품명 | 규격 | 수량 | 단가 | 금액(합계)] 순서의 마크다운 표 구조를 준수하여 계산을 수행하십시오."
             },
             4: {
-                title: "Rule 04. 작업 명확화 (Task)",
-                desc: "단순히 '도와줘'가 아니라 요약, 표 작성, 마인드맵화 등 수행할 핵심 액션 동사를 분명히 한정합니다.",
-                bad: "프롬포절 필요성에 들어갈 거 잘 정리해봐.",
-                good: "제시된 지자체 조례 텍스트에서 행복아동센터의 '주말 돌봄 명분 필요성'에 직접 인용할 핵심 지자체 근거 3개 단락을 개조식 명제 형태로 명확히 추출하고 정리하라."
+                title: "Rule 04. 임무 구체화 (Task)",
+                desc: "두루뭉술한 지시가 아니라 요약, 데이터 추출, 사칙연산 검증, 대안 제시 등 AI가 이행해야 할 핵심 행동을 동사 형태로 규정합니다.",
+                bad: "사업계획서 필요성 부분에 쓸 내용을 요약해봐.",
+                good: "첨부된 지자체 아동 복지 조례 및 통계 자료에서 행복아동센터의 '주말 돌봄 명분 및 타당성'을 객관적으로 입증할 수 있는 핵심 구절 3가지와 근거 지표를 개조식 문장으로 추출하여 분석하십시오."
             },
             5: {
-                title: "Rule 05. 출력 형식 지정 (Format)",
-                desc: "마크다운 표(Table), 쉼표 구분(CSV), 3단계 개조식 리스트 등 한글(HWP) 파일 본문에 바로 복사해서 붙여넣기 가장 이쁜 문서 서식을 미리 약속합니다.",
-                bad: "계획서 예산안 써줘.",
-                good: "보고서 아웃풋 서식은 반드시 [1. 사업 기획 필요성, 2. 예산 세부 내역 표(마크다운 표 서식), 3. 월간 주차별 지도안]의 3단 레이아웃 순서로 엄격하게 출력하라."
+                title: "Rule 05. 출력 형식 (Format)",
+                desc: "HWP(한글) 본문 또는 보고서 양식에 즉시 복사해서 붙여넣기 편리하도록 마크다운 표, 이모지 목록, 번호 매겨진 3단 리어아웃 등 시각적 구조를 지정하는 규칙입니다.",
+                bad: "아동 요리 교실 세부 일정을 상세하게 작성해줘.",
+                good: "출력 결과물은 반드시 [1. 사업 기획 필요성 및 목적, 2. 예산 세부 내역 표(Markdown Table), 3. 회차별 세부 활동 지도안(표)]의 3단 보고서 레이아웃 구조로 엄격하게 출력하십시오."
             },
             6: {
                 title: "Rule 06. 어조 및 톤 (Tone)",
-                desc: "친근한 어조, 격식체(~할 계획임, ~함) 등 기관 공문서와 모금회 제출 규격에 맞는 종결형 문장 말투를 사전에 제약해 두는 방법입니다.",
-                bad: "심사위원이 읽을 거니까 친절하게 설명해줄래?",
-                good: "공식 심사보고서이므로 존댓말을 완전히 배제하고, 어미를 철저히 '~함', '~계획임', '~예정임' 등의 개조식 문어체 종결 어투로 격식 있게 서술하라."
+                desc: "심사관들에게 신뢰를 주는 문어체 말투, 즉 종결형 어투(~함, ~계획임, ~예정임)와 정중한 태도를 약속해 두어 불필요한 공용 챗봇 말투를 걷어냅니다.",
+                bad: "심사관이 읽기 편하도록 부드럽고 친근하게 설명해주세요.",
+                good: "공동모금회 공식 심사 보고서이므로 존댓말과 친근한 수식어를 완전히 배제하고, 어미를 철저하게 '~함', '~계획임', '~예정임' 등의 공문서용 개조식 종결어미를 적용하여 정중하고 전문적인 논조로 서술하십시오."
             }
         };
 
@@ -2811,33 +2005,20 @@
             });
         };
 
-        // SIDEBAR TOGGLE SYSTEM (Robust Inline Style Overrides)
+        // SIDEBAR TOGGLE SYSTEM (Robust Class-Based)
         window.toggleSidebar = function() {
             const body = document.body;
-            const sidebar = document.getElementById("sidebar");
-            const mainWrapper = document.getElementById("main-wrapper");
             const unfoldBtn = document.getElementById("sidebar-unfold-btn");
-            
             const isHidden = body.classList.contains("sidebar-hidden");
             
             if (isHidden) {
                 body.classList.remove("sidebar-hidden");
-                if (sidebar) sidebar.style.transform = "translateX(0)";
-                if (mainWrapper) {
-                    if (window.innerWidth >= 1024) {
-                        mainWrapper.style.paddingLeft = "190px";
-                    } else {
-                        mainWrapper.style.paddingLeft = "0";
-                    }
-                }
                 if (unfoldBtn) {
                     unfoldBtn.classList.add("opacity-0", "pointer-events-none", "-translate-x-12");
                     unfoldBtn.classList.remove("opacity-100", "pointer-events-auto", "translate-x-0");
                 }
             } else {
                 body.classList.add("sidebar-hidden");
-                if (sidebar) sidebar.style.transform = "translateX(-100%)";
-                if (mainWrapper) mainWrapper.style.paddingLeft = "0";
                 if (unfoldBtn) {
                     unfoldBtn.classList.remove("opacity-0", "pointer-events-none", "-translate-x-12");
                     unfoldBtn.classList.add("opacity-100", "pointer-events-auto", "translate-x-0");
@@ -2910,7 +2091,25 @@
 
         // Initialize elements on load
         window.addEventListener("DOMContentLoaded", () => {
+            // Mobile Sidebar default hidden
+            if (window.innerWidth < 1024) {
+                document.body.classList.add("sidebar-hidden");
+                const unfoldBtn = document.getElementById("sidebar-unfold-btn");
+                if (unfoldBtn) {
+                    unfoldBtn.classList.remove("opacity-0", "pointer-events-none", "-translate-x-12");
+                    unfoldBtn.classList.add("opacity-100", "pointer-events-auto", "translate-x-0");
+                }
+            }
             initScrollSpy();
+            
+            // Mobile Auto-Close on link click
+            document.querySelectorAll("aside nav a").forEach(link => {
+                link.addEventListener("click", () => {
+                    if (window.innerWidth < 1024) {
+                        window.toggleSidebar();
+                    }
+                });
+            });
             window.selectModelNode('gpt', 6);
             window.selectModelNode('gemini', 6);
             window.selectModelNode('claude', 6);
@@ -2918,17 +2117,7 @@
                 window.drawCatenaryCurves();
             }, 600);
             
-            // Sync initial padding-left on resizing
-            window.addEventListener("resize", () => {
-                const mainWrapper = document.getElementById("main-wrapper");
-                if (mainWrapper && !document.body.classList.contains("sidebar-hidden")) {
-                    if (window.innerWidth >= 1024) {
-                        mainWrapper.style.paddingLeft = "190px";
-                    } else {
-                        mainWrapper.style.paddingLeft = "0";
-                    }
-                }
-            });
+
         });
 
         window.addEventListener("resize", () => {
