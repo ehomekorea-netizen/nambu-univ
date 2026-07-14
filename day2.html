@@ -161,7 +161,7 @@
             background-color: #60a5fa !important;
         }
 
-        /* Sidebar slide out and main bleed transitions */
+                        /* Sidebar slide out and main bleed transitions */
         #sidebar {
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -169,84 +169,14 @@
             transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sidebar-hidden #sidebar {
-            transform: translateX(-100%) !important;
+            transform: translateX(-100%);
         }
         .sidebar-hidden #main-wrapper {
             padding-left: 0 !important;
         }
-        
-        /* Mobile vs Desktop responsive layout base settings */
-        @media (max-width: 1023px) {
-            #sidebar {
-                transform: translateX(-100%);
-            }
-            #main-wrapper {
-                padding-left: 0 !important;
-            }
-            body:not(.sidebar-hidden) #sidebar {
-                transform: translateX(0) !important;
-            }
-        }
-        @media (min-width: 1024px) {
-            #sidebar {
-                transform: translateX(0);
-            }
-            #main-wrapper {
-                padding-left: 190px;
-            }
-        }
-
 </style>
 
     <script>
-        // SIDEBAR TOGGLE SYSTEM
-        window.toggleSidebar = function() {
-            const body = document.body;
-            const isHidden = body.classList.contains("sidebar-hidden");
-            const unfoldBtn = document.getElementById("sidebar-unfold-btn");
-            
-            if (isHidden) {
-                body.classList.remove("sidebar-hidden");
-                if (unfoldBtn) {
-                    unfoldBtn.classList.add("opacity-0", "pointer-events-none", "-translate-x-12");
-                }
-            } else {
-                body.classList.add("sidebar-hidden");
-                if (unfoldBtn) {
-                    unfoldBtn.classList.remove("opacity-0", "pointer-events-none", "-translate-x-12");
-                }
-            }
-            // Trigger scroll handler to recalculate progress line positioning
-            setTimeout(() => {
-                window.dispatchEvent(new Event('scroll'));
-                if (window.drawCatenaryCables) window.drawCatenaryCables();
-            }, 450);
-        };
-
-        // Modal triggers (Aligned with Day 3 global-modal structure)
-        window.openModal = function(type, title, htmlContent) {
-            const mTitle = document.getElementById("modal-title");
-            const mBody = document.getElementById("modal-body-content");
-            const mOverlay = document.getElementById("global-modal");
-            
-            if (mTitle && mBody && mOverlay) {
-                mTitle.innerText = title;
-                mBody.innerHTML = htmlContent;
-                mOverlay.classList.remove("opacity-0", "pointer-events-none");
-                mOverlay.classList.add("opacity-100");
-                document.body.style.overflow = "hidden";
-            }
-        };
-
-        window.closeModal = function() {
-            const mOverlay = document.getElementById("global-modal");
-            if (mOverlay) {
-                mOverlay.classList.add("opacity-0", "pointer-events-none");
-                mOverlay.classList.remove("opacity-100");
-                document.body.style.overflow = "auto";
-            }
-        };
-
         // Copy mechanism
         
 
@@ -308,7 +238,7 @@
 <body class="antialiased text-slate-200">
 
     <!-- 1. LEFT SIDEBAR NAVIGATION (Desktop Only) -->
-    <aside id="sidebar" class="fixed top-0 left-0 bottom-0 w-[190px] bg-[#05070f] border-r border-white/5 flex-col justify-between p-5 z-40 transition-transform duration-300 lg:translate-x-0 -translate-x-full">
+    <aside id="sidebar" class="hidden lg:flex fixed top-0 left-0 bottom-0 w-[190px] bg-[#05070f] border-r border-white/5 flex-col justify-between p-5 z-40">
         <div class="w-full shrink-0">
             <button onclick="toggleSidebar()" class="w-full bg-blue-950/25 hover:bg-blue-600/20 text-blue-400 hover:text-white font-black py-3 px-3 rounded-xl text-xs transition-all duration-200 active:scale-95 flex items-center justify-center gap-1.5 border border-blue-500/40 shadow-lg shadow-blue-500/5">
                 <i data-lucide="chevron-left" class="w-4 h-4"></i> 사이드바 접기
@@ -522,7 +452,7 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
                         <!-- G Card -->
-                        <div class="gpt-letter-card w-full h-[300px]" onclick="this.classList.toggle('flipped')">
+                        <div class="gpt-letter-card w-full h-[380px] md:h-[350px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
@@ -540,7 +470,7 @@
                         </div>
  
                         <!-- P Card -->
-                        <div class="gpt-letter-card w-full h-[300px]" onclick="this.classList.toggle('flipped')">
+                        <div class="gpt-letter-card w-full h-[380px] md:h-[350px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
@@ -558,7 +488,7 @@
                         </div>
  
                         <!-- T Card -->
-                        <div class="gpt-letter-card w-full h-[300px]" onclick="this.classList.toggle('flipped')">
+                        <div class="gpt-letter-card w-full h-[380px] md:h-[350px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
@@ -889,10 +819,10 @@
                         <div class="lg:col-span-4 flex flex-col justify-center items-center p-6 bg-slate-950/40 rounded-3xl border border-white/10 relative overflow-hidden min-h-[300px]">
                             <!-- Visual Connection Line animations -->
                             <div class="absolute inset-0 pointer-events-none flex flex-col justify-around py-12 px-4 opacity-30">
-                                <div class="w-full h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0 id-flow-line opacity-0 transition-all duration-500" id="flow-voice"></div>
-                                <div class="w-full h-1 bg-gradient-to-r from-purple-500/0 via-purple-500 to-purple-500/0 id-flow-line opacity-0 transition-all duration-500" id="flow-visual"></div>
-                                <div class="w-full h-1 bg-gradient-to-r from-emerald-500/0 via-emerald-500 to-emerald-500/0 id-flow-line opacity-0 transition-all duration-500" id="flow-text"></div>
-                                <div class="w-full h-1 bg-gradient-to-r from-amber-500/0 via-amber-500 to-amber-500/0 id-flow-line opacity-0 transition-all duration-500" id="flow-number"></div>
+                                <div class="w-full h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0 id-flow-line opacity-0 transition-all duration-500 hidden lg:block" id="flow-voice"></div>
+                                <div class="w-full h-1 bg-gradient-to-r from-purple-500/0 via-purple-500 to-purple-500/0 id-flow-line opacity-0 transition-all duration-500 hidden lg:block" id="flow-visual"></div>
+                                <div class="w-full h-1 bg-gradient-to-r from-emerald-500/0 via-emerald-500 to-emerald-500/0 id-flow-line opacity-0 transition-all duration-500 hidden lg:block" id="flow-text"></div>
+                                <div class="w-full h-1 bg-gradient-to-r from-amber-500/0 via-amber-500 to-amber-500/0 id-flow-line opacity-0 transition-all duration-500 hidden lg:block" id="flow-number"></div>
                             </div>
 
                             <div class="text-xs uppercase tracking-wider text-slate-500 font-black mb-6 z-10">2. 인공지능 믹싱 (AI MIXER CORE)</div>
@@ -1753,6 +1683,7 @@
             headerTitle.innerHTML = iconHtml + ' <h3 class="text-xl md:text-2xl font-black text-white ml-3 leading-tight">' + title + '</h3>';
             bodyContent.innerHTML = contentHtml;
             modal.classList.remove("opacity-0", "pointer-events-none");
+            document.body.style.overflow = "hidden";
             
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
@@ -1763,6 +1694,7 @@
             const modal = document.getElementById("global-modal");
             if (modal) {
                 modal.classList.add("opacity-0", "pointer-events-none");
+                document.body.style.overflow = "auto";
             }
         };
 
@@ -1943,8 +1875,8 @@
             }
 
             const activeNode = modelNodeData[type][level];
-            const monitorTitle = document.getElementById("monitor-node-title");
-            const monitorDesc = document.getElementById("monitor-node-desc");
+            const monitorTitle = document.getElementById("graph-monitor-title");
+            const monitorDesc = document.getElementById("graph-monitor-desc");
             const valScore = document.getElementById("monitor-val-score");
             const valLogic = document.getElementById("monitor-val-logic");
             const valSpeed = document.getElementById("monitor-val-speed");
@@ -1979,7 +1911,7 @@
                 let points = [];
                 for (let i = 1; i <= 6; i++) {
                     const node = document.getElementById(`node-${t}-${i}`);
-                    if (node) {
+                    if (node && node.offsetParent) {
                         const rect = node.getBoundingClientRect();
                         const parentRect = node.offsetParent.getBoundingClientRect();
                         const x = rect.left - parentRect.left + rect.width / 2;
@@ -2006,10 +1938,11 @@
         };
 
         // SIDEBAR TOGGLE SYSTEM (Robust Class-Based)
+                // SIDEBAR TOGGLE SYSTEM
         window.toggleSidebar = function() {
             const body = document.body;
-            const unfoldBtn = document.getElementById("sidebar-unfold-btn");
             const isHidden = body.classList.contains("sidebar-hidden");
+            const unfoldBtn = document.getElementById("sidebar-unfold-btn");
             
             if (isHidden) {
                 body.classList.remove("sidebar-hidden");
@@ -2091,25 +2024,10 @@
 
         // Initialize elements on load
         window.addEventListener("DOMContentLoaded", () => {
-            // Mobile Sidebar default hidden
-            if (window.innerWidth < 1024) {
-                document.body.classList.add("sidebar-hidden");
-                const unfoldBtn = document.getElementById("sidebar-unfold-btn");
-                if (unfoldBtn) {
-                    unfoldBtn.classList.remove("opacity-0", "pointer-events-none", "-translate-x-12");
-                    unfoldBtn.classList.add("opacity-100", "pointer-events-auto", "translate-x-0");
-                }
-            }
+
             initScrollSpy();
             
-            // Mobile Auto-Close on link click
-            document.querySelectorAll("aside nav a").forEach(link => {
-                link.addEventListener("click", () => {
-                    if (window.innerWidth < 1024) {
-                        window.toggleSidebar();
-                    }
-                });
-            });
+
             window.selectModelNode('gpt', 6);
             window.selectModelNode('gemini', 6);
             window.selectModelNode('claude', 6);
