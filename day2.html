@@ -57,16 +57,6 @@
             padding-bottom: 2rem;
         }
 
-        /* Floating Capsule Nav (Mobile) */
-        .floating-nav {
-            background: rgba(3, 7, 18, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
-        }
-
         /* Glassmorphic Panel Styles */
         .glass-panel {
             background: rgba(10, 15, 30, 0.55);
@@ -94,38 +84,51 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
 
-        /* Accordion Transitions */
-        .accordion-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        /* Sidebar slide transitions */
+        #sidebar {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(0);
         }
-        .accordion-item {
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .accordion-item.active {
-            border-color: rgba(59, 130, 246, 0.3) !important;
-            background-color: rgba(15, 23, 42, 0.6) !important;
-            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.15);
-        }
-        .accordion-item.active .accordion-body {
-            max-height: 1500px;
-        }
-        .accordion-item.active .step-badge {
-            background: linear-gradient(135deg, #3b82f6, #6366f1) !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+        #main-wrapper {
+            transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Syntax highlighted prompt boxes */
-        .code-container {
-            background-color: #05070f;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            white-space: pre-wrap;
-            word-break: break-all;
+        /* 3D Click Flip styling */
+        .gpt-letter-card {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .gpt-letter-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .gpt-letter-card.flipped .gpt-letter-inner {
+            transform: rotateY(180deg);
+        }
+        .gpt-letter-front, .gpt-letter-back {
+            backface-visibility: hidden;
+            position: absolute;
+            inset: 0;
+        }
+        .gpt-letter-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Flow line animations in Refinery Simulator */
+        @keyframes floatFiles {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+        .anim-file-flow {
+            position: relative;
+        }
+        .anim-file-flow::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.4), transparent);
+            animation: floatFiles 2s infinite linear;
         }
 
         /* Custom scrolls */
@@ -143,22 +146,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #3b82f6;
         }
-    
-        /* Sidebar slide out and main bleed transitions */
-        #sidebar {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #main-wrapper {
-            transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .sidebar-hidden #sidebar {
-            transform: translateX(-100%);
-        }
-        .sidebar-hidden #main-wrapper {
-            padding-left: 0 !important;
-        }
 
-        /* Dynamic Progress Line & Dot Status Colors */
         .nav-dot {
             transition: all 0.3s ease;
             background-color: #334155 !important;
@@ -172,114 +160,7 @@
         .nav-dot.completed {
             background-color: #60a5fa !important;
         }
-
-        /* INFOGRAPHIC MICRO-ANIMATIONS */
-        
-        /* 1. Chat Ping-Pong Animation (Session 1) */
-        @keyframes chatLeft {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
-            50% { transform: translateY(-4px) scale(1.03); opacity: 1; }
-        }
-        @keyframes chatRight {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
-            50% { transform: translateY(4px) scale(0.97); opacity: 0.6; }
-        }
-        .anim-chat-left { animation: chatLeft 4s infinite ease-in-out; }
-        .anim-chat-right { animation: chatRight 4s infinite ease-in-out; }
-
-        /* 2. Slot Machine Reel Spinning (Session 2) */
-        @keyframes spinReel {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-33.33%); }
-        }
-        .reel-spinning {
-            animation: spinReel 0.6s cubic-bezier(0.15, 0.85, 0.35, 1.2) infinite;
-        }
-
-        /* 3. Funnel Overflow & Suction Animation (Session 3) */
-        @keyframes floatFiles {
-            0% { transform: translateY(30px) scale(0.6); opacity: 0; }
-            30% { opacity: 1; }
-            80% { transform: translateY(-60px) scale(0.8); opacity: 0.8; }
-            100% { transform: translateY(-90px) scale(0.3); opacity: 0; }
-        }
-        .anim-file-flow { animation: floatFiles 3s infinite linear; }
-
-        /* 4. Mixer Particle Flow (Session 4) */
-        @keyframes mixPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.2)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.6)); }
-        }
-        .anim-mixer-core { animation: mixPulse 2s infinite ease-in-out; }
-        
-        @keyframes itemFloatGood {
-            0% { transform: translate(-20px, 40px) scale(0.7); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translate(10px, -20px) scale(1); opacity: 0; }
-        }
-        @keyframes itemFloatBad {
-            0% { transform: translate(20px, 40px) scale(0.7); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translate(-10px, -20px) scale(1); opacity: 0; }
-        }
-        .anim-float-good { animation: itemFloatGood 2.5s infinite ease-in-out; }
-        .anim-float-bad { animation: itemFloatBad 2.5s infinite ease-in-out; }
-    
-        .gpt-letter-card {
-            perspective: 1000px;
-            cursor: pointer;
-        }
-        .gpt-letter-inner {
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .gpt-letter-card.flipped .gpt-letter-inner {
-            transform: rotateY(180deg);
-        }
-        .gpt-letter-front, .gpt-letter-back {
-            backface-visibility: hidden;
-            position: absolute;
-            inset: 0;
-        }
-        .gpt-letter-back {
-            transform: rotateY(180deg);
-        }
-
-            /* Sidebar slide out and main bleed transitions matching day3 */
-        #sidebar {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        #main-wrapper {
-            transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .sidebar-hidden #sidebar {
-            transform: translateX(-100%);
-        }
-        .sidebar-hidden #main-wrapper {
-            padding-left: 0 !important;
-        }
-        
-        /* 3D Click Flip styling without shaking hover bug */
-        .gpt-letter-card {
-            perspective: 1000px;
-            cursor: pointer;
-        }
-        .gpt-letter-inner {
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .gpt-letter-card.flipped .gpt-letter-inner {
-            transform: rotateY(180deg);
-        }
-        .gpt-letter-front, .gpt-letter-back {
-            backface-visibility: hidden;
-            position: absolute;
-            inset: 0;
-        }
-        .gpt-letter-back {
-            transform: rotateY(180deg);
-        }
-    </style>
+</style>
 
     <script>
         // SIDEBAR TOGGLE SYSTEM
@@ -446,17 +327,13 @@
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>7. 프롬프트 6원칙</span>
             </a>
-            <a href="#section-prompt-rules" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
-                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>8. 프롬프트 조립기</span>
-            </a>
             <a href="#section-security-masking" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>9. 보안 마스킹</span>
+                <span>8. 보안 마스킹</span>
             </a>
             <a href="#section-llm-evolution" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>10. LLM 진화 로드맵</span>
+                <span>9. LLM 진화 로드맵</span>
             </a>
         </nav>
         
@@ -486,7 +363,7 @@
     </header>
 
     <!-- MAIN BODY WRAPPER -->
-    <div id="main-wrapper" class="lg:pl-[190px] w-full transition-all duration-300">
+    <div id="main-wrapper" style="padding-left: 190px;" class="w-full transition-all duration-300">
 
         <!-- HERO UNIT -->
         <section id="hero" class="w-full px-6 md:px-12 py-20 relative overflow-hidden">
@@ -1194,117 +1071,9 @@
                 </div>
             </section>
 
-<!-- SECTION 8: 8: PROMPT 6 PRINCIPLES -->
-            <section id="section-prompt-rules" class="presentation-section w-full">
-                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6 mb-6">
-                        <div class="flex items-center gap-3.5">
-                            <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-455 font-extrabold text-xs tracking-wider">07</span>
-                            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight">프롬프트 6대 핵심 원칙 조립기</h2>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span id="prompt-assembled-count" class="text-purple-400 font-bold text-sm transition-all duration-350">결합률 0% (0/6)</span>
-                            <button id="prompt-copy-btn" onclick="copyAssembledPrompt()" class="opacity-40 pointer-events-none bg-purple-600/40 text-slate-450 px-4 py-2 rounded-xl text-xs font-black flex items-center justify-center gap-2 border border-purple-500/30 transition-all duration-300">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> 프롬프트 복사
-                            </button>
-                        </div>
-                    </div>
 
-                    <p class="text-slate-350 text-sm md:text-base leading-relaxed">
-                        사회복지 실무 기획안 작성 시 무작정 질문하면 환각 답변이 나옵니다. 아래의 <span class="text-purple-400 font-bold">6가지 퍼즐 요소</span>를 활성화해 보며, 구조화된 고품질 프롬프트가 조립되는 과정을 직관적으로 체험하세요.
-                    </p>
 
-                    <!-- Principle Grid Buttons -->
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-                        <button id="principle-btn-persona" onclick="togglePromptPart('persona', this)" class="group border border-white/10 bg-slate-900/45 hover:border-purple-500/50 hover:bg-purple-950/10 p-4 rounded-2xl text-left transition-all duration-300 flex flex-col justify-between h-28 relative overflow-hidden">
-                            <div class="flex justify-between items-start w-full">
-                                <span class="bg-purple-500/10 text-purple-400 text-[10px] font-black px-2 py-0.5 rounded-md border border-purple-500/20">1. Persona</span>
-                                <i id="principle-icon-persona" data-lucide="plus" class="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-colors"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white text-xs font-black mb-0.5">역할 지정</h4>
-                                <p class="text-slate-450 text-[10px] leading-tight">사회복지 기획관 페르소나</p>
-                            </div>
-                        </button>
-
-                        <button id="principle-btn-context" onclick="togglePromptPart('context', this)" class="group border border-white/10 bg-slate-900/45 hover:border-blue-500/50 hover:bg-blue-950/10 p-4 rounded-2xl text-left transition-all duration-300 flex flex-col justify-between h-28 relative overflow-hidden">
-                            <div class="flex justify-between items-start w-full">
-                                <span class="bg-blue-500/10 text-blue-400 text-[10px] font-black px-2 py-0.5 rounded-md border border-blue-500/20">2. Context</span>
-                                <i id="principle-icon-context" data-lucide="plus" class="w-4 h-4 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white text-xs font-black mb-0.5">배경 상황</h4>
-                                <p class="text-slate-450 text-[10px] leading-tight">예산 한도 및 아동 요리 경험</p>
-                            </div>
-                        </button>
-
-                        <button id="principle-btn-examples" onclick="togglePromptPart('examples', this)" class="group border border-white/10 bg-slate-900/45 hover:border-pink-500/50 hover:bg-pink-950/10 p-4 rounded-2xl text-left transition-all duration-300 flex flex-col justify-between h-28 relative overflow-hidden">
-                            <div class="flex justify-between items-start w-full">
-                                <span class="bg-pink-500/10 text-pink-400 text-[10px] font-black px-2 py-0.5 rounded-md border border-pink-500/20">3. Examples</span>
-                                <i id="principle-icon-examples" data-lucide="plus" class="w-4 h-4 text-slate-500 group-hover:text-pink-400 transition-colors"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white text-xs font-black mb-0.5">예시 제공</h4>
-                                <p class="text-slate-450 text-[10px] leading-tight">작년 사업 예산 편성 비율</p>
-                            </div>
-                        </button>
-
-                        <button id="principle-btn-action" onclick="togglePromptPart('action', this)" class="group border border-white/10 bg-slate-900/45 hover:border-orange-500/50 hover:bg-orange-950/10 p-4 rounded-2xl text-left transition-all duration-300 flex flex-col justify-between h-28 relative overflow-hidden">
-                            <div class="flex justify-between items-start w-full">
-                                <span class="bg-orange-500/10 text-orange-400 text-[10px] font-black px-2 py-0.5 rounded-md border border-orange-500/20">4. Action</span>
-                                <i id="principle-icon-action" data-lucide="plus" class="w-4 h-4 text-slate-500 group-hover:text-orange-400 transition-colors"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white text-xs font-black mb-0.5">명령 수행</h4>
-                                <p class="text-slate-450 text-[10px] leading-tight">신규 주말 실습 기획안 작성</p>
-                            </div>
-                        </button>
-
-                        <button id="principle-btn-format" onclick="togglePromptPart('format', this)" class="group border border-white/10 bg-slate-900/45 hover:border-emerald-500/50 hover:bg-emerald-950/10 p-4 rounded-2xl text-left transition-all duration-300 flex flex-col justify-between h-28 relative overflow-hidden">
-                            <div class="flex justify-between items-start w-full">
-                                <span class="bg-emerald-500/10 text-emerald-450 text-[10px] font-black px-2 py-0.5 rounded-md border border-emerald-500/20">5. Format</span>
-                                <i id="principle-icon-format" data-lucide="plus" class="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white text-xs font-black mb-0.5">출력 형식</h4>
-                                <p class="text-slate-450 text-[10px] leading-tight">보고서 목차 순서 고정</p>
-                            </div>
-                        </button>
-
-                        <button id="principle-btn-tone" onclick="togglePromptPart('tone', this)" class="group border border-white/10 bg-slate-900/45 hover:border-amber-500/50 hover:bg-amber-950/10 p-4 rounded-2xl text-left transition-all duration-300 flex flex-col justify-between h-28 relative overflow-hidden">
-                            <div class="flex justify-between items-start w-full">
-                                <span class="bg-amber-500/10 text-amber-400 text-[10px] font-black px-2 py-0.5 rounded-md border border-amber-500/20">6. Tone</span>
-                                <i id="principle-icon-tone" data-lucide="plus" class="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition-colors"></i>
-                            </div>
-                            <div>
-                                <h4 class="text-white text-xs font-black mb-0.5">어조 설정</h4>
-                                <p class="text-slate-450 text-[10px] leading-tight">격식 있는 비즈니스 정중 톤</p>
-                            </div>
-                        </button>
-                    </div>
-
-                    <!-- Assembled Output Console -->
-                    <div class="relative bg-slate-950/90 rounded-2xl border border-white/10 p-6 font-mono text-xs md:text-sm leading-relaxed overflow-hidden">
-                        <div class="absolute top-3 right-4 flex items-center justify-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-red-500"></span>
-                            <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
-                            <span class="w-2 h-2 rounded-full bg-green-500"></span>
-                        </div>
-                        <div class="text-slate-500 text-[10px] uppercase font-black tracking-widest mb-4 border-b border-white/5 pb-2">PROMPT EDITOR CONSOLE</div>
-                        
-                        <div class="space-y-4 text-slate-300">
-                            <p id="segment-persona" class="transition-all duration-500 opacity-40 text-slate-600">너는 15년 차 경력의 노련한 사회복지사 기획관이다.</p>
-                            <p id="segment-context" class="transition-all duration-500 opacity-40 text-slate-600">아동들은 요리 경험이 전무하며 주말 강사 예산은 회당 15만 원으로 한정되어 있다.</p>
-                            <p id="segment-examples" class="transition-all duration-500 opacity-40 text-slate-600">참고로 작년 오감 만족 제과제빵 예산 비율은 주재료 70%, 강사비 30%였다.</p>
-                            <p id="segment-action" class="transition-all duration-500 opacity-40 text-slate-600">남구 지역아동센터 대상의 신규 요리 실습 주말 특별 프로그램 기획안을 작성해라.</p>
-                            <p id="segment-format" class="transition-all duration-500 opacity-40 text-slate-600">보고서 양식은 [1. 사업 기획 의도, 2. 예산 세부 내역 표, 3. 월간 주차별 지도안] 순서로 출력하라.</p>
-                            <p id="segment-tone" class="transition-all duration-500 opacity-40 text-slate-600">어조는 격식 있고 신뢰감이 느껴지는 정중한 비즈니스 톤으로 써라.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION 9: SECURITY MASKING -->
+            <!-- SECTION 8: SECURITY MASKING -->
             <section id="section-security-masking" class="presentation-section w-full mt-12">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
                     <div class="flex items-center gap-3.5 border-b border-white/5 pb-4 mb-6">
@@ -1361,7 +1130,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 10: LLM EVOLUTION ROADMAP (SEPARATOR LANES WITH CATENARY CURVES) -->
+            <!-- SECTION 9: LLM EVOLUTION ROADMAP (SEPARATOR LANES WITH CATENARY CURVES) -->
             <section id="section-llm-evolution" class="presentation-section w-full mt-12">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6 mb-6">
@@ -1582,8 +1351,34 @@
                     </div>
                 </div>
             </section>
-        </main>
-
+        <!-- bottom navigator links -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-12 border-t border-white/10">
+            <a href="day1.html" class="glass-card p-6 rounded-2xl border border-white/5 flex items-center justify-between hover:border-blue-500/50 hover:bg-blue-950/10 transition group">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-500/20 shrink-0">
+                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-wider block">PREVIOUS DAY</span>
+                        <strong class="text-white text-base md:text-lg font-black group-hover:text-blue-400 transition">1일차: AI 개념 & 실무 비서 기초</strong>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="day3.html" class="glass-card p-6 rounded-2xl border border-white/5 flex items-center justify-between hover:border-purple-500/50 hover:bg-purple-950/10 transition group text-right">
+                <div class="flex items-center gap-4 justify-end w-full">
+                    <div>
+                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-wider block">NEXT DAY</span>
+                        <strong class="text-white text-base md:text-lg font-black group-hover:text-purple-400 transition">3일차: 사업계획서 자동 빌딩 실습</strong>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 group-hover:bg-purple-500/20 shrink-0">
+                        <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+    
     <!-- Global Modal Component (Overhauled for High Readability) -->
     <div id="global-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
         <div class="glass-panel w-full max-w-5xl mx-4 rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative flex flex-col max-h-[85vh] bg-gradient-to-br from-[#0f172a] to-[#070a13]">
@@ -1603,13 +1398,25 @@
         </div>
     </div>
 
+    <!-- Global Toast Component -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900/90 border border-emerald-500/30 text-white px-5 py-3.5 rounded-xl shadow-2xl backdrop-blur-md opacity-0 translate-y-24 transition-all duration-300 flex items-center gap-3">
+        <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <i data-lucide="check" class="w-4 h-4"></i>
+        </div>
+        <div>
+            <span class="text-xs text-slate-400 block font-medium">알림</span>
+            <span id="toast-text" class="text-sm font-bold text-slate-100">프롬프트가 복사되었습니다!</span>
+        </div>
     </div>
 
-    <!-- Global Toast Component -->
+
+    
     <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900/90 border border-emerald-500/30 text-white px-5 py-3.5 rounded-xl shadow-2xl backdrop-blur-md opacity-0 translate-y-24 transition-all duration-300 flex items-center gap-3">
         <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
         <span class="text-slate-100 text-xs md:text-sm font-black">Toast Message</span>
     </div>
+
+    </div> <!-- close main-wrapper -->
 
     <script>
         // --- Sidebar Drawer & Active Navigation Sync ---
@@ -2472,7 +2279,6 @@
                     qIdx++;
                 } else {
                     clearInterval(typingInterval);
-                    // Start typing answer
                     setTimeout(() => {
                         let aIdx = 0;
                         typingInterval = setInterval(() => {
@@ -2511,9 +2317,11 @@
             output.className = "text-base md:text-lg font-bold text-slate-500 font-mono";
             bar.classList.remove("hidden");
             progress.style.width = "0%";
-            badge.classList.remove("opacity-100", "translate-x-0");
-            badge.classList.add("opacity-0", "translate-x-32");
-            source.classList.add("hidden");
+            if (badge) {
+                badge.classList.remove("opacity-100", "translate-x-0");
+                badge.classList.add("opacity-0", "translate-x-32");
+            }
+            if (source) source.classList.add("hidden");
             
             let w = 0;
             const timer = setInterval(() => {
@@ -2551,10 +2359,11 @@
             bar.classList.remove("hidden");
             progress.style.width = "0%";
             
-            // Show attachment badge
-            badge.classList.remove("opacity-0", "translate-x-32");
-            badge.classList.add("opacity-100", "translate-x-0");
-            source.classList.add("hidden");
+            if (badge) {
+                badge.classList.remove("opacity-0", "translate-x-32");
+                badge.classList.add("opacity-100", "translate-x-0");
+            }
+            if (source) source.classList.add("hidden");
             
             let w = 0;
             const timer = setInterval(() => {
@@ -2571,7 +2380,7 @@
                         output.innerText = "“첨부해주신 '보육료_지침서_2026.pdf'의 4페이지 지침에 따르면, 9세 아동에 대한 모금회 표준 지원비용은 1인당 연간 32만 원입니다.”";
                         output.className = "text-base md:text-lg font-bold text-emerald-400 font-mono";
                         bar.classList.add("hidden");
-                        source.classList.remove("hidden");
+                        if (source) source.classList.remove("hidden");
                     }, 400);
                 }
             }, 200);
@@ -2588,7 +2397,6 @@
         window.togglePipelineData = function(type, element) {
             pipelineStates[type] = !pipelineStates[type];
             
-            // Toggle active card styling
             const card = document.getElementById(`data-card-${type}`);
             const flow = document.getElementById(`flow-${type}`);
             
@@ -2599,7 +2407,7 @@
                 }
                 if (flow) {
                     flow.classList.remove("opacity-0");
-                    flow.classList.add("opacity-100");
+                    flow.classList.add("opacity-100", "anim-file-flow");
                 }
             } else {
                 if (card) {
@@ -2608,15 +2416,13 @@
                 }
                 if (flow) {
                     flow.classList.add("opacity-0");
-                    flow.classList.remove("opacity-100");
+                    flow.classList.remove("opacity-100", "anim-file-flow");
                 }
             }
 
-            // Calculate active counts
             const activeKeys = Object.keys(pipelineStates).filter(k => pipelineStates[k]);
             const count = activeKeys.length;
             
-            // Update Core Status
             const core = document.getElementById("refinery-core");
             const coreStatus = document.getElementById("refinery-core-status");
             
@@ -2633,8 +2439,6 @@
                 }
             }
 
-            // Toggle Outputs
-            // Output 1 -> requires 'number'
             const outCard1 = document.getElementById("output-card-1");
             const outTitle1 = document.getElementById("output-title-1");
             const outDesc1 = document.getElementById("output-desc-1");
@@ -2646,7 +2450,7 @@
                     outCard1.classList.remove("opacity-40");
                     outCard1.classList.add("opacity-100", "border-amber-500/30", "shadow-[0_0_15px_rgba(245,158,11,0.1)]");
                     outTitle1.className = "text-white text-lg md:text-xl block font-black transition-colors duration-500";
-                    outDesc1.className = "text-slate-350 text-xs md:text-sm leading-relaxed font-bold transition-colors duration-500";
+                    outDesc1.className = "text-slate-300 text-xs md:text-sm leading-relaxed font-bold transition-colors duration-500";
                     outBadge1.classList.remove("hidden");
                     outIcon1.className = "w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/20 shrink-0 transition";
                 } else {
@@ -2659,7 +2463,6 @@
                 }
             }
 
-            // Output 2 -> requires 'text' and 'visual'
             const outCard2 = document.getElementById("output-card-2");
             const outTitle2 = document.getElementById("output-title-2");
             const outDesc2 = document.getElementById("output-desc-2");
@@ -2671,7 +2474,7 @@
                     outCard2.classList.remove("opacity-40");
                     outCard2.classList.add("opacity-100", "border-purple-500/30", "shadow-[0_0_15px_rgba(139,92,246,0.1)]");
                     outTitle2.className = "text-white text-lg md:text-xl block font-black transition-colors duration-500";
-                    outDesc2.className = "text-slate-350 text-xs md:text-sm leading-relaxed font-bold transition-colors duration-500";
+                    outDesc2.className = "text-slate-300 text-xs md:text-sm leading-relaxed font-bold transition-colors duration-500";
                     outBadge2.classList.remove("hidden");
                     outIcon2.className = "w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20 shrink-0 transition";
                 } else {
@@ -2684,7 +2487,6 @@
                 }
             }
 
-            // Output 3 -> requires 'text' and 'voice'
             const outCard3 = document.getElementById("output-card-3");
             const outTitle3 = document.getElementById("output-title-3");
             const outDesc3 = document.getElementById("output-desc-3");
@@ -2696,7 +2498,7 @@
                     outCard3.classList.remove("opacity-40");
                     outCard3.classList.add("opacity-100", "border-emerald-500/30", "shadow-[0_0_15px_rgba(16,185,129,0.1)]");
                     outTitle3.className = "text-white text-lg md:text-xl block font-black transition-colors duration-500";
-                    outDesc3.className = "text-slate-350 text-xs md:text-sm leading-relaxed font-bold transition-colors duration-500";
+                    outDesc3.className = "text-slate-300 text-xs md:text-sm leading-relaxed font-bold transition-colors duration-500";
                     outBadge3.classList.remove("hidden");
                     outIcon3.className = "w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 shrink-0 transition";
                 } else {
@@ -2822,117 +2624,7 @@
             window.openModal('aha', data.title, html);
         };
 
-        // --- Session 8: Prompt Builder Assembly Panel ---
-        const promptStates = {
-            persona: false,
-            context: false,
-            examples: false,
-            action: false,
-            format: false,
-            tone: false
-        };
-
-        const segmentTexts = {
-            persona: "“너는 15년 차 공동모금회 전문 심사위원이다.”",
-            context: "“우리 센터 이용 위기 아동 20명 중 15명이 주말 돌봄 부재 상태이다.”",
-            examples: "“예산 산출 공식은 [품명 | 규격 | 수량 | 단가 | 금액] 형태를 따른다.”",
-            action: "“오감 만족 주말 실습 프로그램 3차년도 예산 계획안을 작성하라.”",
-            format: "“최종 출력 결과물은 가독성 높은 마크다운 표로 깔끔하게 포맷팅하여 제시하라.”",
-            tone: "“모금회 심사에 유리하도록 종결 어미를 격식 있는 비즈니스 어투(~함, ~임)로 서술하라.”"
-        };
-
-        window.togglePromptPart = function(type) {
-            promptStates[type] = !promptStates[type];
-            
-            const btn = document.getElementById(`principle-btn-${type}`);
-            const icon = document.getElementById(`principle-icon-${type}`);
-            const segment = document.getElementById(`segment-${type}`);
-            
-            if (btn && segment) {
-                if (promptStates[type]) {
-                    btn.classList.add("border-purple-500", "bg-purple-950/20", "scale-[1.01]");
-                    btn.classList.remove("border-white/10", "bg-slate-900/45");
-                    if (icon) {
-                        icon.setAttribute("data-lucide", "check");
-                        icon.className = "w-4 h-4 text-purple-400";
-                    }
-                    segment.classList.remove("opacity-40", "text-slate-600");
-                    segment.classList.add("font-black");
-                    if (type === 'action') segment.classList.add("text-orange-400");
-                    else if (type === 'persona') segment.classList.add("text-purple-400");
-                    else if (type === 'context') segment.classList.add("text-blue-400");
-                    else if (type === 'examples') segment.classList.add("text-pink-400");
-                    else if (type === 'format') segment.classList.add("text-emerald-400");
-                    else if (type === 'tone') segment.classList.add("text-amber-400");
-                } else {
-                    btn.classList.remove("border-purple-500", "bg-purple-950/20", "scale-[1.01]");
-                    btn.classList.add("border-white/10", "bg-slate-900/45");
-                    if (icon) {
-                        icon.setAttribute("data-lucide", "plus");
-                        icon.className = "w-4 h-4 text-slate-500 group-hover:text-purple-400";
-                    }
-                    segment.classList.add("opacity-40", "text-slate-600");
-                    segment.classList.remove("font-black", "text-orange-400", "text-purple-400", "text-blue-400", "text-pink-400", "text-emerald-400", "text-amber-400");
-                }
-            }
-
-            const activeKeys = Object.keys(promptStates).filter(k => promptStates[k]);
-            const activeCount = activeKeys.length;
-            const pct = Math.round((activeCount / 6) * 100);
-            
-            const countText = document.getElementById("prompt-assembled-count");
-            if (countText) {
-                countText.innerText = `결합률 ${pct}% (${activeCount}/6)`;
-            }
-            
-            const copyBtn = document.getElementById("prompt-copy-btn");
-            if (copyBtn && countText) {
-                if (activeCount === 6) {
-                    copyBtn.classList.remove("opacity-40", "pointer-events-none", "bg-purple-600/40", "text-slate-400");
-                    copyBtn.classList.add("opacity-100", "cursor-pointer", "animate-pulse", "bg-purple-600", "text-white");
-                    countText.className = "text-emerald-400 font-black animate-pulse";
-                } else {
-                    copyBtn.classList.add("opacity-40", "pointer-events-none", "bg-purple-600/40", "text-slate-400");
-                    copyBtn.classList.remove("opacity-100", "cursor-pointer", "animate-pulse", "bg-purple-600", "text-white");
-                    countText.className = "text-purple-400";
-                }
-            }
-            
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-        };
-
-        window.copyAssembledPrompt = function() {
-            const activeCount = Object.values(promptStates).filter(Boolean).length;
-            if (activeCount < 6) return;
-
-            const fullPrompt = `${segmentTexts.persona}\n\n${segmentTexts.context}\n\n${segmentTexts.examples}\n\n${segmentTexts.action}\n\n${segmentTexts.format}\n\n${segmentTexts.tone}`;
-            
-            navigator.clipboard.writeText(fullPrompt).then(() => {
-                showPromptToast("📋 6원칙 조립 프롬프트 복사 성공!");
-            }).catch(err => {
-                console.error("클립보드 복사 실패: ", err);
-            });
-        };
-
-        function showPromptToast(message) {
-            const toast = document.getElementById("toast");
-            if (!toast) return;
-            
-            const toastBody = toast.querySelector("span.text-slate-100");
-            if (toastBody) {
-                toastBody.innerText = message;
-            }
-            
-            toast.className = "fixed bottom-6 right-6 z-50 bg-slate-900/90 border border-purple-550/40 text-white px-5 py-3.5 rounded-xl shadow-[0_0_20px_rgba(168,85,247,0.3)] backdrop-blur-md opacity-100 translate-y-0 transition-all duration-300 flex items-center gap-3";
-            
-            setTimeout(() => {
-                toast.className = "fixed bottom-6 right-6 z-50 bg-slate-900/90 border border-emerald-500/30 text-white px-5 py-3.5 rounded-xl shadow-2xl backdrop-blur-md opacity-0 translate-y-24 transition-all duration-300 flex items-center gap-3";
-            }, 2500);
-        }
-
-        // --- Session 9: Security Masking Level Controller Script ---
+        // --- Session 8: Security Masking Level Controller Script ---
         window.updateMaskingLevel = function(val) {
             const levelValue = parseInt(val);
             
@@ -3011,7 +2703,7 @@
             }
         };
 
-        // --- Session 10: Model Evolution Catenary Cable Roadmap Controller ---
+        // --- Session 9: Model Evolution Catenary Cable Roadmap Controller ---
         const modelNodeData = {
             gpt: {
                 1: { title: "GPT-3 (2020년 6월 출시)", desc: "1,750억 파라미터. 초창기 대규모 언어모델로, 잦은 문맥 환각(Hallucination)이 존재해 문서 작성 검토용으로만 연구됨." },
@@ -3083,7 +2775,7 @@
                 let score = 50 + (level * 8);
                 let logic = 40 + (level * 10);
                 let speed = 90 - (level * 3);
-                if (level >= 4) speed = 80 + (level * 3); // next-gen speedup
+                if (level >= 4) speed = 80 + (level * 3);
 
                 valScore.innerText = score + "점";
                 valScore.style.width = score + "%";
@@ -3119,7 +2811,7 @@
                         const p1 = points[i];
                         const p2 = points[i+1];
                         const cx1 = p1.x + (p2.x - p1.x) / 3;
-                        const cy1 = p1.y + (p2.y - p1.y) / 3 + 28; // catenary sag
+                        const cy1 = p1.y + (p2.y - p1.y) / 3 + 28;
                         const cx2 = p1.x + (p2.x - p1.x) * 2 / 3;
                         const cy2 = p1.y + (p2.y - p1.y) * 2 / 3 + 28;
                         d += ` C ${cx1} ${cy1}, ${cx2} ${cy2}, ${p2.x} ${p2.y}`;
@@ -3130,20 +2822,33 @@
             });
         };
 
-        // SIDEBAR TOGGLE SYSTEM (Synced with day3)
+        // SIDEBAR TOGGLE SYSTEM (Robust Inline Style Overrides)
         window.toggleSidebar = function() {
             const body = document.body;
-            const isHidden = body.classList.contains("sidebar-hidden");
+            const sidebar = document.getElementById("sidebar");
+            const mainWrapper = document.getElementById("main-wrapper");
             const unfoldBtn = document.getElementById("sidebar-unfold-btn");
+            
+            const isHidden = body.classList.contains("sidebar-hidden");
             
             if (isHidden) {
                 body.classList.remove("sidebar-hidden");
+                if (sidebar) sidebar.style.transform = "translateX(0)";
+                if (mainWrapper) {
+                    if (window.innerWidth >= 1024) {
+                        mainWrapper.style.paddingLeft = "190px";
+                    } else {
+                        mainWrapper.style.paddingLeft = "0";
+                    }
+                }
                 if (unfoldBtn) {
                     unfoldBtn.classList.add("opacity-0", "pointer-events-none", "-translate-x-12");
                     unfoldBtn.classList.remove("opacity-100", "pointer-events-auto", "translate-x-0");
                 }
             } else {
                 body.classList.add("sidebar-hidden");
+                if (sidebar) sidebar.style.transform = "translateX(-100%)";
+                if (mainWrapper) mainWrapper.style.paddingLeft = "0";
                 if (unfoldBtn) {
                     unfoldBtn.classList.remove("opacity-0", "pointer-events-none", "-translate-x-12");
                     unfoldBtn.classList.add("opacity-100", "pointer-events-auto", "translate-x-0");
@@ -3154,7 +2859,7 @@
             }, 300);
         };
 
-        // ScrollSpy and sidebar progress dynamics
+        // ScrollSpy and sidebar progress dynamics (9 sections)
         function initScrollSpy() {
             const navLinks = document.querySelectorAll("aside nav a");
             const progressLine = document.getElementById("sidebar-progress-line");
@@ -3169,7 +2874,6 @@
                 document.getElementById("section-rag"),
                 document.getElementById("section-data"),
                 document.getElementById("section-prompt"),
-                document.getElementById("section-prompt-rules"),
                 document.getElementById("section-security-masking"),
                 document.getElementById("section-llm-evolution")
             ].filter(el => el !== null);
@@ -3186,7 +2890,6 @@
                     }
                 });
 
-                // Detect bottom of page to force highlight of last section
                 const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
                 if (isAtBottom && sections.length) {
                     currentSection = sections[sections.length - 1];
@@ -3210,7 +2913,6 @@
                 });
 
                 if (progressLine) {
-                    const linkHeight = 36; // approximate height of links
                     const lineVal = activeIdx * (progressLine.parentElement.clientHeight / (navLinks.length - 1));
                     progressLine.style.height = `${lineVal}px`;
                 }
@@ -3226,6 +2928,18 @@
             setTimeout(() => {
                 window.drawCatenaryCurves();
             }, 600);
+            
+            // Sync initial padding-left on resizing
+            window.addEventListener("resize", () => {
+                const mainWrapper = document.getElementById("main-wrapper");
+                if (mainWrapper && !document.body.classList.contains("sidebar-hidden")) {
+                    if (window.innerWidth >= 1024) {
+                        mainWrapper.style.paddingLeft = "190px";
+                    } else {
+                        mainWrapper.style.paddingLeft = "0";
+                    }
+                }
+            });
         });
 
         window.addEventListener("resize", () => {
