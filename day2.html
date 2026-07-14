@@ -2029,16 +2029,18 @@
 
             // Color theming
             const colorMap = {
-                blue:   { border: 'border-blue-500/40',   iconBg: 'bg-blue-500/15 text-blue-400',   arrowBorder: 'border-blue-500/40',   dateClass: 'text-blue-400' },
-                purple: { border: 'border-purple-500/40', iconBg: 'bg-purple-500/15 text-purple-400', arrowBorder: 'border-purple-500/40', dateClass: 'text-purple-400' },
-                amber:  { border: 'border-amber-500/40',  iconBg: 'bg-amber-500/15 text-amber-400',  arrowBorder: 'border-amber-500/40',  dateClass: 'text-amber-400' }
+                blue:   { border: 'border-blue-500/50',   iconBg: 'bg-blue-500/20 text-blue-400',   arrowBorder: 'border-blue-500/50',   dateClass: 'bg-blue-500/10 text-blue-400 border-blue-500/30' },
+                purple: { border: 'border-purple-500/50', iconBg: 'bg-purple-500/20 text-purple-400', arrowBorder: 'border-purple-500/50', dateClass: 'bg-purple-500/10 text-purple-400 border-purple-500/30' },
+                amber:  { border: 'border-amber-500/50',  iconBg: 'bg-amber-500/20 text-amber-400',  arrowBorder: 'border-amber-500/50',  dateClass: 'bg-amber-500/10 text-amber-400 border-amber-500/30' }
             };
             const col = colorMap[data.color] || colorMap.blue;
 
-            toastInner.className = 'relative w-72 rounded-2xl border shadow-2xl overflow-hidden backdrop-blur-xl ' + col.border;
-            toastIcon.className = 'w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ' + col.iconBg;
-            toastArrow.className = 'absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 border-r border-b ' + col.arrowBorder;
-            toastDate.className = 'text-xs font-bold mt-0.5 ' + col.dateClass;
+            // Apply upgraded sizes and styles
+            const toastWClass = window.innerWidth < 640 ? 'w-[380px]' : 'w-[420px]';
+            toastInner.className = 'relative ' + toastWClass + ' rounded-2xl border-2 shadow-2xl overflow-hidden backdrop-blur-2xl ' + col.border;
+            toastIcon.className = 'w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ' + col.iconBg;
+            toastArrow.className = 'absolute bottom-[-9px] left-1/2 -translate-x-1/2 w-4.5 h-4.5 rotate-45 border-r-2 border-b-2 ' + col.arrowBorder;
+            toastDate.className = 'inline-block text-[11px] font-extrabold px-2 py-0.5 rounded border mt-1 ' + col.dateClass;
 
             // Update icon
             toastIconEl.setAttribute('data-lucide', data.icon);
@@ -2047,11 +2049,12 @@
 
             // Position: centered above the node element
             const rect = nodeEl.getBoundingClientRect();
-            const toastW = 288; // w-72 = 18rem = 288px
+            // Determine toast width based on screen size (w-[380px] on mobile, w-[420px] on desktop)
+            const toastW = window.innerWidth < 640 ? 380 : 420;
             let left = rect.left + rect.width / 2;
-            // Clamp to viewport
-            left = Math.max(toastW / 2 + 12, Math.min(left, window.innerWidth - toastW / 2 - 12));
-            const top = rect.top + window.scrollY - 12; // 12px gap above node
+            // Clamp to viewport with 16px safety margin
+            left = Math.max(toastW / 2 + 16, Math.min(left, window.innerWidth - toastW / 2 - 16));
+            const top = rect.top + window.scrollY - 14; // 14px gap above node
 
             toast.style.display = 'block';
             toast.style.left = left + 'px';
@@ -2205,30 +2208,36 @@
         });
     </script>
 
-    <!-- Model Toast Popup -->
+    <!-- Model Toast Popup (Enlarged & Presentation-Optimized) -->
     <div id="model-toast"
-         style="display:none; position:fixed; z-index:9999; transform:translateX(-50%) translateY(0); transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);"
+         style="display:none; position:fixed; z-index:9999; transform:translateX(-50%) translateY(0); transition: opacity 0.22s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);"
          class="opacity-0 pointer-events-none">
         <div id="model-toast-inner"
-             class="relative w-72 rounded-2xl border shadow-2xl overflow-hidden backdrop-blur-xl"
-             style="background: linear-gradient(135deg, rgba(10,17,35,0.97) 0%, rgba(15,23,42,0.97) 100%);">
+             class="relative w-[380px] md:w-[420px] rounded-2xl border-2 shadow-[0_15px_50px_rgba(0,0,0,0.8)] overflow-hidden backdrop-blur-2xl"
+             style="background: linear-gradient(135deg, rgba(8,14,28,0.98) 0%, rgba(13,20,38,0.98) 100%);">
             <!-- Arrow pointing down -->
             <div id="model-toast-arrow"
-                 class="absolute bottom-[-8px] left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 border-r border-b"
-                 style="background: rgba(15,23,42,0.97);"></div>
+                 class="absolute bottom-[-9px] left-1/2 -translate-x-1/2 w-4.5 h-4.5 rotate-45 border-r-2 border-b-2"
+                 style="background: rgba(13,20,38,0.98);"></div>
             <!-- Header -->
-            <div id="model-toast-header" class="flex items-center gap-3 px-4 pt-4 pb-3 border-b border-white/5">
-                <div id="model-toast-icon" class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0">
-                    <i id="model-toast-icon-el" class="w-4 h-4"></i>
+            <div class="flex items-center justify-between px-5 pt-5 pb-3.5 border-b border-white/10 relative">
+                <div class="flex items-center gap-3.5">
+                    <div id="model-toast-icon" class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0">
+                        <i id="model-toast-icon-el" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h4 id="model-toast-title" class="text-base md:text-lg font-black text-white leading-tight"></h4>
+                        <span id="model-toast-date" class="inline-block text-[11px] font-extrabold px-2 py-0.5 rounded border mt-1"></span>
+                    </div>
                 </div>
-                <div>
-                    <p id="model-toast-title" class="text-sm font-black text-white leading-tight"></p>
-                    <p id="model-toast-date" class="text-xs font-bold mt-0.5"></p>
-                </div>
+                <!-- Close Button -->
+                <button onclick="closeModelToast()" class="text-slate-400 hover:text-white transition p-1 hover:bg-white/5 rounded-lg active:scale-95">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
             </div>
             <!-- Body -->
-            <div class="px-4 pt-3 pb-4">
-                <p id="model-toast-desc" class="text-xs text-slate-300 leading-relaxed font-medium"></p>
+            <div class="px-5 pt-4 pb-5">
+                <p id="model-toast-desc" class="text-sm md:text-[15px] text-slate-200 leading-relaxed font-bold"></p>
             </div>
         </div>
     </div>
