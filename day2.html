@@ -160,6 +160,21 @@
         .nav-dot.completed {
             background-color: #60a5fa !important;
         }
+
+        /* Sidebar slide out and main bleed transitions */
+        #sidebar {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #main-wrapper {
+            transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .sidebar-hidden #sidebar {
+            transform: translateX(-100%);
+        }
+        .sidebar-hidden #main-wrapper {
+            padding-left: 0 !important;
+        }
+
 </style>
 
     <script>
@@ -363,7 +378,7 @@
     </header>
 
     <!-- MAIN BODY WRAPPER -->
-    <div id="main-wrapper" style="padding-left: 190px;" class="w-full transition-all duration-300">
+    <div id="main-wrapper" class="w-full transition-all duration-300">
 
         <!-- HERO UNIT -->
         <section id="hero" class="w-full px-6 md:px-12 py-20 relative overflow-hidden">
@@ -411,7 +426,7 @@
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
                         <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 1</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white">생성형 AI의 진짜 본질: 똑똑한 신입 비서</h2>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">세션 1. 생성형 AI의 본질적 차이</h2>
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -489,33 +504,21 @@
             </section>
 
             <!-- SECTION 2: GPT 어원 -->
-            <section id="section-gemini-gpt" class="presentation-section">
-                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
-                    <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 02</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white">GPT는 무슨 뜻일까?</h2>
-                    </div>
-                    <p class="text-slate-300 text-lg md:text-xl leading-relaxed">
-                        GPT는 <strong class="text-blue-400">Generative Pre-trained Transformer</strong>의 앞글자를 딴 이름입니다.<br>
-                        어렵게 생각하기보다 <strong>“미리 공부한 자료를 바탕으로(P), 앞뒤 문맥을 살피며(T), 다음에 올 알맞은 말을 조합해내는 AI(G)”</strong>라고 이해하면 쉽습니다.
-                    </p>
-                    
-                    <!-- Interactive Letter Cards Grid (Click 3D Flip Effect - Larger Text, No shaking) -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+            <section id="section-gemini-gpt" class="presentation-section"><div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
                         <!-- G Card -->
                         <div class="gpt-letter-card w-full h-[300px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-24 h-24 rounded-full bg-orange-400 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-orange-500/20 select-none">G</div>
-                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Generative<br><span class="text-base md:text-lg text-orange-350 font-bold block mt-1">생성형 (생성)</span></h4>
-                                    <span class="text-[11px] text-slate-500 animate-pulse font-bold">클릭해서 뒷면을 읽어보세요!</span>
+                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Generative<br><span class="text-base md:text-2xl font-bold text-orange-350 font-bold block mt-1">생성형 (생성)</span></h4>
+                                    <span class="text-[11px] text-slate-500  font-bold">클릭해서 뒷면을 읽어보세요!</span>
                                 </div>
                                 <!-- Back -->
                                 <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-orange-500/30 bg-slate-950/90">
-                                    <span class="text-orange-400 text-sm font-black tracking-wider uppercase">01 · Generative</span>
-                                    <h5 class="text-white font-black text-lg md:text-xl">무에서 창조가 아닌 '재조합 생성'</h5>
-                                    <p class="text-slate-300 text-sm leading-relaxed text-left font-medium">인터넷상의 수많은 검색 결과를 고대로 뱉는 것이 아니라, 질문자가 원하는 형태에 맞춰 문장 구조, 포맷, 아이디어를 확률 분포에 맞추어 새로 조립(재배열)해 줍니다.</p>
+                                    <span class="text-orange-400 text-lg font-black tracking-wider uppercase">01 · Generative</span>
+                                    <h5 class="text-white font-black text-2xl font-bold md:text-xl">무에서 창조가 아닌 '재조합 생성'</h5>
+                                    <p class="text-slate-300 text-lg leading-relaxed text-left font-medium">인터넷상의 수많은 검색 결과를 고대로 뱉는 것이 아니라, 질문자가 원하는 형태에 맞춰 문장 구조, 포맷, 아이디어를 확률 분포에 맞추어 새로 조립(재배열)해 줍니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -526,14 +529,14 @@
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-24 h-24 rounded-full bg-fuchsia-400 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-fuchsia-500/20 select-none">P</div>
-                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Pre-trained<br><span class="text-base md:text-lg text-fuchsia-350 font-bold block mt-1">Pre-trained (사전 학습)</span></h4>
-                                    <span class="text-[11px] text-slate-500 animate-pulse font-bold">클릭해서 뒷면을 읽어보세요!</span>
+                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Pre-trained<br><span class="text-base md:text-2xl font-bold text-fuchsia-350 font-bold block mt-1">Pre-trained (사전 학습)</span></h4>
+                                    <span class="text-[11px] text-slate-500  font-bold">클릭해서 뒷면을 읽어보세요!</span>
                                 </div>
                                 <!-- Back -->
                                 <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-fuchsia-500/30 bg-slate-950/90">
-                                    <span class="text-fuchsia-400 text-sm font-black tracking-wider uppercase">02 · Pre-trained</span>
-                                    <h5 class="text-white font-black text-lg md:text-xl">데이터 언어 패턴 사전 습득</h5>
-                                    <p class="text-slate-300 text-sm leading-relaxed text-left font-medium">수십억 개의 웹 문서, 기획서, 뉴스 텍스트를 미리 공부(학습)해 두었기에 자연스러운 한국어 문장 패턴과 규격을 이미 알고 있습니다. 단, 최신 팩트를 기억한다는 의미는 아닙니다.</p>
+                                    <span class="text-fuchsia-400 text-lg font-black tracking-wider uppercase">02 · Pre-trained</span>
+                                    <h5 class="text-white font-black text-2xl font-bold md:text-xl">데이터 언어 패턴 사전 습득</h5>
+                                    <p class="text-slate-300 text-lg leading-relaxed text-left font-medium">수십억 개의 웹 문서, 기획서, 뉴스 텍스트를 미리 공부(학습)해 두었기에 자연스러운 한국어 문장 패턴과 규격을 이미 알고 있습니다. 단, 최신 팩트를 기억한다는 의미는 아닙니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -544,14 +547,14 @@
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-24 h-24 rounded-full bg-lime-200 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-lime-500/20 select-none">T</div>
-                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Transformer<br><span class="text-base md:text-lg text-lime-350 font-bold block mt-1">Transformer (맥락 이해)</span></h4>
-                                    <span class="text-[11px] text-slate-500 animate-pulse font-bold">클릭해서 뒷면을 읽어보세요!</span>
+                                    <h4 class="text-white font-black text-2xl md:text-3xl font-sans">Transformer<br><span class="text-base md:text-2xl font-bold text-lime-350 font-bold block mt-1">Transformer (맥락 이해)</span></h4>
+                                    <span class="text-[11px] text-slate-500  font-bold">클릭해서 뒷면을 읽어보세요!</span>
                                 </div>
                                 <!-- Back -->
                                 <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-lime-500/30 bg-slate-950/90">
-                                    <span class="text-lime-400 text-sm font-black tracking-wider uppercase">03 · Transformer</span>
-                                    <h5 class="text-white font-black text-lg md:text-xl">문맥 속 단어간 연결 관계 분석</h5>
-                                    <p class="text-slate-300 text-sm leading-relaxed text-left font-medium">문장 전체의 흐름을 병렬로 동시에 읽어, 사용자가 던져준 지엽적 지침(프롬프트)의 앞뒤 맥락을 보고 다음에 들어갈 단어 확률을 정확히 계산하여 엮어내는 구글 특허의 핵심 알고리즘입니다.</p>
+                                    <span class="text-lime-400 text-lg font-black tracking-wider uppercase">03 · Transformer</span>
+                                    <h5 class="text-white font-black text-2xl font-bold md:text-xl">문맥 속 단어간 연결 관계 분석</h5>
+                                    <p class="text-slate-300 text-lg leading-relaxed text-left font-medium">문장 전체의 흐름을 병렬로 동시에 읽어, 사용자가 던져준 지엽적 지침(프롬프트)의 앞뒤 맥락을 보고 다음에 들어갈 단어 확률을 정확히 계산하여 엮어내는 구글 특허의 핵심 알고리즘입니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -564,7 +567,7 @@
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
                         <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">Session 03</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white">왜 Creative(창조)가 아니고 Generative(생성)일까?</h2>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">세션 3. 생성형 AI란 무엇인가?</h2>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -597,9 +600,7 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
                         <div>
                             <span class="text-red-400 text-xs md:text-sm font-black tracking-widest uppercase block mb-1">Session 04</span>
-                            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">
-                                <i data-lucide="alert-triangle" class="w-6 h-6 text-red-400"></i> AI 할루시네이션(환각)의 이해
-                            </h2>
+                            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">세션 4. 할루시네이션 (환각)의 이해</h2>
                         </div>
                         <span class="px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-black tracking-wider">HALLUCINATION</span>
                     </div>
@@ -678,9 +679,7 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
                         <div>
                             <span class="text-blue-400 text-xs md:text-sm font-black tracking-widest uppercase block mb-1">Session 05</span>
-                            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">
-                                <i data-lucide="file-search" class="w-6 h-6 text-blue-400"></i> RAG — 검색증강생성의 이해
-                            </h2>
+                            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">세션 5. RAG (검색 증강 생성) 원리</h2>
                         </div>
                         <span class="px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-black tracking-wider">RETRIEVAL-AUGMENTED GENERATION</span>
                     </div>
@@ -795,7 +794,7 @@
                     
                     <div class="flex items-center gap-3">
                         <span class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 font-extrabold text-sm">Session 06</span>
-                        <h2 class="text-3xl md:text-5xl font-black text-white">데이터(Data): AI를 움직이는 원재료</h2>
+                        <h2 class="text-3xl md:text-5xl font-black text-white">세션 6. 사업계획서 데이터 파이프라인</h2>
                     </div>
 
                     <p class="text-slate-200 text-xl md:text-3xl font-black border-l-4 border-amber-500 pl-4 leading-relaxed">
@@ -954,7 +953,7 @@
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
                         <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">Session 07</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white">기획서 퀄리티를 수직 상승시키는 프롬프트 6대 원칙</h2>
+                        <h2 class="text-2xl md:text-3xl font-black text-white">세션 7. 프롬프트 6대 핵심 원칙</h2>
                     </div>
 
                     <p class="text-slate-350 text-base leading-relaxed">
@@ -1078,7 +1077,7 @@
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
                     <div class="flex items-center gap-3.5 border-b border-white/5 pb-4 mb-6">
                         <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-455 font-extrabold text-xs tracking-wider">08</span>
-                        <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight">안전망 구축: 개인정보 가명화 시뮬레이션</h2>
+                        <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight">세션 8. 데이터 보안 및 마스킹</h2>
                     </div>
 
                     <p class="text-slate-350 text-sm md:text-base leading-relaxed">
@@ -1136,7 +1135,7 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/5 pb-6 mb-6">
                         <div class="flex items-center gap-3.5">
                             <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-455 font-extrabold text-xs tracking-wider">09</span>
-                            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight">3대 메이저 AI 모델 변천사 (2026년 7월 최신 기준)</h2>
+                            <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight">세션 9. LLM의 진화 방향</h2>
                         </div>
                         <button onclick="playModelTimeline()" class="bg-sky-600 hover:bg-sky-500 text-white font-black px-5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-[0_0_15px_rgba(56,189,248,0.3)]">
                             <i data-lucide="play" class="w-4 h-4 fill-white"></i> ⚡ 3대 모델 진화 로드맵 재생
@@ -1352,18 +1351,8 @@
                 </div>
             </section>
         <!-- bottom navigator links -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-12 border-t border-white/10">
-            <a href="day1.html" class="glass-card p-6 rounded-2xl border border-white/5 flex items-center justify-between hover:border-blue-500/50 hover:bg-blue-950/10 transition group">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-500/20 shrink-0">
-                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-wider block">PREVIOUS DAY</span>
-                        <strong class="text-white text-base md:text-lg font-black group-hover:text-blue-400 transition">1일차: AI 개념 & 실무 비서 기초</strong>
-                    </div>
-                </div>
-            </a>
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-6 pt-12 border-t border-white/10">
+            
             
             <a href="day3.html" class="glass-card p-6 rounded-2xl border border-white/5 flex items-center justify-between hover:border-purple-500/50 hover:bg-purple-950/10 transition group text-right">
                 <div class="flex items-center gap-4 justify-end w-full">
