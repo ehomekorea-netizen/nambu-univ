@@ -186,12 +186,12 @@
 
         /* Session 2: Verifying Funnel Animation */
         @keyframes funnelDrop {
-            0% { transform: translateY(-40px); opacity: 0; }
-            30% { opacity: 1; transform: translateY(-10px); }
-            70% { opacity: 1; transform: translateY(10px); }
-            100% { transform: translateY(40px); opacity: 0; }
+            0% { transform: translateY(-30px); opacity: 0; }
+            30% { opacity: 1; transform: translateY(-8px); }
+            70% { opacity: 1; transform: translateY(8px); }
+            100% { transform: translateY(30px); opacity: 0; }
         }
-        .anim-funnel-drop { animation: funnelDrop 3s infinite ease-in-out; }
+        .anim-funnel-drop { animation: funnelDrop 3.2s infinite ease-in-out; }
 
         /* Session 3: GPT Circle Hover Flip */
         .gpt-letter-card {
@@ -214,20 +214,20 @@
 
         /* Session 4: NotebookLM Desktop Slide Motion */
         @keyframes slideFile {
-            0% { transform: translate(-30px, -20px) rotate(-5deg); opacity: 0; }
+            0% { transform: translate(-25px, -15px) rotate(-3deg); opacity: 0; }
             40% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
             70% { opacity: 1; transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 20px) scale(0.8); opacity: 0; }
+            100% { transform: translate(25px, 15px) scale(0.85); opacity: 0; }
         }
-        .anim-slide-file { animation: slideFile 4.5s infinite ease-in-out; }
+        .anim-slide-file { animation: slideFile 4s infinite ease-in-out; }
 
         /* Session 5: Puzzle Pieces Assembly */
         @keyframes puzzlePiece1 {
-            0%, 100% { transform: translate(-8px, -8px); }
+            0%, 100% { transform: translate(-6px, -6px); }
             50% { transform: translate(0, 0); }
         }
         @keyframes puzzlePiece2 {
-            0%, 100% { transform: translate(8px, 8px); }
+            0%, 100% { transform: translate(6px, 6px); }
             50% { transform: translate(0, 0); }
         }
         .anim-puzzle-1 { animation: puzzlePiece1 3s infinite ease-in-out; }
@@ -235,7 +235,7 @@
     </style>
 
     <script>
-        // SIDEBAR TOGGLE SYSTEM
+        // SIDEBAR TOGGLE SYSTEM (Synced with Day 3 styling)
         window.toggleSidebar = function() {
             const body = document.body;
             const isHidden = body.classList.contains("sidebar-hidden");
@@ -258,29 +258,26 @@
             }, 450);
         };
 
-        // Modal triggers
+        // Modal triggers (Synced with Day 3 global-modal structure)
         window.openModal = function(type, title, htmlContent) {
             const mTitle = document.getElementById("modal-title");
             const mBody = document.getElementById("modal-body-content");
-            const mOverlay = document.getElementById("modal-overlay");
+            const mOverlay = document.getElementById("global-modal");
             
             if (mTitle && mBody && mOverlay) {
                 mTitle.innerText = title;
                 mBody.innerHTML = htmlContent;
-                mOverlay.classList.remove("hidden", "opacity-0", "pointer-events-none");
-                mOverlay.classList.add("flex", "opacity-100");
+                mOverlay.classList.remove("opacity-0", "pointer-events-none");
+                mOverlay.classList.add("opacity-100");
                 document.body.style.overflow = "hidden";
             }
         };
 
         window.closeModal = function() {
-            const mOverlay = document.getElementById("modal-overlay");
+            const mOverlay = document.getElementById("global-modal");
             if (mOverlay) {
                 mOverlay.classList.add("opacity-0", "pointer-events-none");
-                setTimeout(() => {
-                    mOverlay.classList.add("hidden");
-                    mOverlay.classList.remove("flex");
-                }, 300);
+                mOverlay.classList.remove("opacity-100");
                 document.body.style.overflow = "auto";
             }
         };
@@ -290,12 +287,12 @@
             navigator.clipboard.writeText(text)
                 .then(() => {
                     const toast = document.getElementById("toast");
-                    toast.classList.add("translate-y-0", "opacity-100");
+                    toast.classList.add("opacity-100", "translate-y-0");
                     toast.classList.remove("translate-y-24");
                     
                     setTimeout(() => {
                         toast.classList.add("translate-y-24");
-                        toast.classList.remove("translate-y-0", "opacity-100");
+                        toast.classList.remove("opacity-100", "translate-y-0");
                     }, 2500);
                 })
                 .catch(err => {
@@ -420,7 +417,7 @@
         <!-- 4. MAIN CONTENT AREA -->
         <main class="max-w-[1440px] mx-auto px-6 md:px-12 pb-24 space-y-24">
 
-            <!-- SECTION 1: AI 리터러시 (INFOGRAPHIC ADDED) -->
+            <!-- SECTION 1: AI 리터러시 -->
             <section id="section-essence" class="presentation-section">
                  <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
@@ -461,14 +458,14 @@
                 </div>
             </section>
 
-            <!-- SECTION 2: 작동 방식과 한계 (INFOGRAPHIC ADDED) -->
+            <!-- SECTION 2: 작동 방식과 한계 -->
             <section id="section-generative" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3"><span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">Session 2</span><h2 class="text-2xl md:text-3xl font-black text-white">왜 AI 답변을 그대로 믿으면 안 될까?</h2></div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                         <div class="lg:col-span-8 space-y-4">
-                            <p class="text-slate-350 text-base md:text-lg leading-relaxed">AI는 질문의 의도를 추측해 가장 그럴듯한 답변을 생성합니다. 답변의 말투가 자신 있어 보여도 사실이라는 뜻은 아닙니다. 존재하지 않는 출처·통계·사례를 제시하는 <strong class="text-amber-400">환각(hallucination)</strong>도 생길 수 있습니다.</p>
+                            <p class="text-slate-300 text-base md:text-lg leading-relaxed">AI는 질문의 의도를 추측해 가장 그럴듯한 답변을 생성합니다. 답변의 말투가 자신 있어 보여도 사실이라는 뜻은 아닙니다. 존재하지 않는 출처·통계·사례를 제시하는 <strong class="text-amber-400">환각(hallucination)</strong>도 생길 수 있습니다.</p>
                         </div>
                         
                         <!-- ADDED INFOGRAPHIC: Fact Filtering Flow Animation -->
@@ -500,7 +497,7 @@
                 </div>
             </section>
 
-            <!-- SECTION 3: GPT 어원 (INTERACTIVE HOVER FLIP ADDED) -->
+            <!-- SECTION 3: GPT 어원 -->
             <section id="section-gemini-gpt" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-6">
                     <div class="flex items-center gap-3"><span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 3</span><h2 class="text-2xl md:text-3xl font-black text-white">GPT는 무슨 뜻일까?</h2></div>
@@ -515,7 +512,7 @@
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-20 h-20 rounded-full bg-orange-400 flex items-center justify-center text-4xl font-black text-slate-950 shadow-lg shadow-orange-500/10">G</div>
-                                    <h4 class="text-white font-extrabold text-xl">Generative<br><span class="text-sm text-orange-350">생성형</span></h4>
+                                    <h4 class="text-white font-extrabold text-xl font-sans">Generative<br><span class="text-sm text-orange-300">생성형</span></h4>
                                     <span class="text-[10px] text-slate-500">마우스를 올려 뒷면을 읽어보세요!</span>
                                 </div>
                                 <!-- Back -->
@@ -533,7 +530,7 @@
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-20 h-20 rounded-full bg-fuchsia-400 flex items-center justify-center text-4xl font-black text-slate-950 shadow-lg shadow-fuchsia-500/10">P</div>
-                                    <h4 class="text-white font-extrabold text-xl">Pre-trained<br><span class="text-sm text-fuchsia-350">사전 학습된</span></h4>
+                                    <h4 class="text-white font-extrabold text-xl font-sans">Pre-trained<br><span class="text-sm text-fuchsia-350">사전 학습된</span></h4>
                                     <span class="text-[10px] text-slate-500">마우스를 올려 뒷면을 읽어보세요!</span>
                                 </div>
                                 <!-- Back -->
@@ -551,7 +548,7 @@
                                 <!-- Front -->
                                 <div class="gpt-letter-front absolute inset-0 glass-card p-6 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-20 h-20 rounded-full bg-lime-200 flex items-center justify-center text-4xl font-black text-slate-950 shadow-lg shadow-lime-500/10">T</div>
-                                    <h4 class="text-white font-extrabold text-xl">Transformer<br><span class="text-sm text-lime-350">트랜스포머</span></h4>
+                                    <h4 class="text-white font-extrabold text-xl font-sans">Transformer<br><span class="text-sm text-lime-350">트랜스포머</span></h4>
                                     <span class="text-[10px] text-slate-500">마우스를 올려 뒷면을 읽어보세요!</span>
                                 </div>
                                 <!-- Back -->
@@ -569,17 +566,17 @@
                 </div>
             </section>
 
-            <!-- SECTION 4: NotebookLM (INFOGRAPHIC ADDED) -->
+            <!-- SECTION 4: NotebookLM -->
             <section id="section-ai-data" class="presentation-section">
-                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
+                <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-7">
                     <div class="flex items-center gap-3"><span class="px-3.5 py-1.5 rounded-xl bg-amber-500/20 text-amber-400 font-extrabold text-xs">Session 4</span><h2 class="text-2xl md:text-3xl font-black text-white">NotebookLM이란?</h2></div>
                     <p class="text-slate-300 text-base md:text-lg leading-relaxed"><strong class="text-amber-400">NotebookLM</strong>은 내가 올린 자료를 중심으로 질문하고 정리하는 ‘자료 기반 AI 메모장’입니다. 일반 챗봇이 폭넓은 지식을 활용한다면, NotebookLM은 선택한 문서·PDF·웹페이지·유튜브 자막·Google 문서 등을 자료로 삼아 답변합니다.</p>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                         <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
-                            <div class="glass-card p-5 rounded-2xl space-y-2"><span class="text-xs font-extrabold text-blue-400">STEP 1</span><h4 class="text-white font-bold text-base">자료 넣기</h4><p class="text-slate-400 text-xs leading-relaxed">사업계획서, 운영지침, 공개된 통계, 회의자료 등 주제에 필요한 자료를 한 노트북에 모읍니다. 자료의 출처와 사용 권한을 먼저 확인합니다.</p></div>
-                            <div class="glass-card p-5 rounded-2xl space-y-2"><span class="text-xs font-extrabold text-purple-400">STEP 2</span><h4 class="text-white font-bold text-base">자료에 질문하기</h4><p class="text-slate-400 text-xs leading-relaxed">“요약해줘”보다 “세 자료의 공통 목표와 차이점을 표로 정리해줘”처럼 대상·기준·형식을 함께 요청합니다. 답변에는 원문을 확인할 수 있는 인용이 표시됩니다.</p></div>
-                            <div class="glass-card p-5 rounded-2xl space-y-2"><span class="text-xs font-extrabold text-amber-400">STEP 3</span><h4 class="text-white font-bold text-base">결과물로 바꾸기</h4><p class="text-slate-400 text-xs leading-relaxed">자료를 바탕으로 학습 가이드, 브리핑, 오디오 개요, 마인드맵, 퀴즈, 플래시카드, 표 등을 만들 수 있습니다. 기능과 사용량은 계정에 따라 다를 수 있습니다.</p></div>
+                            <div class="glass-card p-5 rounded-2xl space-y-2"><span class="text-xs font-extrabold text-blue-400 font-sans">STEP 1</span><h4 class="text-white font-bold text-base font-sans">자료 넣기</h4><p class="text-slate-400 text-xs leading-relaxed">사업계획서, 운영지침, 공개된 통계, 회의자료 등 주제에 필요한 자료를 한 노트북에 모읍니다. 자료의 출처와 사용 권한을 먼저 확인합니다.</p></div>
+                            <div class="glass-card p-5 rounded-2xl space-y-2"><span class="text-xs font-extrabold text-purple-400 font-sans">STEP 2</span><h4 class="text-white font-bold text-base font-sans">자료에 질문하기</h4><p class="text-slate-400 text-xs leading-relaxed">“요약해줘”보다 “세 자료의 공통 목표와 차이점을 표로 정리해줘”처럼 대상·기준·형식을 함께 요청합니다. 답변에는 원문을 확인할 수 있는 인용이 표시됩니다.</p></div>
+                            <div class="glass-card p-5 rounded-2xl space-y-2"><span class="text-xs font-extrabold text-amber-400 font-sans">STEP 3</span><h4 class="text-white font-bold text-base font-sans">결과물로 바꾸기</h4><p class="text-slate-400 text-xs leading-relaxed">자료를 바탕으로 학습 가이드, 브리핑, 오디오 개요, 마인드맵, 퀴즈, 플래시카드, 표 등을 만들 수 있습니다. 기능과 사용량은 계정에 따라 다를 수 있습니다.</p></div>
                         </div>
 
                         <!-- ADDED INFOGRAPHIC: Slide File desk and scanning motion -->
@@ -600,14 +597,14 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                        <div class="bg-blue-950/20 p-6 rounded-2xl border border-blue-500/10 space-y-3"><h4 class="text-white font-extrabold text-lg flex items-center gap-2"><i data-lucide="book-open-check" class="w-5 h-5 text-blue-400"></i> 지역아동센터 활용 예</h4><ul class="space-y-2 text-slate-300 text-sm leading-relaxed list-disc list-inside"><li>공모사업 안내문 여러 개의 공통 제출서류 비교</li><li>기관 운영지침에서 담당자가 확인할 절차 추출</li><li>지난해 결과보고서에서 반복된 개선점 찾기</li><li>직원 교육자료를 오디오 개요·퀴즈로 바꾸기</li></ul></div>
+                        <div class="bg-blue-950/20 p-6 rounded-2xl border border-blue-500/10 space-y-3"><h4 class="text-white font-extrabold text-lg flex items-center gap-2"><i data-lucide="book-open-check" class="w-5 h-5 text-blue-400"></i> 지역아동센터 활용 예</h4><ul class="space-y-2 text-slate-300 text-sm leading-relaxed list-disc list-inside"><li>공모사업 안내문 여러 개의 공통 제출서류 비교</li><li>기관 운영지침에서 담당자가 확인할 절차 추출</li><li>직원 교육자료를 오디오 개요·퀴즈로 바꾸기</li></ul></div>
                         <div class="bg-red-950/30 border border-red-500/20 rounded-2xl p-6 space-y-3"><h4 class="text-white font-extrabold text-lg flex items-center gap-2"><i data-lucide="shield-alert" class="w-5 h-5 text-red-400"></i> 개인정보·저작권 주의</h4><p class="text-slate-300 text-sm leading-relaxed">아동의 사례기록·사진·상담내용은 실제 자료 그대로 올리지 않습니다. 기관이 승인한 자료만 사용하고, 공개·공유할 때는 원자료의 권리와 접근 범위를 확인합니다. NotebookLM도 AI이므로 의료·법률·보호 판단을 대신하지 않습니다.</p></div>
                     </div>
                     <div class="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-5 text-sm text-amber-100 leading-relaxed"><strong>쉽게 비유하면</strong>　NotebookLM은 ‘아무거나 대답하는 검색창’이 아니라, 내가 건넨 자료를 책상 위에 펼쳐 놓고 함께 찾아보는 ‘자료 정리 파트너’입니다. 그래도 인용문과 원문은 반드시 대조합니다.</div>
                 </div>
             </section>
 
-            <!-- SECTION 5: 기본 프롬프팅 (INFOGRAPHIC ADDED) -->
+            <!-- SECTION 5: 기본 프롬프팅 -->
             <section id="section-prompt-rules" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3"><span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">Session 5</span><h2 class="text-2xl md:text-3xl font-black text-white">기본 프롬프트 6요소: 말 잘하기보다 일 잘 시키기</h2></div>
@@ -615,12 +612,12 @@
                     
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                         <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">01 · 목적</span><h4 class="text-white font-bold text-base mt-2">무엇을 위해?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">“지역아동센터 방학 프로그램 초안을 만들기 위해”</p></div>
-                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">02 · 맥락</span><h4 class="text-white font-bold text-lg mt-2">어떤 상황에서?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">대상, 기간, 인력, 예산, 이미 확인한 사실</p></div>
-                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">03 · 작업</span><h4 class="text-white font-bold text-lg mt-2">무엇을 해줘?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">요약, 비교, 초안, 질문 만들기처럼 동사로 요청</p></div>
-                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">04 · 형식</span><h4 class="text-white font-bold text-lg mt-2">어떤 모양으로?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">표·목록·문단 수·글자 수·대상 독자를 지정</p></div>
-                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">05 · 기준</span><h4 class="text-white font-bold text-lg mt-2">무엇을 지켜?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">근거 없는 숫자는 만들지 말고, 모르면 ‘확인 필요’로 표시</p></div>
-                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">06 · 예시·검증</span><h4 class="text-white font-bold text-lg mt-2">어떻게 확인해?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">원하는 예시를 주고, 사실·추정·확인 필요를 구분하도록 요청</p></div>
+                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">01 · 목적</span><h4 class="text-white font-bold text-base mt-2 font-sans">무엇을 위해?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">“지역아동센터 방학 프로그램 초안을 만들기 위해”</p></div>
+                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">02 · 맥락</span><h4 class="text-white font-bold text-lg mt-2 font-sans">어떤 상황에서?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">대상, 기간, 인력, 예산, 이미 확인한 사실</p></div>
+                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">03 · 작업</span><h4 class="text-white font-bold text-lg mt-2 font-sans">무엇을 해줘?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">요약, 비교, 초안, 질문 만들기처럼 동사로 요청</p></div>
+                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">04 · 형식</span><h4 class="text-white font-bold text-lg mt-2 font-sans">어떤 모양으로?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">표·목록·문단 수·글자 수·대상 독자를 지정</p></div>
+                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">05 · 기준</span><h4 class="text-white font-bold text-lg mt-2 font-sans">무엇을 지켜?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">근거 없는 숫자는 만들지 말고, 모르면 ‘확인 필요’로 표시</p></div>
+                            <div class="glass-card p-5 rounded-2xl"><span class="text-xs font-extrabold text-blue-400 tracking-wider">06 · 예시·검증</span><h4 class="text-white font-bold text-lg mt-2 font-sans">어떻게 확인해?</h4><p class="text-slate-400 text-xs leading-relaxed mt-2">원하는 예시를 주고, 사실·추정·확인 필요를 구분하도록 요청</p></div>
                         </div>
 
                         <!-- ADDED INFOGRAPHIC: Puzzle Pieces Assembly Motion -->
@@ -667,22 +664,25 @@
                     <div class="flex items-center gap-3"><span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 6</span><h2 class="text-2xl md:text-3xl font-black text-white">지역아동센터 실무 프롬프트 4종</h2></div>
                     <p class="text-slate-300 text-base leading-relaxed">아래 예시는 실제 아동 정보가 아닌 가상 정보로 연습합니다. 결과를 복사하기 전에 원문·기관 양식·현장 가능성을 확인하세요.</p>
                     <div class="space-y-4 pt-2">
-                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden"><button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"><div class="flex items-center gap-3"><span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">1</span><strong class="text-white text-base md:text-lg">회의 메모를 실행 목록으로 정리하기</strong></div><i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i></button><div class="accordion-body"><div class="px-6 pb-6 pt-2 space-y-4"><p class="text-slate-400 text-xs md:text-sm">가상 회의 메모를 붙여넣고 담당자·기한·확인 필요 사항을 분리합니다.</p><div class="relative"><div id="p-gemini-tip-1" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">아래 회의 메모를 바탕으로 실행 목록을 만들어줘.
+                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden bg-slate-900/30"><button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none"><div class="flex items-center gap-4"><span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge transition duration-300 font-sans">3-1</span><span class="font-bold text-slate-100 font-sans">회의 메모를 실행 목록으로 정리하기</span></div><i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i></button><div class="accordion-body bg-slate-950/20"><div class="p-6 space-y-4"><p class="text-slate-400 text-xs md:text-sm">가상 회의 메모를 붙여넣고 담당자·기한·확인 필요 사항을 분리합니다.</p><div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40"><div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl"><span class="text-xs font-bold text-slate-400 font-sans">실습 프롬프트 1</span><button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPromptText(document.getElementById('p-gemini-tip-1').innerText)">복사</button></div><div id="p-gemini-tip-1" class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl">아래 회의 메모를 바탕으로 실행 목록을 만들어줘.
 1. 결정된 사항 / 2. 추가 논의가 필요한 사항 / 3. 담당자와 기한 / 4. 외부 확인이 필요한 사실로 나눠줘.
 메모에 없는 담당자·기한·숫자는 만들지 말고 ‘미정’ 또는 ‘확인 필요’로 표시해줘. 표 형식으로 작성해줘.
-회의 메모: [비식별화한 가상 메모를 붙여넣기]</div><button onclick="copyPromptText(document.getElementById('p-gemini-tip-1').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center gap-1"><i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기</button></div></div></div></div>
-                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden"><button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"><div class="flex items-center gap-3"><span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">2</span><strong class="text-white text-base md:text-lg">프로그램 아이디어를 현실적으로 다듬기</strong></div><i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i></button><div class="accordion-body"><div class="px-6 pb-6 pt-2 space-y-4"><p class="text-slate-400 text-xs md:text-sm">대상·기간·인력·예산을 먼저 주고, 실행 가능성 질문까지 요청합니다.</p><div class="relative"><div id="p-gemini-tip-2" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">너는 지역아동센터 프로그램 기획을 돕는 조력자야. 아래 조건에 맞춰 3가지 프로그램 안을 제안해줘.
+회의 메모: [비식별화한 가상 메모를 붙여넣기]</div></div></div></div></div>
+                        
+                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden bg-slate-900/30"><button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none"><div class="flex items-center gap-4"><span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge transition duration-300 font-sans">3-2</span><span class="font-bold text-slate-100 font-sans">프로그램 아이디어를 현실적으로 다듬기</span></div><i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i></button><div class="accordion-body bg-slate-950/20"><div class="p-6 space-y-4"><p class="text-slate-400 text-xs md:text-sm">대상·기간·인력·예산을 먼저 주고, 실행 가능성 질문까지 요청합니다.</p><div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40"><div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl"><span class="text-xs font-bold text-slate-400 font-sans">실습 프롬프트 2</span><button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPromptText(document.getElementById('p-gemini-tip-2').innerText)">복사</button></div><div id="p-gemini-tip-2" class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl">너는 지역아동센터 프로그램 기획을 돕는 조력자야. 아래 조건에 맞춰 3가지 프로그램 안을 제안해줘.
 조건: 초등 고학년 8명 / 4주 / 주 2회 / 실무자 2명 / 예산 80만 원 / 목표는 협력과 자기표현 경험 확대
 각 안에 목표·주요 활동·회기 수·준비물·예상 위험과 대응을 포함해줘. 아동을 진단하거나 낙인찍는 표현은 쓰지 말고, 확인되지 않은 효과를 단정하지 마.
-마지막에 실무자가 선택하기 위해 추가로 확인할 질문 5개를 제시해줘.</div><button onclick="copyPromptText(document.getElementById('p-gemini-tip-2').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center gap-1"><i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기</button></div></div></div></div>
-                         <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden"><button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"><div class="flex items-center gap-3"><span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">3</span><strong class="text-white text-base md:text-lg">NotebookLM에서 문서 근거 뽑기</strong></div><i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i></button><div class="accordion-body"><div class="px-6 pb-6 pt-2 space-y-4"><p class="text-slate-400 text-xs md:text-sm">NotebookLM에 기관 승인 자료나 공개 자료를 넣고, 인용과 원문 위치를 함께 확인합니다.</p><div class="relative"><div id="p-gemini-tip-3" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">내가 선택한 자료만 근거로 아래 항목을 정리해줘.
+마지막에 실무자가 선택하기 위해 추가로 확인할 질문 5개를 제시해줘.</div></div></div></div></div>
+                         
+                         <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden bg-slate-900/30"><button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none"><div class="flex items-center gap-4"><span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge transition duration-300 font-sans">3-3</span><span class="font-bold text-slate-100 font-sans">NotebookLM에서 문서 근거 뽑기</span></div><i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i></button><div class="accordion-body bg-slate-950/20"><div class="p-6 space-y-4"><p class="text-slate-400 text-xs md:text-sm">NotebookLM에 기관 승인 자료나 공개 자료를 넣고, 인용과 원문 위치를 함께 확인합니다.</p><div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40"><div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl"><span class="text-xs font-bold text-slate-400 font-sans">실습 프롬프트 3</span><button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPromptText(document.getElementById('p-gemini-tip-3').innerText)">복사</button></div><div id="p-gemini-tip-3" class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl">내가 선택한 자료만 근거로 아래 항목을 정리해줘.
 1. 문서에 명시된 핵심 문제 2. 사업 목표 3. 대상과 기간 4. 성과지표 5. 숫자·날짜·조건
 각 항목마다 근거가 있는 쪽수 또는 문서 내 위치를 표시해줘. 문서에 없는 내용은 추론하지 말고 ‘문서에 없음’이라고 써줘. 마지막에 담당자가 원문으로 다시 확인할 항목을 5개 제안해줘.
-첨부 자료: [기관 승인 자료 또는 공개 자료]</div><button onclick="copyPromptText(document.getElementById('p-gemini-tip-3').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center gap-1"><i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기</button></div></div></div></div>
-                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden"><button class="accordion-header w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"><div class="flex items-center gap-3"><span class="step-badge w-7 h-7 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs shrink-0">4</span><strong class="text-white text-base md:text-lg">내 초안을 점검하는 안전한 피드백</strong></div><i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i></button><div class="accordion-body"><div class="px-6 pb-6 pt-2 space-y-4"><p class="text-slate-400 text-xs md:text-sm">AI에게 ‘합격 보장’이나 ‘전문가 판정’을 요구하지 않고, 확인 가능한 개선점만 받습니다.</p><div class="relative"><div id="p-gemini-tip-4" class="code-container p-5 rounded-2xl text-xs md:text-sm text-slate-300 leading-relaxed max-h-[300px] overflow-y-auto">아래 비식별화한 사업계획서 초안을 다음 기준으로 점검해줘.
+첨부 자료: [기관 승인 자료 또는 공개 자료]</div></div></div></div></div>
+                        
+                        <div class="accordion-item rounded-2xl bg-slate-900/30 overflow-hidden bg-slate-900/30"><button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none"><div class="flex items-center gap-4"><span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge transition duration-300 font-sans">3-4</span><span class="font-bold text-slate-100 font-sans">내 초안을 점검하는 안전한 피드백</span></div><i data-lucide="chevron-down" class="w-5 h-5 text-slate-450 transition-transform duration-300"></i></button><div class="accordion-body bg-slate-950/20"><div class="p-6 space-y-4"><p class="text-slate-400 text-xs md:text-sm">AI에게 ‘합격 보장’이나 ‘전문가 판정’을 요구하지 않고, 확인 가능한 개선점만 받습니다.</p><div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40"><div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl"><span class="text-xs font-bold text-slate-400 font-sans">실습 프롬프트 4</span><button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPromptText(document.getElementById('p-gemini-tip-4').innerText)">복사</button></div><div id="p-gemini-tip-4" class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl">아래 비식별화한 사업계획서 초안을 다음 기준으로 점검해줘.
 ① 목표와 활동이 연결되는가 ② 대상·기간·인력이 실행 가능한가 ③ 예산 산식에 빈칸이나 계산 오류가 있는가 ④ 사실·추정·확인 필요가 구분되는가 ⑤ 아동을 존중하는 표현인가
 각 문제마다 ‘문제 문장 / 왜 확인이 필요한지 / 수정 방향’을 표로 작성해줘. 법·지침·통계는 출처를 확인하지 못하면 단정하지 말고 ‘공식 자료 확인 필요’라고 표시해줘.
-초안: [비식별화한 초안]</div><button onclick="copyPromptText(document.getElementById('p-gemini-tip-4').innerText)" class="absolute top-3 right-3 bg-blue-600/20 hover:bg-blue-600 hover:text-white border border-blue-500/40 text-blue-400 font-bold py-1.5 px-3 rounded-lg text-xs transition active:scale-95 flex items-center gap-1"><i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사하기</button></div></div></div></div>
+초안: [비식별화한 초안]</div></div></div></div></div>
                     </div>
                     <div class="mt-6 p-5 rounded-2xl bg-white/5 border border-white/10 text-xs text-slate-400 leading-relaxed"><strong class="text-slate-200">교육 자료의 기준</strong>　UNESCO의 인간 중심·비판적 사고·윤리 원칙, NIST의 생성형 AI 위험관리 관점을 참고했습니다. NotebookLM 기능 설명은 <a href="https://support.google.com/notebooklm/answer/16164461?hl=ko" target="_blank" rel="noopener" class="text-blue-300 underline">Google 공식 도움말</a>과 <a href="https://carat.im/blog/notebooklm-guide" target="_blank" rel="noopener" class="text-blue-300 underline">제공하신 NotebookLM 가이드</a>를 대조해 정리했습니다. 서비스 기능과 개인정보 설정은 변경될 수 있으므로 실습 당일 공식 도움말과 기관 정책을 다시 확인합니다.</div>
                 </div>
@@ -691,37 +691,61 @@
         </main>
     </div>
 
-    <!-- 5. TOAST NOTIFICATION STICKY -->
-    <div id="toast" class="fixed bottom-8 right-8 z-50 transform translate-y-24 opacity-0 transition-all duration-300 ease-out">
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-extrabold px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 border border-blue-400/30">
-            <div class="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-white"><i data-lucide="check" class="w-4 h-4"></i></div>
-            <div>
-                <strong class="block text-sm">프롬프트 복사 성공!</strong>
-                 <span class="text-xs text-white/80">사용 중인 AI 대화창에 Ctrl+V로 입력하세요.</span>
+    <!-- Global Modal Component (Overhauled for High Readability - Day 3 Sync) -->
+    <div id="global-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-panel w-full max-w-5xl mx-4 rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative flex flex-col max-h-[85vh] bg-gradient-to-br from-[#0f172a] to-[#070a13]">
+            <!-- Header -->
+            <div class="flex items-center justify-between p-6 border-b border-white/10 bg-[#0d1326]">
+                <div class="flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20"><i data-lucide="sparkles" class="w-4 h-4"></i></span>
+                    <h3 id="modal-title" class="text-lg md:text-2xl font-black text-white font-sans">아하! 그렇군요</h3>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white p-2.5 rounded-lg bg-white/5 hover:bg-white/10 transition active:scale-95">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <!-- Body -->
+            <div class="p-8 md:p-12 overflow-y-auto space-y-6 text-slate-200 leading-relaxed font-sans" id="modal-body-content">
+                <!-- Dynamic body content -->
             </div>
         </div>
     </div>
 
-    <!-- 6. POPUP DETAILED MODAL LAYER (aha/info popup) -->
-    <div id="modal-overlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center opacity-0 transition-opacity duration-300 p-4">
-        <div class="max-w-4xl w-full bg-[#0a0f1e] rounded-[32px] border border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
-            <div class="p-6 md:p-8 border-b border-white/5 flex items-center justify-between shrink-0 bg-[#05070f]">
-                <h3 id="modal-title" class="text-lg md:text-2xl font-black text-white flex items-center gap-2">아하! 그렇군요</h3>
-                <button onclick="closeModal()" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-slate-450 hover:text-white flex items-center justify-center transition active:scale-95">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-            <div id="modal-body-content" class="p-6 md:p-10 overflow-y-auto text-slate-300 space-y-6 leading-relaxed">
-                <!-- dynamic injecting -->
-            </div>
+    <!-- 5. TOAST NOTIFICATION STICKY -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900/90 border border-emerald-500/30 text-white px-5 py-3.5 rounded-xl shadow-2xl backdrop-blur-md opacity-0 translate-y-24 transition-all duration-300 flex items-center gap-3">
+        <div class="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <i data-lucide="check" class="w-4 h-4"></i>
+        </div>
+        <div>
+            <span class="text-xs text-slate-400 block font-medium">알림</span>
+            <span class="text-sm font-bold text-slate-100">프롬프트가 클립보드에 복사되었습니다!</span>
         </div>
     </div>
+
+    <!-- 6. FOOTER -->
+    <footer class="w-full py-12 border-t border-white/5 bg-[#030712]/95 text-center text-slate-500 text-xs mt-24">
+        <div class="max-w-6xl mx-auto space-y-3">
+            <p>© 2026 남부대학교 사회복지기획 교육 실습 가이드. All rights reserved.</p>
+            <p class="text-slate-605 text-[10px]">본 서비스는 교육 목적으로 설계되었으며 상업적 무단 도용을 금지합니다.</p>
+        </div>
+    </footer>
 
     <!-- ScrollSpy & Interactive Initializer -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             initAccordion();
             initScrollSpy();
+            
+            // Add click-to-close behavior on modal overlay background
+            const modal = document.getElementById("global-modal");
+            if (modal) {
+                modal.addEventListener("click", (e) => {
+                    if (e.target === modal) {
+                        window.closeModal();
+                    }
+                });
+            }
+
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
@@ -752,12 +776,12 @@
             const firstItem = document.querySelector(".accordion-item");
             if (firstItem) {
                 firstItem.classList.add("active");
-                const body = firstItem.querySelector(".accordion-item");
+                const body = firstItem.querySelector(".accordion-body");
                 body.style.maxHeight = body.scrollHeight + 150 + "px";
             }
         }
 
-        // ScrollSpy and sidebar dynamics
+        // ScrollSpy and sidebar dynamics (Synced & Bug-fixed with Day 3 code)
         function initScrollSpy() {
             const navLinks = document.querySelectorAll("aside nav a");
             const progressLine = document.getElementById("sidebar-progress-line");
@@ -772,20 +796,28 @@
             const handleScroll = () => {
                 try {
                     let activeIdx = 0;
+                    const scrollPos = window.scrollY || window.pageYOffset;
+                    const isAtBottom = (window.innerHeight + scrollPos) >= (document.documentElement.scrollHeight - 60);
 
                     sections.forEach((section, idx) => {
                         const rect = section.getBoundingClientRect();
-                        if (rect.top <= 200) {
+                        // Sync trigger offset with Day 3 (top <= 200/220px)
+                        if (rect.top <= 220) {
                             activeIdx = idx;
                         }
                     });
+
+                    // Force ignite the last dot when scroll hits the bottom of Day 2 page
+                    if (isAtBottom) {
+                        activeIdx = sections.length - 1;
+                    }
 
                     navLinks.forEach((link, idx) => {
                         const dot = link.querySelector(".nav-dot");
                         
                         if (idx === activeIdx) {
                             link.classList.add("bg-white/10", "text-white");
-                            link.classList.remove("text-slate-400", "text-slate-500", "text-slate-300");
+                            link.classList.remove("text-slate-400", "text-slate-500", "text-slate-350");
                             if (dot) {
                                 dot.classList.add("active");
                                 dot.classList.remove("completed");
@@ -807,6 +839,7 @@
                         }
                     });
 
+                    // Recalculate progress line height perfectly matching dot centers
                     if (progressLine && navLinks[0] && activeIdx >= 0) {
                         const firstDot = navLinks[0].querySelector(".nav-dot");
                         const activeDot = navLinks[activeIdx].querySelector(".nav-dot");
