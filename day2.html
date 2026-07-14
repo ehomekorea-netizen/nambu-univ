@@ -93,6 +93,14 @@
             transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        
+        .gpt-glass {
+            background: rgba(15, 23, 42, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+        }
+
         /* 3D Click Flip styling */
         .gpt-letter-card {
             perspective: 1000px;
@@ -182,21 +190,26 @@
             transform: translateX(0) !important;
         }
 
-        /* 3D Flip Card hover vibration fix (flicker prevention) */
+        /* 3D Flip Card - NO hover transforms, only click-flip */
         .gpt-letter-card {
             perspective: 1000px;
         }
-        .gpt-letter-card:hover .gpt-letter-inner {
-            transform: translateY(-6px);
-        }
-        .gpt-letter-card.flipped:hover .gpt-letter-inner {
-            transform: rotateY(180deg) translateY(-6px);
-        }
+        /* No hover transform on inner - prevents flicker */
         .gpt-letter-front:hover, .gpt-letter-back:hover {
             transform: none !important;
             box-shadow: none !important;
         }
         
+        
+        @keyframes ragFileFly {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: translate(150px, -20px) scale(0.8) rotate(10deg); opacity: 0.8; }
+            100% { transform: translate(300px, 0) scale(0.5) rotate(20deg); opacity: 0; }
+        }
+        .rag-fly-active {
+            animation: ragFileFly 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    
         /* RAG Flow line pulse styling */
         @keyframes ragPulse {
             0% { transform: scale(1); box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
@@ -356,7 +369,7 @@
         <section id="hero" class="w-full px-6 md:px-12 py-20 relative overflow-hidden">
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-gradient-to-r from-blue-500/10 via-indigo-500/5 to-purple-500/10 rounded-full blur-[180px] pointer-events-none"></div>
             
-            <div class="max-w-[1700px] mx-auto text-center space-y-10 relative z-10">
+            <div class="w-full mx-auto text-center space-y-10 relative z-10">
                 <span class="px-6 py-3 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-450 text-xs md:text-sm lg:text-base font-black uppercase tracking-widest inline-block shadow-lg">
                     남부대학교 아동복지 실무자 특별 연수
                 </span>
@@ -372,13 +385,13 @@
         </section>
 
         <!-- MAIN CONTENT AREA -->
-        <main class="max-w-[1700px] mx-auto px-8 md:px-16 pb-24 space-y-24">
+        <main class="w-full mx-auto px-6 md:px-10 pb-24 space-y-24">
 
             <!-- SECTION 1: 생성형 AI 본질 -->
             <section id="section-essence" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 1</span>
+                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">01</span>
                         <h2 class="text-2xl md:text-3xl font-black text-white">01. 생성형 AI 본질</h2>
                     </div>
                     
@@ -398,15 +411,6 @@
                         <!-- INFOGRAPHIC: Chat Conversation Ping-Pong -->
                         <div class="lg:col-span-5 bg-slate-950/40 p-2 rounded-3xl border border-white/5 flex items-center justify-center relative overflow-hidden group shadow-2xl">
                             <img src="C:/Users/IN/.gemini/antigravity/brain/5d149bb2-22c9-475c-8f9e-dedf677271e2/generative_essence_infographic_1784048781702.png" alt="생성형 AI의 본질 인포그래픽" class="w-full h-auto rounded-2xl object-cover transition-transform duration-500 group-hover:scale-105" />
-                        </div>
-                            <!-- AI Bubble (Right) -->
-                            <div class="anim-chat-right bg-purple-600/10 border border-purple-500/20 p-3.5 rounded-2xl rounded-tr-none max-w-[85%] self-end flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 shrink-0"><i data-lucide="cpu" class="w-4 h-4"></i></div>
-                                <div>
-                                    <span class="text-[10px] text-purple-400 block font-bold">Gemini (인공지능 비서)</span>
-                                    <p class="text-xs text-slate-200">"네! 아동 통계와 함께 개조식으로 쓸게요."</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -455,7 +459,7 @@
             <section id="section-gemini-gpt" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">Session 02</span>
+                        <span class="px-3.5 py-1.5 rounded-xl bg-blue-500/20 text-blue-400 font-extrabold text-xs">02</span>
                         <h2 class="text-2xl md:text-3xl font-black text-white">02. Gemini vs GPT 어원</h2>
                     </div>
                     
@@ -468,13 +472,13 @@
                         <div class="gpt-letter-card w-full h-[380px] md:h-[350px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
-                                <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
+                                <div class="gpt-letter-front absolute inset-0 gpt-glass p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-24 h-24 rounded-full bg-orange-400 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-orange-500/20 select-none">G</div>
                                     <h4 class="text-white font-black text-3xl md:text-4xl font-sans tracking-tight">Generative<br><span class="text-lg md:text-2xl font-extrabold text-orange-400 block mt-2">생성형 (Generative)</span></h4>
                                     
                                 </div>
                                 <!-- Back -->
-                                <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-orange-500/30 bg-slate-950/90">
+                                <div class="gpt-letter-back absolute inset-0 gpt-glass p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-orange-500/30 bg-slate-950/90">
                                     <span class="text-orange-400 text-lg font-black tracking-wider uppercase">01 · Generative</span>
                                     <h5 class="text-white font-black text-xl md:text-2xl border-b border-orange-500/20 pb-2 mb-2 w-full">무에서 유가 아닌 '언어 재조합'</h5>
                                     <p class="text-slate-200 text-base md:text-lg leading-relaxed text-left font-semibold">인터넷상의 수많은 검색 결과를 고대로 뱉는 것이 아니라, 질문자가 원하는 형태에 맞춰 문장 구조, 포맷, 아이디어를 확률 분포에 맞추어 새로 조립(재배열)해 줍니다.</p>
@@ -486,13 +490,13 @@
                         <div class="gpt-letter-card w-full h-[380px] md:h-[350px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
-                                <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
+                                <div class="gpt-letter-front absolute inset-0 gpt-glass p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-24 h-24 rounded-full bg-fuchsia-400 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-fuchsia-500/20 select-none">P</div>
                                     <h4 class="text-white font-black text-3xl md:text-4xl font-sans tracking-tight">Pre-trained<br><span class="text-lg md:text-2xl font-extrabold text-fuchsia-400 block mt-2">사전 학습 (Pre-trained)</span></h4>
                                     
                                 </div>
                                 <!-- Back -->
-                                <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-fuchsia-500/30 bg-slate-950/90">
+                                <div class="gpt-letter-back absolute inset-0 gpt-glass p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-fuchsia-500/30 bg-slate-950/90">
                                     <span class="text-fuchsia-400 text-lg font-black tracking-wider uppercase">02 · Pre-trained</span>
                                     <h5 class="text-white font-black text-xl md:text-2xl border-b border-fuchsia-500/20 pb-2 mb-2 w-full">언어 패턴의 '사전 학습'</h5>
                                     <p class="text-slate-200 text-base md:text-lg leading-relaxed text-left font-semibold">수십억 개의 웹 문서, 기획서, 뉴스 텍스트를 미리 공부(학습)해 두었기에 자연스러운 한국어 문장 패턴과 규격을 이미 알고 있습니다. 단, 최신 팩트를 기억한다는 의미는 아닙니다.</p>
@@ -504,13 +508,13 @@
                         <div class="gpt-letter-card w-full h-[380px] md:h-[350px]" onclick="this.classList.toggle('flipped')">
                             <div class="gpt-letter-inner w-full h-full relative duration-500">
                                 <!-- Front -->
-                                <div class="gpt-letter-front absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
+                                <div class="gpt-letter-front absolute inset-0 gpt-glass p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-white/15 bg-slate-900/40">
                                     <div class="w-24 h-24 rounded-full bg-lime-200 flex items-center justify-center text-5xl font-black text-slate-950 shadow-lg shadow-lime-500/20 select-none">T</div>
                                     <h4 class="text-white font-black text-3xl md:text-4xl font-sans tracking-tight">Transformer<br><span class="text-lg md:text-2xl font-extrabold text-lime-400 block mt-2">맥락 이해 (Transformer)</span></h4>
                                     
                                 </div>
                                 <!-- Back -->
-                                <div class="gpt-letter-back absolute inset-0 glass-card p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-lime-500/30 bg-slate-950/90">
+                                <div class="gpt-letter-back absolute inset-0 gpt-glass p-8 rounded-2xl flex flex-col justify-center items-center text-center space-y-4 border border-lime-500/30 bg-slate-950/90">
                                     <span class="text-lime-400 text-lg font-black tracking-wider uppercase">03 · Transformer</span>
                                     <h5 class="text-white font-black text-xl md:text-2xl border-b border-lime-500/20 pb-2 mb-2 w-full">문맥을 꿰뚫는 '연결 분석'</h5>
                                     <p class="text-slate-200 text-base md:text-lg leading-relaxed text-left font-semibold">문장 전체의 흐름을 병렬로 동시에 읽어, 사용자가 던져준 지엽적 지침(프롬프트)의 앞뒤 맥락을 보고 다음에 들어갈 단어 확률을 정확히 계산하여 엮어내는 구글 특허의 핵심 알고리즘입니다.</p>
@@ -525,7 +529,7 @@
             <section id="section-generative" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">Session 03</span>
+                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">03</span>
                         <h2 class="text-2xl md:text-3xl font-black text-white">03. 생성형 AI와 창조 한계</h2>
                     </div>
 
@@ -558,7 +562,7 @@
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
                         <div>
-                            <span class="text-red-400 text-xs md:text-sm font-black tracking-widest uppercase block mb-1">Session 04</span>
+                            <span class="text-red-400 text-xs md:text-sm font-black tracking-widest uppercase block mb-1">04</span>
                             <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">04. AI 할루시네이션 현상</h2>
                         </div>
                         <span class="px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-xs font-black tracking-wider">HALLUCINATION</span>
@@ -637,7 +641,7 @@
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8 w-full">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
                         <div>
-                            <span class="text-blue-400 text-xs md:text-sm font-black tracking-widest uppercase block mb-1">Session 05</span>
+                            <span class="text-blue-400 text-xs md:text-sm font-black tracking-widest uppercase block mb-1">05</span>
                             <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">05. RAG 핵심 원리</h2>
                         </div>
                         <span class="px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-black tracking-wider">RETRIEVAL-AUGMENTED GENERATION</span>
@@ -688,6 +692,12 @@
                                 <span id="sim-attached-badge" class="flex items-center justify-center gap-1 bg-blue-500/20 border border-blue-500/40 text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-black translate-x-32 opacity-0 transition-all duration-700 pointer-events-none mt-2">
                                     <i data-lucide="paperclip" class="w-3 h-3"></i> 첨부됨
                                 </span>
+                                
+                                <div id="rag-flying-file" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-emerald-400 opacity-0 pointer-events-none z-20 flex flex-col items-center">
+                                    <i data-lucide="file-check" class="w-10 h-10"></i>
+                                    <span class="text-[10px] font-black mt-1">DATA</span>
+                                </div>
+    
                                 <!-- Flow line -->
                                 <div id="rag-flow-line" class="absolute -right-4 top-1/2 w-8 h-0.5 bg-gradient-to-r from-blue-500 to-transparent opacity-0 transition-opacity duration-500"></div>
                             </div>
@@ -752,7 +762,7 @@
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-10">
                     
                     <div class="flex items-center gap-3">
-                        <span class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 font-extrabold text-sm">Session 06</span>
+                        <span class="px-4 py-2 rounded-xl bg-amber-500/20 text-amber-400 font-extrabold text-sm">06</span>
                         <h2 class="text-3xl md:text-5xl font-black text-white">06. 사업계획서 데이터 파이프라인</h2>
                     </div>
 
@@ -911,7 +921,7 @@
             <section id="section-prompt" class="presentation-section">
                 <div class="glass-panel p-8 md:p-12 rounded-[32px] space-y-8">
                     <div class="flex items-center gap-3">
-                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">Session 07</span>
+                        <span class="px-3.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-400 font-extrabold text-xs">07</span>
                         <h2 class="text-2xl md:text-3xl font-black text-white">07. 프롬프트 6대 원칙</h2>
                     </div>
 
@@ -1407,6 +1417,12 @@
             if (fileBox) {
                 fileBox.classList.remove("rag-pulse-active");
             }
+            const flyingFile = document.getElementById("rag-flying-file");
+            if (flyingFile) {
+                flyingFile.classList.remove("rag-fly-active");
+                flyingFile.classList.add("opacity-0");
+            }
+    
             
             status.innerText = "사전학습 데이터 기반 추론 중...";
             status.className = "text-xs md:text-sm font-black text-red-400";
@@ -2011,6 +2027,7 @@
         window.addEventListener("DOMContentLoaded", () => {
 
             initScrollSpy();
+            if (typeof lucide !== "undefined") lucide.createIcons();
             
 
             window.selectModelNode('gpt', 6);
