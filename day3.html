@@ -600,6 +600,10 @@
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>5. 조립 및 검증</span>
             </a>
+            <a href="#step-6" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>6. 만능 AI 공식</span>
+            </a>
         </nav>
         
         <!-- Bottom Actions -->
@@ -1963,12 +1967,79 @@
             </div>
         </section>
 
-        <!-- 6단계: 실전 자가 퀴즈 -->
+        <!-- 6단계: AI 방정식(A+B=C)으로 평생 써먹는 프롬프트 자립 사고법 -->
         <section id="step-6" class="presentation-section">
             <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full">
                 <div class="flex items-center gap-3 flex-wrap">
-                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 text-white flex items-center justify-center font-black text-lg shrink-0">6</span>
-                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">6. 실전 자가 퀴즈 및 성취도 진단</h2>
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-black text-lg shrink-0">6</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">6. AI 방정식(A+B=C)으로 평생 써먹는 프롬프트 자립 사고법</h2>
+                </div>
+
+                <p class="text-slate-350 text-sm md:text-base leading-relaxed font-semibold font-sans">
+                    💡 <strong>평생 자립을 위한 골든 공식:</strong> 교육이 끝난 후 복지관에 돌아가 강사님이 짜준 프롬프트 복사 버튼이 없을 때, 나만의 지침을 스스로 빌드하는 근본적인 생각의 흐름입니다.
+                </p>
+
+                <!-- AI 방정식 Visual Card -->
+                <div class="bg-slate-950/60 rounded-[24px] border border-white/10 p-8 md:p-10 flex flex-col items-center justify-center gap-6 text-center w-full shadow-2xl">
+                    <div class="text-base md:text-2xl lg:text-3xl font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 font-sans">
+                        [A] 원료 데이터 &nbsp;+&nbsp; [B] 지시 프롬프트 &nbsp;=&nbsp; [C] 명품 결과물
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
+                    <!-- A 카드 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-3 bg-slate-900/30">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded bg-blue-500/10 text-blue-400 flex items-center justify-center font-black text-xs shrink-0 font-sans">A</span>
+                            <strong class="text-white text-base font-sans">원료 데이터 (나에게 있음)</strong>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed font-medium font-sans">
+                            내 머릿속 기획 아이디어, 우리 지역의 결핍 통계, 보건복지부 개정 지침서 등 이미 가지고 있는 <strong>기초 팩트 재료</strong>입니다.
+                        </p>
+                    </div>
+
+                    <!-- B 카드 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-3 bg-slate-900/30">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded bg-amber-500/10 text-amber-400 flex items-center justify-center font-black text-xs shrink-0 font-sans">B</span>
+                            <strong class="text-white text-base font-sans">지시 프롬프트 (막막한 부분)</strong>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed font-medium font-sans">
+                            원료를 버무려 명품 기획서로 가공하도록 AI에게 지시하는 <strong>행정 규칙서이자 쇠틀</strong>로, 우리가 가장 어렵고 답답해하는 영역입니다.
+                        </p>
+                    </div>
+
+                    <!-- C 카드 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-3 bg-slate-900/30">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-black text-xs shrink-0 font-sans">C</span>
+                            <strong class="text-white text-base font-sans">명품 결과물 (원하는 정답지)</strong>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed font-medium font-sans">
+                            사랑의열매 공식 우수계획서, 베테랑 선배 복지사가 작성한 합격 제안서 등 <strong>우리가 원하는 완벽한 최종 기획서 형태</strong>입니다.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 역산 설계 핵심 해설 -->
+                <div class="bg-blue-600/5 rounded-2xl p-6 border border-blue-500/20 flex flex-col md:flex-row items-center gap-6 w-full">
+                    <span class="text-2xl shrink-0">✨</span>
+                    <div class="space-y-1.5 text-sm md:text-base font-sans">
+                        <p class="text-blue-400 font-black text-base md:text-lg">강사 없이 평생 자립하는 '역산(C - A = B)'의 논리</p>
+                        <p class="text-slate-300 leading-relaxed font-medium">
+                            "원료 <strong>[A]</strong>도 있고 정답지 <strong>[C]</strong>도 있다면, 이미 잘 짜인 명품 결과물 <strong>[C](우수사례 PDF)</strong>를 AI에게 통째로 던지세요. 그리고 AI에게 <strong>'이 결과물 [C]를 구워내기 위해 내가 처음에 입력했어야 할 지시 지침서 [B]를 네가 거꾸로 유추해서 뱉어내라'</strong>고 시키는 역산 사고법이 2단계 역기획의 진짜 본질이자 여러분의 평생 무기입니다."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7단계: 실전 자가 퀴즈 -->
+        <section id="step-7" class="presentation-section">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full">
+                <div class="flex items-center gap-3 flex-wrap">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 text-white flex items-center justify-center font-black text-lg shrink-0">7</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">7. 실전 자가 퀴즈 및 성취도 진단</h2>
                 </div>
 
                 <div class="bg-[#a855f7]/5 rounded-[24px] p-8 md:p-10 border border-[#a855f7]/25 flex flex-col xl:flex-row items-center justify-between gap-8 w-full">
