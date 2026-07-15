@@ -2,7 +2,10 @@
 const state = {
     currentTopic: "", // Initialized dynamically from DOM value
     selectedAgency: "chest", // 'chest' = 산출중심형, 'enterprise' = 성과중심형, 'gov' = 성과확산형
-    selectedBudget: "15,000,000원"
+    selectedBudget: "15,000,000원",
+    selectedEvalOrg: "사회복지공동모금회",
+    selectedAppOrg: "지역아동센터",
+    selectedRegion: "광주광역시 남구"
 };
 
 // Raw Prompt Templates (Plain text definitions, styling is applied dynamically)
@@ -180,6 +183,9 @@ function getHighlightSpan(text) {
 function renderAllPrompts(topic) {
     const topicSpan = getHighlightSpan(topic);
     const budgetSpan = getHighlightSpan(state.selectedBudget);
+    const evalOrgSpan = getHighlightSpan(state.selectedEvalOrg);
+    const appOrgSpan = getHighlightSpan(state.selectedAppOrg);
+    const regionSpan = getHighlightSpan(state.selectedRegion);
     
     const targetSpan = getHighlightSpan("저소득 난독증 아동");
     const goalSpan = getHighlightSpan("언어역량 발달 및 정서회복");
@@ -193,7 +199,10 @@ function renderAllPrompts(topic) {
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
                 .replace(/\n/g, "<br>")
-                .replace(/\[TOPIC\]/g, topicSpan);
+                .replace(/\[TOPIC\]/g, topicSpan)
+                .replace(/\[EVAL_ORG\]/g, evalOrgSpan)
+                .replace(/\[APP_ORG\]/g, appOrgSpan)
+                .replace(/\[REGION\]/g, regionSpan);
 
             if (id === "p-step-5" || id === "p-master-docs") {
                 renderedHtml = renderedHtml.replace(/\[BUDGET\]/g, budgetSpan);
@@ -223,8 +232,12 @@ function renderAllPrompts(topic) {
 // Deep Research Widget Generator (Updated: Incorporating '2025/2026' temporal prompt instruction)
 function initDeepResearchGenerator() {
     const agencyRadios = document.querySelectorAll("input[name='var-agency']");
+    const evalSelect = document.getElementById("var-eval-org");
+    const appSelect = document.getElementById("var-app-org");
+    const regionInput = document.getElementById("var-region");
     const budgetSelect = document.getElementById("var-budget");
-    if (!agencyRadios.length || !budgetSelect) return;
+
+    if (!agencyRadios.length || !evalSelect || !appSelect || !regionInput || !budgetSelect) return;
 
     const updatePrompt = () => {
         let agency = "chest";
@@ -233,8 +246,15 @@ function initDeepResearchGenerator() {
         });
 
         const budget = budgetSelect.value;
+        const evalOrg = evalSelect.value;
+        const appOrg = appSelect.value;
+        const region = regionInput.value || "광주광역시 남구";
+
         state.selectedAgency = agency;
         state.selectedBudget = budget;
+        state.selectedEvalOrg = evalOrg;
+        state.selectedAppOrg = appOrg;
+        state.selectedRegion = region;
         
         renderAllPrompts(state.currentTopic);
 
@@ -250,14 +270,17 @@ function initDeepResearchGenerator() {
         const typeSpan = getHighlightSpan(typeName);
         const budgetSpan = getHighlightSpan(budget);
         const topicSpan = getHighlightSpan(state.currentTopic);
+        const evalOrgSpan = getHighlightSpan(evalOrg);
+        const appOrgSpan = getHighlightSpan(appOrg);
+        const regionSpan = getHighlightSpan(region);
         
         // 2025/2026 최신 기준 강조 변수 추가
         const yearSpan = getHighlightSpan("최근 2025년~2026년 기준");
 
         // Raw plain text for clipboard (No HTML, variables cleanly injected with 2025/2026 time constraint)
-        const rawPrompt = `내가 기획하고자 하는 사업 주제는 "${state.currentTopic}"이고, 프로포절의 유형은 [${typeName}]이며, 총 사업 예산 한도는 ${budget}이야.
+        const rawPrompt = `내가 기획하고자 하는 사업 주제는 "${state.currentTopic}"이고, 신청하는 우리 기관 유형은 "${appOrg}"이며, 제출할 심사 공모 기관은 "${evalOrg}"야. 이 프로포절의 유형은 [${typeName}]이며, 총 사업 예산 한도는 ${budget}이고, 통계 수집 및 리서치 대상 지역은 "${region}"이야.
 
-최근 2025년~2026년 기준의 공동모금회 배분 신청 요강 및 최신 복지 정책 아젠다를 반영하여, 내가 이번 기획에서 반드시 확보해야 할 다음 "3대 핵심 기획 전략 가이드"를 수집하여 정리해줘:
+최근 2025년~2026년 기준의 해당 심사 기관의 배분 신청 요강 및 최신 복지 정책 아젠다를 반영하여, 내가 이번 기획에서 반드시 확보해야 할 다음 "3대 핵심 기획 전략 가이드"를 수집하여 정리해줘:
 
 1. [필요성 설득 전략]: 이 주제가 심사위원에게 왜 긴급하고 시급한 과제인지 입증해줄 수 있는 최신 국가 통계 지표와 신뢰성 있는 출처 추천.
 2. [세부 설계 및 평가 전략]: 이 유형의 프로포절에서 당선 확률을 높이기 위해 활용하기 가장 적절한 세부 프로그램 구성안과 검증용 평가 도구(척도명 등) 추천.
@@ -266,9 +289,9 @@ function initDeepResearchGenerator() {
 서류 작성용 세부 본문 텍스트가 아닌, 기획 방향의 뼈대를 잡기 위한 "전략적 핵심 가이드라인" 형태로 요약해서 제시해줘.`;
 
         // Render in UI with color code highlights
-        const uiText = `내가 기획하고자 하는 사업 주제는 "${topicSpan}"이고, 프로포절의 유형은 [${typeSpan}]이며, 총 사업 예산 한도는 ${budgetSpan}이야.
+        const uiText = `내가 기획하고자 하는 사업 주제는 "${topicSpan}"이고, 신청하는 우리 기관 유형은 "${appOrgSpan}"이며, 제출할 심사 공모 기관은 "${evalOrgSpan}"야. 이 프로포절의 유형은 [${typeSpan}]이며, 총 사업 예산 한도는 ${budgetSpan}이고, 통계 수집 및 리서치 대상 지역은 "${regionSpan}"이야.
 
-${yearSpan}의 공동모금회 배분 신청 요강 및 최신 복지 정책 아젠다를 반영하여, 내가 이번 기획에서 반드시 확보해야 할 다음 "3대 핵심 기획 전략 가이드"를 수집하여 정리해줘:
+${yearSpan}의 해당 심사 기관의 배분 신청 요강 및 최신 복지 정책 아젠다를 반영하여, 내가 이번 기획에서 반드시 확보해야 할 다음 "3대 핵심 기획 전략 가이드"를 수집하여 정리해줘:
 
 1. [필요성 설득 전략]: 이 주제가 심사위원에게 왜 긴급하고 시급한 과제인지 입증해줄 수 있는 최신 국가 통계 지표와 신뢰성 있는 출처 추천.
 2. [세부 설계 및 평가 전략]: 이 유형의 프로포절에서 당선 확률을 높이기 위해 활용하기 가장 적절한 세부 프로그램 구성안과 검증용 평가 도구(척도명 등) 추천.
@@ -286,6 +309,9 @@ ${yearSpan}의 공동모금회 배분 신청 요강 및 최신 복지 정책 아
     agencyRadios.forEach(radio => {
         radio.addEventListener("change", updatePrompt);
     });
+    evalSelect.addEventListener("change", updatePrompt);
+    appSelect.addEventListener("change", updatePrompt);
+    regionInput.addEventListener("input", updatePrompt);
     budgetSelect.addEventListener("change", updatePrompt);
 
     updatePrompt();

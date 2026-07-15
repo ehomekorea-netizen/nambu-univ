@@ -675,26 +675,58 @@
 
                 <!-- 유형별 락(Lock) 프롬프트 빌더 위젯 -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4">
-                    <div class="lg:col-span-1 bg-slate-900/60 border border-white/5 rounded-2xl p-5 space-y-5 text-sm">
+                    <div class="lg:col-span-1 bg-slate-900/60 border border-white/5 rounded-2xl p-5 space-y-4 text-sm">
                         <div class="space-y-2">
                             <label class="font-bold text-slate-300 block text-xs tracking-wider">1. 기획할 프로포절 유형</label>
                             <div class="grid grid-cols-1 gap-2">
-                                <label class="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-slate-950/40 cursor-pointer transition hover:bg-slate-900/40 select-none">
+                                <label class="flex items-center gap-3 p-2.5 rounded-xl border border-white/5 bg-slate-950/40 cursor-pointer transition hover:bg-slate-900/40 select-none">
                                     <input type="radio" name="var-agency" value="chest" checked class="w-4 h-4 accent-blue-500">
                                     <span class="text-xs font-bold text-slate-200">산출중심형 (수량/횟수 정량화)</span>
                                 </label>
-                                <label class="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-slate-950/40 cursor-pointer transition hover:bg-slate-900/40 select-none">
+                                <label class="flex items-center gap-3 p-2.5 rounded-xl border border-white/5 bg-slate-950/40 cursor-pointer transition hover:bg-slate-900/40 select-none">
                                     <input type="radio" name="var-agency" value="enterprise" class="w-4 h-4 accent-blue-500">
                                     <span class="text-xs font-bold text-slate-200">성과중심형 (표준 척도/질적 변화)</span>
                                 </label>
-                                <label class="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-slate-950/40 cursor-pointer transition hover:bg-slate-900/40 select-none">
+                                <label class="flex items-center gap-3 p-2.5 rounded-xl border border-white/5 bg-slate-950/40 cursor-pointer transition hover:bg-slate-900/40 select-none">
                                     <input type="radio" name="var-agency" value="gov" class="w-4 h-4 accent-blue-500">
                                     <span class="text-xs font-bold text-slate-200">성과확산형 (거버넌스/매뉴얼)</span>
                                 </label>
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label class="font-bold text-slate-300 block text-xs tracking-wider">2. 총 사업 예산 한도</label>
+                            <label class="font-bold text-slate-300 block text-xs tracking-wider">2. 제출할 심사 기관</label>
+                            <div class="relative">
+                                <select id="var-eval-org" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 text-xs appearance-none cursor-pointer">
+                                    <option value="사회복지공동모금회">사회복지공동모금회</option>
+                                    <option value="대기업 사회공헌재단 (삼성, 아산 등)">대기업 사회공헌재단 (삼성, 아산 등)</option>
+                                    <option value="지자체/정부 공모사업">지자체/정부 공모사업</option>
+                                    <option value="민간 복지재단">민간 복지재단</option>
+                                </select>
+                                <div class="absolute right-4 top-4 pointer-events-none text-slate-400">
+                                    <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-300 block text-xs tracking-wider">3. 신청 기관 유형</label>
+                            <div class="relative">
+                                <select id="var-app-org" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 text-xs appearance-none cursor-pointer">
+                                    <option value="지역아동센터">지역아동센터</option>
+                                    <option value="종합사회복지관">종합사회복지관</option>
+                                    <option value="장애인복지관">장애인복지관</option>
+                                    <option value="다문화가족지원센터">다문화가족지원센터</option>
+                                </select>
+                                <div class="absolute right-4 top-4 pointer-events-none text-slate-400">
+                                    <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-300 block text-xs tracking-wider">4. 리서치 대상 지역</label>
+                            <input type="text" id="var-region" value="광주광역시 남구" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 text-xs placeholder-slate-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="font-bold text-slate-300 block text-xs tracking-wider">5. 총 사업 예산 한도</label>
                             <div class="relative">
                                 <select id="var-budget" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 text-xs appearance-none cursor-pointer">
                                     <option value="15,000,000원">1,500만 원 이하 (일반 배분사업)</option>
