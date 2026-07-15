@@ -273,8 +273,7 @@ function renderAllPrompts(topic) {
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
-                .replace(/
-/g, "<br>")
+                .replace(/\n/g, "<br>")
                 .replace(/\[TOPIC\]/g, topicSpan)
                 .replace(/\[EVAL_ORG\]/g, evalOrgSpan)
                 .replace(/\[APP_ORG\]/g, appOrgSpan)
@@ -397,8 +396,7 @@ function initDeepResearchGenerator() {
 
         const divEl = document.getElementById("deep-research-result");
         if (divEl) {
-            divEl.innerHTML = uiText.replace(/
-/g, "<br>");
+            divEl.innerHTML = uiText.replace(/\n/g, "<br>");
             divEl.dataset.raw = rawPrompt;
         }
     };
