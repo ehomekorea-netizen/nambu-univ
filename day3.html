@@ -576,67 +576,54 @@
         </section>
 
         <!-- 실습 소스 및 양식 파일 다운로드 센터 -->
+                <!-- 실습 소스 및 양식 파일 다운로드 센터 -->
         <section id="step-download" class="presentation-section">
             <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border">
                 <div class="flex items-center gap-4 flex-wrap">
                     <span class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black shadow-lg shadow-blue-500/10">
                         <i data-lucide="download-cloud" class="w-6 h-6"></i>
                     </span>
-                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">실습용 공모 양식 및 유형별 참고 PDF 다운로드</h2>
+                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">실습용 공모 양식 및 유형별 우수 프로포절 다운로드</h2>
                 </div>
 
-                <p class="text-slate-300 text-lg md:text-xl leading-relaxed font-medium">
-                    실무 교육장에서 실습을 진행하기 위해 필요한 한글 기획서 양식과 유형별 참고 자료 파일들입니다. 
+                <p class="text-slate-300 text-sm md:text-base leading-relaxed font-medium">
+                    실무 교육장에서 실습을 진행하기 위해 필요한 한글 기획서 양식과 유형별 우수 참고 사례 파일들입니다. 
                     아래 버튼을 눌러 교육용 PC 바탕화면에 바로 다운로드하여 수업 준비를 진행해 주세요.
                 </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
-                    <!-- HWPX 양식 카드 -->
-                    <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4">
-                        <div class="space-y-2">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left: 한글 양식 다운로드 카드 (lg:col-span-1) -->
+                    <div class="lg:col-span-1 glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4 bg-slate-900/40">
+                        <div class="space-y-2.5">
                             <span class="text-xs font-bold text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded">기획서 공식 한글 양식</span>
                             <h4 class="font-bold text-white text-lg pt-1">광주공동모금회 산출중심형 양식.hwpx</h4>
-                            <p class="text-xs text-slate-400 leading-relaxed">실습 시 AI 결과물 데이터를 실제로 이식해서 편집 및 작성할 최종 한글 기안용 파일 양식입니다.</p>
+                            <p class="text-xs text-slate-400 leading-relaxed font-medium">실습 시 AI 결과물 데이터를 실제로 이식해서 편집 및 작성할 최종 한글 기안용 파일 양식입니다. (성과/확산형 서식도 페이지 내 일괄 포함되어 있습니다.)</p>
                         </div>
-                        <a href="files/광주공동모금회 산출중심형 사업계획서 양식.hwpx" download target="_blank" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 text-center font-black text-sm rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2">
+                        <a href="files/광주공동모금회 산출중심형 사업계획서 양식.hwpx" download target="_blank" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 text-center font-black text-sm rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-md">
                             <i data-lucide="download" class="w-4 h-4"></i> 양식 다운로드 (.hwpx)
                         </a>
                     </div>
 
-                    <!-- 성과중심형 PDF -->
-                    <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4">
-                        <div class="space-y-2">
-                            <span class="text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded">사례 1: 성과중심형</span>
-                            <h4 class="font-bold text-white text-lg pt-1">난독 아동 언어역량 발달 및 정서회복 지원</h4>
-                            <p class="text-xs text-slate-400 leading-relaxed">정서적 변화(Outcome)를 측정하기 위해 사전/사후 설문지 척도를 활용한 대표 기획서 사례입니다.</p>
+                    <!-- Right: 유형별 우수 프로포절 라이브러리 (lg:col-span-2) -->
+                    <div class="lg:col-span-2 glass-card p-6 rounded-2xl border border-white/5 space-y-6 bg-slate-900/40">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div class="space-y-1">
+                                <span class="text-xs font-bold text-purple-400 bg-purple-400/10 px-2.5 py-1 rounded">2단계 실습 연계 소스</span>
+                                <h4 class="font-bold text-white text-lg">유형별 우수 프로포절 레퍼런스 라이브러리</h4>
+                            </div>
+                            <!-- 탭 버튼들 -->
+                            <div class="flex flex-wrap gap-1 bg-[#090d1a] p-1 rounded-xl border border-white/5">
+                                <button onclick="changeRefTab('outcomes', this)" class="ref-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95 bg-blue-600/20 text-blue-400">성과중심(7)</button>
+                                <button onclick="changeRefTab('outputs', this)" class="ref-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95">산출중심(6)</button>
+                                <button onclick="changeRefTab('diffusion', this)" class="ref-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95">성과확산(6)</button>
+                                <button onclick="changeRefTab('reinforcement', this)" class="ref-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95">기능보강(6)</button>
+                            </div>
                         </div>
-                        <a href="files/읽기, 쓰기 곤란한 난독증 아동의 언어역량 발달 및 정서회복 지원사업(성과중심형).pdf" download target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-center font-black text-sm rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2">
-                            <i data-lucide="file-text" class="w-4 h-4"></i> 성과중심 사례 PDF 다운
-                        </a>
-                    </div>
 
-                    <!-- 산출중심형 PDF -->
-                    <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4">
-                        <div class="space-y-2">
-                            <span class="text-xs font-bold text-blue-400 bg-blue-400/10 px-2.5 py-1 rounded">사례 2: 산출중심형</span>
-                            <h4 class="font-bold text-white text-lg pt-1">저소득가정 아동 그린 방과후 돌봄서비스</h4>
-                            <p class="text-xs text-slate-400 leading-relaxed">서비스 제공 회차(연 40회) 및 급식 일수 등의 물리적 산출량(Output)을 기준으로 작성된 사례입니다.</p>
+                        <!-- 동적 리스트 렌더링 영역 (최대 높이 280px 스크롤 뷰) -->
+                        <div class="overflow-y-auto max-h-[280px] pr-2 space-y-2.5 custom-scrollbar" id="ref-list-container">
+                            <!-- JS에 의해 동적으로 목록이 채워집니다. -->
                         </div>
-                        <a href="files/저소득 가정 아동·청소년의 즐거운 돌봄서비스 제공을 위한 그린 방과후 프로그램(산출중심형).pdf" download target="_blank" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white text-center font-black text-sm rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2">
-                            <i data-lucide="file-text" class="w-4 h-4"></i> 산출중심 사례 PDF 다운
-                        </a>
-                    </div>
-
-                    <!-- 성과확산형 PDF -->
-                    <div class="glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4">
-                        <div class="space-y-2">
-                            <span class="text-xs font-bold text-purple-400 bg-purple-400/10 px-2.5 py-1 rounded">사례 3: 성과확산형</span>
-                            <h4 class="font-bold text-white text-lg pt-1">취약계층 아동 심리지원 동행자 연계 사업</h4>
-                            <p class="text-xs text-slate-400 leading-relaxed">유관 복지 협의체 거버넌스 및 상담 동행 모델을 타 지역에 확산시키는 것을 목적으로 한 사례입니다.</p>
-                        </div>
-                        <a href="files/취약계층 아동 심리지원 동행자 연계 사업(성과확산형).pdf" download target="_blank" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white text-center font-black text-sm rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2">
-                            <i data-lucide="file-text" class="w-4 h-4"></i> 성과확산 사례 PDF 다운
-                        </a>
                     </div>
                 </div>
             </div>
@@ -1064,7 +1051,86 @@
     <!-- 로컬 스크립트 연결 -->
     <script src="app.js"></script>
     <script>
+        // 2단계 실습 연계 레퍼런스 라이브러리 데이터
+        const referenceFiles = {
+            outcomes: [
+                { name: "광주광역시 남구장애인복지관 (장애인 사회참여)", path: "example/프로포절작성예시/성과중심형(7건)/광주광역시남구장애인복지관.pdf" },
+                { name: "남광종합사회복지관 (독거노인 고독사 예방)", path: "example/프로포절작성예시/성과중심형(7건)/남광종합사회복지관.pdf" },
+                { name: "동촌종합사회복지관 (고위험군 고립가구 회복)", path: "example/프로포절작성예시/성과중심형(7건)/동촌종합사회복지관.pdf" },
+                { name: "북구종합사회복지관 (아동 정서지원 멘토링)", path: "example/프로포절작성예시/성과중심형(7건)/북구종합사회복지관.pdf" },
+                { name: "상주시장애인종합복지관 (중증장애인 자립생활)", path: "example/프로포절작성예시/성과중심형(7건)/상주시장애인종합복지관.pdf" },
+                { name: "팔달노인복지관 (신노년 세대 일자리 연계)", path: "example/프로포절작성예시/성과중심형(7건)/팔달노인복지관.pdf" },
+                { name: "한몸 복지기관 (장애 아동 감각통합 훈련)", path: "example/프로포절작성예시/성과중심형(7건)/한몸.pdf" }
+            ],
+            outputs: [
+                { name: "강원중부아동보호전문기관 (피해아동 학습 케어)", path: "example/프로포절작성예시/산출중심형(6건)/강원중부아동보호전문기관.pdf" },
+                { name: "구미시장애인종합복지관 (장애아동 낮돌봄 교실)", path: "example/프로포절작성예시/산출중심형(6건)/구미시장애인종합복지관.pdf" },
+                { name: "세종시장애인가족지원센터 (가족 심리 정서 휴식)", path: "example/프로포절작성예시/산출중심형(6건)/세종시장애인가족지원센터.pdf" },
+                { name: "시립보라매인터넷중독예방상담센터 (스마트폰 과의존 예방)", path: "example/프로포절작성예시/산출중심형(6건)/시립보라매인터넷중독예방상담센터.pdf" },
+                { name: "의정부시지역사회보장협의체 (취약가구 생필품 배분)", path: "example/프로포절작성예시/산출중심형(6건)/의정부시지역사회보장협의체.pdf" },
+                { name: "충청남도시각장애인복지관 (시각장애인 보행 훈련)", path: "example/프로포절작성예시/산출중심형(6건)/충청남도시각장애인복지관.pdf" }
+            ],
+            diffusion: [
+                { name: "가정종합사회복지관 (가족 기능 강화 네트워크)", path: "example/프로포절작성예시/성과확산형(6건)/가정종합사회복지관.pdf" },
+                { name: "마포구고용복지지원센터 (취약계층 고용 협력체)", path: "example/프로포절작성예시/성과확산형(6건)/마포구고용복지지원센터.pdf" },
+                { name: "밀알복지관 (장애인 통합 서비스 체계화)", path: "example/프로포절작성예시/성과확산형(6건)/밀알복지관.pdf" },
+                { name: "성산종합사회복지관 (주민 참여 골목 거버넌스)", path: "example/프로포절작성예시/성과확산형(6건)/성산종합사회복지관.pdf" },
+                { name: "성지종합사회복지관 (방임 아동 통합 케어 매뉴얼)", path: "example/프로포절작성예시/성과확산형(6건)/성지종합사회복지관.pdf" },
+                { name: "오산남부종합사회복지관 (아동 안전 통학길 네트워크)", path: "example/프로포절작성예시/성과확산형(6건)/오산남부종합사회복지관.pdf" }
+            ],
+            reinforcement: [
+                { name: "강릉시장애인종합복지관 (장애인 치료실 노후장비 교체)", path: "example/프로포절작성예시/기능보강형(6건)/강릉시장애인종합복지관.pdf" },
+                { name: "마가렛보호작업장 (임가공 작업장 소방·안전 설비)", path: "example/프로포절작성예시/기능보강형(6건)/마가렛보호작업장.pdf" },
+                { name: "성광직업재활원 (임대 아파트 내 노후 보일러 교체)", path: "example/프로포절작성예시/기능보강형(6건)/성광직업재활원.pdf" },
+                { name: "시흥시여자단기청소년쉼터 (여가 다목적 공간 리모델링)", path: "example/프로포절작성예시/기능보강형(6건)/시흥시여자단기청소년쉼터.pdf" },
+                { name: "전북특별자치도서부노인보호전문기관 (피해 노인 전용 차량 구입)", path: "example/프로포절작성예시/기능보강형(6건)/전북특별자치도서부노인보호전문기관.pdf" },
+                { name: "훈훈한집 복지시설 (시설 위생 안전 화장실 리보강)", path: "example/프로포절작성예시/기능보강형(6건)/훈훈한집.pdf" }
+            ]
+        };
+
+        function changeRefTab(type, btn) {
+            // Update active button classes
+            document.querySelectorAll(".ref-tab-btn").forEach(el => {
+                el.classList.remove("bg-blue-600/20", "text-blue-400");
+            });
+            if (btn) {
+                btn.classList.add("bg-blue-600/20", "text-blue-400");
+            }
+            
+            const container = document.getElementById("ref-list-container");
+            if (!container) return;
+            
+            const list = referenceFiles[type] || [];
+            let html = "";
+            
+            if (list.length === 0) {
+                html = `<div class="text-center text-slate-500 py-8 text-sm">등록된 레퍼런스가 없습니다.</div>`;
+            } else {
+                list.forEach(item => {
+                    html += `
+                    <div class="flex items-center justify-between p-3 bg-slate-900/50 border border-white/5 rounded-xl hover:border-blue-500/20 transition-all duration-200">
+                        <div class="flex items-center gap-3 truncate">
+                            <span class="w-7 h-7 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center font-bold text-xs shrink-0 font-sans">PDF</span>
+                            <span class="text-xs font-bold text-slate-200 truncate font-sans">${item.name}</span>
+                        </div>
+                        <a href="${item.path}" download target="_blank" class="px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/35 text-blue-400 hover:text-white text-xs font-black transition-all duration-200 active:scale-95 flex items-center gap-1.5 shrink-0 shadow-md">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i> 다운로드
+                        </a>
+                    </div>
+                    `;
+                });
+            }
+            container.innerHTML = html;
+            
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
+            // Load outcome templates as default view
+            changeRefTab('outcomes', document.querySelector(".ref-tab-btn"));
+            
             const modal = document.getElementById("global-modal");
             if (modal) {
                 modal.addEventListener("click", (e) => {
