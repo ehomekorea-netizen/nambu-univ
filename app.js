@@ -298,6 +298,11 @@ const promptTemplates = {
 
 // 2. WINDOW INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
+    // 페이지 진입 시 스크롤을 맨 상단으로 강제 이동
+    window.scrollTo(0, 0);
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
     initInteractiveTopic(); // Initialize this first to capture correct state.currentTopic from HTML input
     initDeepResearchGenerator();
     initScrollSpy();
