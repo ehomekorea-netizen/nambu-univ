@@ -487,8 +487,10 @@ function initDeepResearchGenerator() {
             typeName = "산출중심형";
         } else if (agency === "enterprise") {
             typeName = "성과중심형";
-        } else {
+        } else if (agency === "gov") {
             typeName = "성과확산형";
+        } else if (agency === "reinforcement") {
+            typeName = "기능보강형";
         }
 
         const typeSpan = getHighlightSpan(typeName, "사업 유형");
