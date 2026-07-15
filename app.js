@@ -726,3 +726,63 @@ function updateCheckCardStyle(cb) {
         }
     }
 }
+
+// ----------------------------------------------------
+// 6단계 AI 방정식 (A+B=C) 인터랙티브 계산기 로직
+// ----------------------------------------------------
+window.calculateAIEquation = function() {
+    const rawValA = document.getElementById("eq-input-a").value;
+    const rawValC = document.getElementById("eq-input-c").value;
+    const valA = rawValA ? rawValA.trim() : "";
+    const valC = rawValC ? rawValC.trim() : "";
+    
+    const inputA = valA || "독거노인 우울증 완화를 위한 원예 치료 및 반려식물 배달";
+    const inputC = valC || "취약 어르신의 고독감 감수를 위한 야외 원예 집단 프로그램 (행복정원)";
+    
+    const template = `[역기획 방정식 (B = C - A) 구동 완료]
+
+너는 프로포절 역기획 전문가이자 시니어 사회복지사이다.
+내가 기획하고자 하는 사업 아이디어 [A]와 벤치마킹할 우수 사업 제안서 [C]가 다음과 같다:
+
+- [A] 나의 사업 아이디어: "${inputA}"
+- [C] 벤치마킹 우수 사업명: "${inputC}"
+
+이 우수사례 [C]의 세부 구조와 작성 기법을 엑스레이처럼 분석하여, 내 기획안 [A]를 위한 맞춤형 '프롬프트 지침셋(B)'을 만들어라. 
+단, 우수사례 [C]의 고유 데이터(수치, 지역명 등)는 철저히 배제하고, 순수한 논리적 금형과 뼈대만 역산하여 다음 3가지 영역을 도출하라:
+
+1. [C의 뼈대 번역]: "${inputC}" 사업이 취약계층의 욕구를 분석하고 예산을 설계한 '논리 모델 구조' 분석.
+2. [A에 대입할 B 지침]: 그 구조에 맞춰 나의 아이디어 "${inputA}"에 들어갈 진짜 데이터를 입력하게 유도하는 '맞춤형 작성 가이드 명령문(프롬프트)'.
+3. [채워 넣을 변수 리스트]: 내 아이디어 실현을 위해 수집해야 하는 통계 자료 요건 가이드.`;
+
+    const container = document.getElementById("eq-result-container");
+    const textEl = document.getElementById("eq-result-text");
+    
+    if (!container || !textEl) return;
+    
+    container.classList.remove("hidden");
+    // Trigger CSS Transition
+    setTimeout(() => {
+        container.classList.remove("scale-95", "opacity-0");
+        container.classList.add("scale-100", "opacity-100", "flex");
+    }, 50);
+
+    // Typing animation effect
+    textEl.innerText = "";
+    let i = 0;
+    
+    // Clear any active timers to prevent text overlap if double clicked
+    if (window.eqTypingTimer) {
+        clearInterval(window.eqTypingTimer);
+    }
+    
+    window.eqTypingTimer = setInterval(() => {
+        if (i < template.length) {
+            textEl.innerText += template.charAt(i);
+            i++;
+            // Scroll to bottom as it types
+            textEl.scrollTop = textEl.scrollHeight;
+        } else {
+            clearInterval(window.eqTypingTimer);
+        }
+    }, 5); // Ultra-fast typing
+}
