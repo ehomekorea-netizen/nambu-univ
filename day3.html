@@ -807,6 +807,28 @@
                     </div>
                 </div>
 
+                <!-- 🚀 3단계 진입 전 필수 작업: 베이스캠프 컨텍스트 주입 프롬프트 -->
+                <div class="flex flex-col border border-purple-500/25 rounded-2xl bg-slate-950/40">
+                    <div class="flex justify-between items-center bg-[#1e1b4b]/60 px-5 py-3.5 border-b border-purple-500/20 rounded-t-2xl">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-black bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded-md">1단계+2단계 맥락 주입</span>
+                            <span class="text-sm font-bold text-white font-sans">Gemini 최초 입력용 베이스캠프 프롬프트</span>
+                        </div>
+                        <button class="copy-btn bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-basecamp')">복사</button>
+                    </div>
+                    <div class="p-6 text-sm leading-relaxed text-slate-355 select-all code-container rounded-b-2xl" id="p-basecamp">[임무 정의]
+너는 지금부터 사회복지공동모금회 프로포절 당선작을 빌드하는 전문 기획가야.
+아래에 제공하는 [1. 레퍼런스 논리 구조(2단계 추출물)]와 [2. 기획 기초 팩트 자료(1단계 구글독스/검색 결과)]를 머릿속에 완벽히 기억하고, 이 두 자료를 유기적으로 융합하여 내가 앞으로 지시할 기획서 초안을 단계별로 작성해줘.
+
+■ 1. 레퍼런스 논리 구조 (2단계 추출물)
+[이곳에 2단계에서 NotebookLM이 도출해준 '지시용 템플릿 및 뼈대 구조'를 복사-붙여넣기 하세요]
+
+■ 2. 기획 기초 팩트 자료 (1단계 Google Docs / 리서치 결과물)
+[이곳에 1단계 구글 딥리서치 결과가 저장된 Google Docs의 텍스트 본문 전체를 복사-붙여넣기 하세요]
+
+이해했으면 핵심 맥락(사업 주제, 대상 지역, 예산 규모)만 한 문장으로 요약해서 대답하고 대기해줘. 지금부터 3-1단계부터 차례대로 세부 본문 작성을 요청할게.</div>
+                </div>
+
                 <!-- 실시간 연쇄 프롬프트 아코디언 로드맵 -->
                 <div class="space-y-4 text-base">
 
