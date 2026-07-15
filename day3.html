@@ -471,10 +471,6 @@
             <div class="absolute left-[15px] top-[14px] bottom-[14px] w-[2px] bg-slate-800 z-0"></div>
             <div id="sidebar-progress-line" class="absolute left-[15px] top-[14px] w-[2px] bg-blue-500 transition-all duration-300 z-0" style="height: 0px;"></div>
 
-            <a href="#step-download" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
-                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>자료 다운로드</span>
-            </a>
             <a href="#step-1" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>1. 전략 딥리서치</span>
@@ -485,11 +481,15 @@
             </a>
             <a href="#step-3" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>3. 연쇄 프롬프팅</span>
+                <span>3. 베이스 프롬프트</span>
             </a>
             <a href="#step-4" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
-                <span>4. 조립 및 검증</span>
+                <span>4. 연쇄 프롬프팅</span>
+            </a>
+            <a href="#step-5" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>5. 조립 및 검증</span>
             </a>
         </nav>
         
@@ -577,57 +577,7 @@
 
         <!-- 실습 소스 및 양식 파일 다운로드 센터 -->
                 <!-- 실습 소스 및 양식 파일 다운로드 센터 -->
-        <section id="step-download" class="presentation-section">
-            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border">
-                <div class="flex items-center gap-4 flex-wrap">
-                    <span class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black shadow-lg shadow-blue-500/10">
-                        <i data-lucide="download-cloud" class="w-6 h-6"></i>
-                    </span>
-                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">실습용 공모 양식 및 유형별 우수 프로포절 다운로드</h2>
-                </div>
-
-                <p class="text-slate-300 text-sm md:text-base leading-relaxed font-medium">
-                    실무 교육장에서 실습을 진행하기 위해 필요한 한글 기획서 양식과 유형별 우수 참고 사례 파일들입니다. 
-                    아래 버튼을 눌러 교육용 PC 바탕화면에 바로 다운로드하여 수업 준비를 진행해 주세요.
-                </p>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Left: 한글 양식 다운로드 카드 (lg:col-span-1) -->
-                    <div class="lg:col-span-1 glass-card p-6 rounded-2xl border border-white/5 flex flex-col justify-between space-y-4 bg-slate-900/40">
-                        <div class="space-y-2.5">
-                            <span class="text-xs font-bold text-amber-500 bg-amber-500/10 px-2.5 py-1 rounded">기획서 공식 한글 양식</span>
-                            <h4 class="font-bold text-white text-lg pt-1">광주공동모금회 산출중심형 양식.hwpx</h4>
-                            <p class="text-xs text-slate-400 leading-relaxed font-medium">실습 시 AI 결과물 데이터를 실제로 이식해서 편집 및 작성할 최종 한글 기안용 파일 양식입니다. (성과/확산형 서식도 페이지 내 일괄 포함되어 있습니다.)</p>
-                        </div>
-                        <a href="files/광주공동모금회 산출중심형 사업계획서 양식.hwpx" download target="_blank" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 text-center font-black text-sm rounded-xl transition-all duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-md">
-                            <i data-lucide="download" class="w-4 h-4"></i> 양식 다운로드 (.hwpx)
-                        </a>
-                    </div>
-
-                    <!-- Right: 유형별 우수 프로포절 라이브러리 (lg:col-span-2) -->
-                    <div class="lg:col-span-2 glass-card p-6 rounded-2xl border border-white/5 space-y-6 bg-slate-900/40">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                            <div class="space-y-1">
-                                <span class="text-xs font-bold text-purple-400 bg-purple-400/10 px-2.5 py-1 rounded">2단계 실습 연계 소스</span>
-                                <h4 class="font-bold text-white text-lg">유형별 우수 프로포절 레퍼런스 라이브러리</h4>
-                            </div>
-                            <!-- 탭 버튼들 -->
-                            <div class="flex flex-wrap gap-1 bg-[#090d1a] p-1 rounded-xl border border-white/5">
-                                <button onclick="changeRefTab('outcomes', this)" class="ref-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95 bg-blue-600/20 text-blue-400">성과중심(7)</button>
-                                <button onclick="changeRefTab('outputs', this)" class="ref-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95">산출중심(6)</button>
-                                <button onclick="changeRefTab('diffusion', this)" class="ref-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95">성과확산(6)</button>
-                                <button onclick="changeRefTab('reinforcement', this)" class="ref-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95">기능보강(6)</button>
-                            </div>
-                        </div>
-
-                        <!-- 동적 리스트 렌더링 영역 (최대 높이 280px 스크롤 뷰) -->
-                        <div class="overflow-y-auto max-h-[280px] pr-2 space-y-2.5 custom-scrollbar" id="ref-list-container">
-                            <!-- JS에 의해 동적으로 목록이 채워집니다. -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
         
         <!-- 2. VARIABLE BAR (Sleek Centered SaaS Card - Reduced Width) -->
@@ -728,6 +678,32 @@
         </section>
 
         <!-- 2단계: 우수사례 PDF 역분석 -->
+        <!-- 📂 유형별 우수 프로포절 레퍼런스 라이브러리 (2단계와 같은 맥락으로 위에 배치) -->
+        <section class="presentation-section">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-6 glow-border bg-[#070b19]/60">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-black bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded">2단계 실습 준비 소스</span>
+                            <h4 class="font-bold text-white text-lg font-sans">유형별 우수 프로포절 레퍼런스 라이브러리 (25선)</h4>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed font-medium">아래 탭을 선택하고 원하는 복지관의 계획서 PDF를 다운로드하여 2단계 NotebookLM 역기획 실습 소스로 바로 활용하세요.</p>
+                    </div>
+                    <!-- 탭 버튼들 -->
+                    <div class="flex flex-wrap gap-1 bg-[#090d1a] p-1 rounded-xl border border-white/5 shrink-0 shadow-inner">
+                        <button onclick="changeRefTab('outcomes', this)" class="ref-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95 bg-blue-600/20 text-blue-400">성과중심(7)</button>
+                        <button onclick="changeRefTab('outputs', this)" class="ref-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95">산출중심(6)</button>
+                        <button onclick="changeRefTab('diffusion', this)" class="ref-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95">성과확산(6)</button>
+                        <button onclick="changeRefTab('reinforcement', this)" class="ref-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition active:scale-95">기능보강(6)</button>
+                    </div>
+                </div>
+                <!-- 동적 리스트 렌더링 영역 (최대 높이 220px 스크롤 뷰) -->
+                <div class="overflow-y-auto max-h-[220px] pr-2 space-y-2 custom-scrollbar border border-white/5 rounded-2xl p-4 bg-slate-950/20" id="ref-list-container">
+                    <!-- JS에 의해 동적으로 목록이 채워집니다. -->
+                </div>
+            </div>
+        </section>
+
         <section id="step-2" class="presentation-section">
             <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full">
                 <div class="flex items-center gap-3 flex-wrap">
@@ -791,15 +767,12 @@
         </section>
 
         <!-- 3단계: 우리 데이터 수집 & 연쇄적 프롬프팅 -->
+                <!-- 3단계: 1단계(리서치) 및 2단계(역기획) 데이터 기반 맥락 주입 베이스 프롬프트 -->
         <section id="step-3" class="presentation-section">
-            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full bg-gradient-to-br from-[#0c0d24] to-[#04050e]">
                 <div class="flex items-center gap-3 flex-wrap">
-                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-black text-lg shrink-0">3</span>
-                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">현장 데이터 수집 및 연쇄적 프롬프팅</h2>
-                    <a href="https://gemini.google.com" target="_blank" class="px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-500/40 text-blue-400 text-xs font-black tracking-wide hover:bg-blue-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-blue inline-flex items-center gap-1.5 shrink-0 shadow-md">
-                        <span>Gemini 바로가기</span>
-                        <i data-lucide="external-link" class="w-3 h-3"></i>
-                    </a>
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-lg shrink-0">3</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">3단계: 데이터 맥락 주입 베이스 프롬프트</h2>
                     <button onclick="openAhaModal(3)" class="px-5 py-2 rounded-full bg-blue-500/15 border border-blue-500/40 text-blue-400 text-xs font-black tracking-wide hover:bg-blue-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-blue inline-flex items-center gap-1.5 shrink-0 shadow-lg"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> <span>AHA POINT</span></button>
                 </div>
 
@@ -807,210 +780,386 @@
                 <div class="bg-[#8b5cf6]/5 rounded-xl p-5 border border-[#8b5cf6]/25 flex items-start gap-3 w-full">
                     <span class="text-purple-400 text-xl">💡</span>
                     <div class="space-y-2 text-sm">
-                        <p class="text-purple-300 font-black">그라운드(도구) 전환에 따른 실습 꿀팁 (맥락 연계):</p>
-                        <p class="text-slate-350 leading-relaxed font-medium">
-                            3단계는 새로운 내용(초안)을 집필하는 단계이므로, 분석용 도구인 NotebookLM이 아닌 창작에 특화된 범용 AI <strong class="text-blue-400">Gemini</strong>를 사용합니다.<br>
-                            이때, <strong class="text-purple-400">1단계(구글 검색 딥리서치)에서 확보한 실제 통계 수치</strong>와 <strong class="text-purple-400">2단계(NotebookLM)에서 분석한 우수 사례 뼈대 지침</strong>을 Gemini 입력창에 생성 프롬프트와 함께 **복사-붙여넣기**하여 입력해 주면, 
-                            작성할 사업 계획서 초안에 팩트 데이터와 선발 노하우가 유기적으로 녹아들어 훨씬 고도화된 프로포절을 완성할 수 있습니다!
+                        <p class="text-purple-300 font-black">그라운드(도구) 전환 및 데이터 맥락 융합 가이드 (통합 맥락 주입):</p>
+                        <p class="text-slate-350 leading-relaxed font-medium font-sans">
+                            이 단계에서는 분석용 도구인 NotebookLM을 졸업하고, 창작에 특화된 범용 AI <strong class="text-blue-400">Gemini</strong>를 사용해 집필을 시작합니다.<br>
+                            집필 전, <strong>1단계(구글 딥리서치로 수집한 진짜 팩트 보고서)</strong>와 <strong>2단계(NotebookLM으로 추출한 논리 뼈대 설계도)</strong>의 데이터를 아래 최초 입력용 베이스캠프 카드에 복사-붙여넣기하여 Gemini에게 예습시키세요. 이 과정이 완료되어야 향후 연쇄 집필 시 논리가 어긋나지 않습니다.
                         </p>
                     </div>
                 </div>
 
-                <!-- 🚀 3단계 진입 전 필수 작업: 베이스캠프 컨텍스트 주입 프롬프트 -->
-                <div class="flex flex-col border border-purple-500/25 rounded-2xl bg-slate-950/40">
-                    <div class="flex justify-between items-center bg-[#1e1b4b]/60 px-5 py-3.5 border-b border-purple-500/20 rounded-t-2xl">
+                <!-- 통합 베이스캠프 -->
+                <div class="flex flex-col border border-purple-500/20 rounded-2xl bg-slate-950/40 w-full">
+                    <div class="flex justify-between items-center bg-[#181236]/70 px-5 py-3.5 border-b border-purple-500/20 rounded-t-2xl">
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-black bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded-md">1단계+2단계 맥락 주입</span>
-                            <span class="text-sm font-bold text-white font-sans">Gemini 최초 입력용 베이스캠프 프롬프트</span>
+                            <span class="text-[10px] font-black bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded">통합 맥락주입용</span>
+                            <span class="text-sm font-bold text-white font-sans">Gemini 맥락 주입 베이스 프롬프트</span>
                         </div>
                         <button class="copy-btn bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-basecamp')">복사</button>
                     </div>
-                    <div class="p-6 text-sm leading-relaxed text-slate-355 select-all code-container rounded-b-2xl" id="p-basecamp">[임무 정의]
-너는 지금부터 사회복지공동모금회 프로포절 당선작을 빌드하는 전문 기획가야.
-아래에 제공하는 [1. 레퍼런스 논리 구조(2단계 추출물)]와 [2. 기획 기초 팩트 자료(1단계 구글독스/검색 결과)]를 머릿속에 완벽히 기억하고, 이 두 자료를 유기적으로 융합하여 내가 앞으로 지시할 기획서 초안을 단계별로 작성해줘.
-
-■ 1. 레퍼런스 논리 구조 (2단계 추출물)
-[이곳에 2단계에서 NotebookLM이 도출해준 '지시용 템플릿 및 뼈대 구조'를 복사-붙여넣기 하세요]
-
-■ 2. 기획 기초 팩트 자료 (1단계 Google Docs / 리서치 결과물)
-[이곳에 1단계 구글 딥리서치 결과가 저장된 Google Docs의 텍스트 본문 전체를 복사-붙여넣기 하세요]
-
-이해했으면 핵심 맥락(사업 주제, 대상 지역, 예산 규모)만 한 문장으로 요약해서 대답하고 대기해줘. 지금부터 3-1단계부터 차례대로 세부 본문 작성을 요청할게.</div>
-                </div>
-
-                <!-- 실시간 연쇄 프롬프트 아코디언 로드맵 -->
-                <div class="space-y-4 text-base">
-
-                    <!-- 3-1: 사업명 -->
-                    <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
-                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
-                            <div class="flex items-center gap-4">
-                                <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge transition duration-300 font-sans">3-1</span>
-                                <span class="font-bold text-slate-100 font-sans">양식 1번 항목: 사업명·목적·방향 사업계획 확정</span>
-                            </div>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
-                        </button>
-                        <div class="accordion-body bg-slate-950/20">
-                            <div class="p-6 space-y-4">
-                                <p class="text-sm text-slate-300 leading-relaxed font-medium">
-                                    [사업 주제]를 대입하여 심사위원의 마음을 사로잡을 사업명과 목차 구성안을 얻습니다.
-                                </p>
-                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
-                                    <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
-                                        <span class="text-xs font-bold text-slate-400 font-sans">3-1단계 프롬프트</span>
-                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-1')">복사</button>
-                                    </div>
-                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-1"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3-2: 사업 필요성 -->
-                    <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
-                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
-                            <div class="flex items-center gap-4">
-                                <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge transition duration-300 font-sans">3-2</span>
-                                <span class="font-bold text-slate-100 font-sans">양식 2번 항목: 사업의 필요성(대상자 욕구 및 통계)</span>
-                            </div>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
-                        </button>
-                        <div class="accordion-body bg-slate-950/20">
-                            <div class="p-6 space-y-4">
-                                <p class="text-sm text-slate-300 leading-relaxed font-medium">
-                                    [필요성 설득 전략]에서 수집한 통계 자료를 바탕으로 왜 해당 아동을 위한 사업이 이 시점에 반드시 열려야 하는지 설득력 있는 본문을 빌드합니다.
-                                </p>
-                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
-                                    <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
-                                        <span class="text-xs font-bold text-slate-400 font-sans">3-2단계 프롬프트</span>
-                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-2')">복사</button>
-                                    </div>
-                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-2"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3-3: 참여자 선정 -->
-                    <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
-                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
-                            <div class="flex items-center gap-4">
-                                <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge transition duration-300 font-sans">3-3</span>
-                                <span class="font-bold text-slate-100 font-sans">양식 3-1번 항목: 참여자 및 우선 선정조건 수립</span>
-                            </div>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
-                        </button>
-                        <div class="accordion-body bg-slate-950/20">
-                            <div class="p-6 space-y-4">
-                                <p class="text-sm text-slate-300 leading-relaxed font-medium">
-                                    일반, 위기, 표적, 클라이언트(실제 참여자) 집단별 수치를 표준 표 형식으로 계산하여 추출하고 구체적 가이드라인을 제시합니다.
-                                </p>
-                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
-                                    <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
-                                        <span class="text-xs font-bold text-slate-400 font-sans">3-3단계 프롬프트</span>
-                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-3')">복사</button>
-                                    </div>
-                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-3"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3-4: 세부사업 내용 -->
-                    <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
-                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
-                            <div class="flex items-center gap-4">
-                                <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge transition duration-300 font-sans">3-4</span>
-                                <span class="font-bold text-slate-100 font-sans">양식 3-2번 항목: 세부사업 내용 및 일정표 생성</span>
-                            </div>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
-                        </button>
-                        <div class="accordion-body bg-slate-950/20">
-                            <div class="p-6 space-y-4">
-                                <p class="text-sm text-slate-300 leading-relaxed font-medium">
-                                    사업 목적을 달성하기 위한 구체적 프로그램의 내용, 진행 주기(주 1회 등), 횟수, 담당 역할자 및 연간 일정 Gantt 표 템플릿을 생성합니다.
-                                </p>
-                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
-                                    <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
-                                        <span class="text-xs font-bold text-slate-400 font-sans">3-4단계 프롬프트</span>
-                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4')">복사</button>
-                                    </div>
-                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3-5: 예산 편성 -->
-                    <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
-                        <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
-                            <div class="flex items-center gap-4">
-                                <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge transition duration-300 font-sans">3-5</span>
-                                <span class="font-bold text-slate-100 font-sans">양식 4번 항목: 상세 예산 계획 및 산출식 설계</span>
-                            </div>
-                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
-                        </button>
-                        <div class="accordion-body bg-slate-950/20">
-                            <div class="p-6 space-y-4">
-                                <p class="text-sm text-slate-300 leading-relaxed font-medium">
-                                    총 사업 예산 [BUDGET] 한도 내에서 신청금(90%)과 자부담(10%) 비율을 엄격히 준수하여 인건비, 사업비, 관리비 산출 근거 표를 자동 빌드합니다.
-                                </p>
-                                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
-                                    <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
-                                        <span class="text-xs font-bold text-slate-400 font-sans">3-5단계 프롬프트</span>
-                                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-5')">복사</button>
-                                    </div>
-                                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-5"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="p-6 text-xs leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[300px] overflow-y-auto" id="p-basecamp"></div>
                 </div>
             </div>
-        </section>
-
-        <!-- 4단계: 최종 조립, 윤문 및 정합성 검증 -->
+        </section>\n\n        <!-- 4단계: 유형별 연쇄 프롬프팅 (4-1: 성과중심형 vs 4-2: 산출중심형) -->
         <section id="step-4" class="presentation-section">
             <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full">
                 <div class="flex items-center gap-3 flex-wrap">
-                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-black text-lg shrink-0">4</span>
-                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">최종 조립, 윤문 및 정합성 검증</h2>
-                    <a href="https://gemini.google.com" target="_blank" class="px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-500/40 text-blue-400 text-xs font-black tracking-wide hover:bg-blue-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-blue inline-flex items-center gap-1.5 shrink-0 shadow-md">
-                        <span>Gemini 바로가기</span>
-                        <i data-lucide="external-link" class="w-3 h-3"></i>
-                    </a>
-                    <span class="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-xs font-black tracking-wide shrink-0">📊 엑셀/계산기 (예산 검증 필수)</span>
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-lg shrink-0">4</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">4단계: 유형별 연쇄 프롬프팅 (4-1 vs 4-2)</h2>
+                </div>
+
+                <p class="text-slate-350 text-sm md:text-base leading-relaxed font-medium">
+                    작성할 프로포절의 유형에 맞추어 아래의 <strong>[4-1 성과중심형 트랙]</strong> 또는 <strong>[4-2 산출중심형 트랙]</strong> 중 하나를 골라 연쇄 프롬프트 실습을 수행하세요.
+                </p>
+
+                <!-- 병렬 트랙 2단 배치 -->
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 items-start">
+                    
+                    <!-- ============================================ -->
+                    <!-- [4-1 트랙] 성과중심형 연쇄 프롬프팅 (1~5 단계) -->
+                    <!-- ============================================ -->
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between bg-slate-900/60 p-5 rounded-2xl border border-white/5">
+                            <div class="space-y-1">
+                                <span class="text-xs font-black text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded uppercase">Outcomes Track</span>
+                                <h3 class="text-lg font-bold text-white font-sans">4-1. 성과중심형 실습 코너</h3>
+                            </div>
+                            <a href="files/사회복지공동모금회 성과중심형 사업계획서 양식.hwp" download target="_blank" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-center font-black text-xs rounded-xl transition-all duration-200 active:scale-95 flex items-center gap-1.5 shadow-md">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i> 양식 받기 (.hwp)
+                            </a>
+                        </div>
+
+                        <!-- 성과중심형 아코디언 그룹 (accordion-group) -->
+                        <div class="accordion-group space-y-4">
+                            <!-- 1단계: 사업명 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">1</span>
+                                        <span class="font-bold text-slate-100 font-sans">사업명 선정 및 기획 방향 수립</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-1-1')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-1-1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2단계: 필요성 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">2</span>
+                                        <span class="font-bold text-slate-100 font-sans">사업의 필요성 및 배경 설명 기술</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-1-2')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-1-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3단계: 참여자 선정 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">3</span>
+                                        <span class="font-bold text-slate-100 font-sans font-sans">참여자 선정 및 수혜 요건 정의</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-1-3')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-1-3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4단계: 성과 평가 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">4</span>
+                                        <span class="font-bold text-slate-100 font-sans">질적 성과 목표 및 과학적 평가 척도 매핑</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-1-4')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-1-4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5단계: 예산 계획 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">5</span>
+                                        <span class="font-bold text-slate-100 font-sans">상세 예산 편성 및 단가 계산</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-1-5')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-1-5"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 성과형 최종 조립 -->
+                        <div class="flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
+                            <div class="flex justify-between items-center bg-[#0d2218]/80 px-5 py-3 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-300 font-sans">성과형 최종 조립 마스터 프롬프트</span>
+                                <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-master-docs-outcome')">복사</button>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[160px] overflow-y-auto" id="p-master-docs-outcome"></div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- [4-2 트랙] 산출중심형 연쇄 프롬프팅 (1~5 단계) -->
+                    <!-- ============================================ -->
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between bg-slate-900/60 p-5 rounded-2xl border border-white/5">
+                            <div class="space-y-1">
+                                <span class="text-xs font-black text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded uppercase">Outputs Track</span>
+                                <h3 class="text-lg font-bold text-white font-sans font-sans">4-2. 산출중심형 실습 코너</h3>
+                            </div>
+                            <a href="files/광주공동모금회 산출중심형 사업계획서 양식.hwpx" download target="_blank" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 text-center font-black text-xs rounded-xl transition-all duration-200 active:scale-95 flex items-center gap-1.5 shadow-md">
+                                <i data-lucide="download" class="w-3.5 h-3.5"></i> 양식 받기 (.hwpx)
+                            </a>
+                        </div>
+
+                        <!-- 산출중심형 아코디언 그룹 (accordion-group) -->
+                        <div class="accordion-group space-y-4">
+                            <!-- 1단계: 사업명 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">1</span>
+                                        <span class="font-bold text-slate-100 font-sans">사업명 선정 및 정량적 투입 방향 수립</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-2-1')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-2-1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2단계: 필요성 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">2</span>
+                                        <span class="font-bold text-slate-100 font-sans">사업의 필요성(물리적/환경적 결핍) 기술</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-2-2')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-2-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3단계: 세부 프로그램 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">3</span>
+                                        <span class="font-bold text-slate-100 font-sans font-sans">세부 프로그램 구성 및 정량적 산출 설계</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-2-3')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-2-3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4단계: 예산 계획 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">4</span>
+                                        <span class="font-bold text-slate-100 font-sans">상세 예산 계획 및 정밀 산출식 설계</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-2-4')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-2-4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 5단계: 기대효과 -->
+                            <div class="accordion-item border border-white/5 rounded-2xl overflow-hidden bg-slate-900/30">
+                                <button class="w-full text-left p-5 text-white flex items-center justify-between hover:bg-slate-900/50 transition accordion-header select-none">
+                                    <div class="flex items-center gap-4">
+                                        <span class="w-8 h-8 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold step-badge font-sans">5</span>
+                                        <span class="font-bold text-slate-100 font-sans font-sans">기대효과 및 사후 관리 환류 계획</span>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400"></i>
+                                </button>
+                                <div class="accordion-body bg-slate-950/20">
+                                    <div class="p-6 space-y-4">
+                                        <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
+                                            <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
+                                                <span class="text-xs font-bold text-slate-400 font-sans">프롬프트 복사</span>
+                                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-step-4-2-5')">복사</button>
+                                            </div>
+                                            <div class="p-5 text-xs leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-step-4-2-5"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 산출형 최종 조립 -->
+                        <div class="flex flex-col border border-amber-500/20 rounded-2xl bg-slate-950/40">
+                            <div class="flex justify-between items-center bg-[#291e0e]/80 px-5 py-3 border-b border-amber-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-300 font-sans font-sans">산출형 최종 조립 마스터 프롬프트</span>
+                                <button class="copy-btn bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-master-docs-output')">복사</button>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[160px] overflow-y-auto" id="p-master-docs-output"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>\n\n        <!-- 5단계: 최종 조립, 윤문 및 정합성 검증 -->
+        <section id="step-5" class="presentation-section">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full">
+                <div class="flex items-center gap-3 flex-wrap">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center font-black text-lg shrink-0">5</span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans font-sans">5단계: 최종 조립, 윤문 및 정합성 검증</h2>
                     <button onclick="openAhaModal(4)" class="px-5 py-2 rounded-full bg-blue-500/15 border border-blue-500/40 text-blue-400 text-xs font-black tracking-wide hover:bg-blue-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-blue inline-flex items-center gap-1.5 shrink-0 shadow-lg"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> <span>AHA POINT</span></button>
                 </div>
 
-                <!-- 🚨 예산 크로스체크 경고 블록 -->
-                <div class="bg-red-500/5 rounded-2xl p-6 border border-red-500/20 space-y-3 w-full">
-                    <span class="text-xs font-bold text-red-400 tracking-widest uppercase">🚨 필수 검증 경고 (Human-in-the-Loop)</span>
-                    <h3 class="text-lg font-bold text-red-300">"AI가 출력한 예산표의 산출식은 반드시 엑셀/계산기로 사람이 재검증해야 합니다."</h3>
-                    <p class="text-slate-300 text-sm leading-relaxed font-medium">
-                        LLM(대규모 언어 모델)은 수학적 사칙연산에 취약하여, 복잡한 예산 비목의 <strong>단가 × 수량 × 인원 × 횟수 = 합계</strong> 산출식에서 환각(Hallucination) 오류가 발생할 수 있습니다. 
-                        프로포절 심사에서 <strong>예산 총합 불일치는 즉시 탈락 사유</strong>이므로, AI 초안 출력 후 아래 3가지를 반드시 사람이 엑셀에서 검증하십시오:
-                    </p>
-                    <ul class="text-sm text-slate-405 list-disc list-inside space-y-2 pl-2 font-medium">
-                        <li>각 비목별 <strong>산출식(단가 공식)</strong>의 곱셈 결과가 정확한지</li>
-                        <li>인건비 + 사업비 + 관리비의 <strong>소계 합산</strong>이 총 예산 한도와 일치하는지</li>
-                        <li>신청금(90%)과 자부담(10%)의 <strong>조달 비율 분배</strong>가 정확한지 <span class="text-red-400 font-black">(★ 공동모금회 심사 규정상 신청 금액과 자부담 비율 분배가 단 1원이라도 불일치하거나 자부담이 10% 미만으로 어긋날 경우 즉각적인 감점 및 심사 탈락 사유가 됩니다.)</span></li>
-                    </ul>
+                <!-- 💡 최종 조립 지침 가이드 -->
+                <div class="bg-[#3b82f6]/5 rounded-xl p-5 border border-[#3b82f6]/25 flex items-start gap-3 w-full">
+                    <span class="text-blue-400 text-xl">💡</span>
+                    <div class="space-y-2 text-sm font-sans">
+                        <p class="text-blue-400 font-black">최종 한글 문서 안착 및 사후 품질검증(QA) 실습:</p>
+                        <p class="text-slate-350 leading-relaxed font-medium">
+                            4-1단계(성과중심) 혹은 4-2단계(산출중심)의 최종 마스터 프롬프트로 조립해 낸 완성본 텍스트를 메모장 또는 한글 파일로 복사하세요.<br>
+                            그 다음, 공식 서식 양식 한글 파일에 이식한 후, 아래 <strong>4대 정합성 체크리스트</strong>를 보며 최종 문서를 수동으로 감수합니다.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- 마스터 템플릿 프롬프트 카드 -->
-                <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
-                    <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
-                        <span class="text-xs font-bold text-slate-400 font-sans">최종 조립 및 윤문 마스터 프롬프트</span>
-                        <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-master-docs')">복사</button>
+                <!-- 4대 정합성 체크리스트 카드 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- 체크리스트 1: 사업명-필요성 매핑 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-2.5 bg-slate-900/30">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs">1</span>
+                            <strong class="text-white text-base font-sans">사업명 - 필요성 논리 정합성</strong>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                            사업명의 [목적] 및 [방법]이 '2. 사업 필요성' 단락에서 제기된 문제점들과 100% 일치하는지 확인합니다. 필요성에서 지적하지 않은 활동이 갑자기 사업명에 언급되면 감점 대상입니다.
+                        </p>
                     </div>
-                    <div class="p-5 text-sm leading-relaxed text-slate-300 select-all code-container rounded-b-2xl" id="p-master-docs"></div>
+
+                    <!-- 체크리스트 2: 프로그램-대상자 매핑 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-2.5 bg-slate-900/30">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-xs">2</span>
+                            <strong class="text-white text-base font-sans">프로그램 - 참여 대상자 일치</strong>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                            수혜 대상자 수(예: 아동 20명)가 앞서 '참여자 선정' 표에 명시된 클라이언트(핵심 참여자) 인원수와 단 1명도 오차 없이 일치하는지 확인합니다.
+                        </p>
+                    </div>
+
+                    <!-- 체크리스트 3: 세부활동-예산 매핑 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-2.5 bg-slate-900/30">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-xs">3</span>
+                            <strong class="text-white text-base font-sans">세부 프로그램 - 예산 비목 일치</strong>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                            세부 내용에 있는 외부 치료 활동이나 특강 수업이 '예산편성'의 외부 강사 수수료 및 교구비 항목에 한 비목도 빠짐없이 반영되어 금액 단가로 설정되어 있는지 확인합니다.
+                        </p>
+                    </div>
+
+                    <!-- 체크리스트 4: 예산 산출 공식 재검산 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-2.5 bg-slate-900/30">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs">4</span>
+                            <strong class="text-white text-base font-sans">사칙연산 및 자부담 비율 확인</strong>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed font-medium font-sans">
+                            인건비, 사업비, 관리비 등 총 예산 표의 <strong>단가 × 인원 × 횟수 = 소계</strong> 공식이 수학적으로 틀리지 않았는지 계산기로 크로스체크합니다. 신청금(90%)과 자부담(10%) 비율 분배가 정확한지 재차 확인합니다.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <!-- Global Modal Component (Overhauled for High Readability) -->
+        </section>\n\n    <!-- Global Modal Component (Overhauled for High Readability) -->
     <div id="global-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
         <div class="glass-panel w-full max-w-5xl mx-4 rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative flex flex-col max-h-[85vh] bg-gradient-to-br from-[#0f172a] to-[#070a13]">
             <!-- Header -->
