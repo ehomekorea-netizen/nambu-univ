@@ -256,3 +256,11 @@ function initQuizEvents() {
         initQuiz();
     });
 }
+
+window.initQuizModal = function() {
+    const resultBox = document.getElementById("quiz-result");
+    if (resultBox) {
+        resultBox.classList.add("hidden");
+    }
+    initQuiz();
+}

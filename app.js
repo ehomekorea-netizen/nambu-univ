@@ -306,6 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initInteractiveTopic(); // Initialize this first to capture correct state.currentTopic from HTML input
     initDeepResearchGenerator();
     initScrollSpy();
+    initQAChecklist();
     
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
@@ -369,7 +370,7 @@ function getHighlightSpan(text, placeholder) {
     if (!text || text.trim() === "") {
         return `<span class="text-rose-400 font-black bg-rose-500/10 px-2 py-0.5 rounded-lg border border-rose-500/35 animate-pulse text-xs md:text-sm">[⚠️ ${placeholder} 입력 필요]</span>`;
     }
-    return `<span class="text-orange-500 font-extrabold bg-orange-500/10 px-1.5 py-0.5 rounded border border-orange-500/20">${text}</span>`;
+    return `<span class="prompt-highlight text-yellow-300 font-extrabold bg-yellow-500/35 px-1.5 py-0.5 rounded-lg border border-yellow-500/50 shadow-[0_0_8px_rgba(234,179,8,0.25)]">${text}</span>`;
 }
 
 function getRawText(text, placeholder) {
@@ -659,4 +660,69 @@ function initScrollSpy() {
 
     window.addEventListener("scroll", handleScroll);
     setTimeout(handleScroll, 100);
+}
+
+// ----------------------------------------------------
+// 퀴즈 모달 제어 (Q3 반영)
+// ----------------------------------------------------
+window.openQuizModal = function() {
+    const modal = document.getElementById("quiz-modal");
+    if (modal) {
+        modal.classList.remove("opacity-0", "pointer-events-none");
+        if (typeof window.initQuizModal === "function") {
+            window.initQuizModal();
+        }
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+}
+
+window.closeQuizModal = function() {
+    const modal = document.getElementById("quiz-modal");
+    if (modal) {
+        modal.classList.add("opacity-0", "pointer-events-none");
+    }
+}
+
+// ----------------------------------------------------
+// 5단계 4대 정합성 체크박스 인터랙티브 UX 제어 (Q2 반영)
+// ----------------------------------------------------
+function initQAChecklist() {
+    const checkboxes = document.querySelectorAll(".qa-checkbox");
+    checkboxes.forEach(cb => {
+        updateCheckCardStyle(cb);
+        cb.addEventListener("change", () => {
+            updateCheckCardStyle(cb);
+        });
+    });
+}
+
+function updateCheckCardStyle(cb) {
+    const card = cb.closest(".qa-check-card");
+    if (!card) return;
+    const title = card.querySelector(".qa-title");
+    const desc = card.querySelector(".qa-desc");
+    
+    if (cb.checked) {
+        card.style.borderColor = "rgba(16, 185, 129, 0.4)";
+        card.style.backgroundColor = "rgba(16, 185, 129, 0.03)";
+        if (title) {
+            title.classList.add("line-through", "text-slate-400");
+            title.classList.remove("text-white");
+        }
+        if (desc) {
+            desc.classList.add("opacity-40");
+        }
+    } else {
+        card.style.borderColor = "";
+        card.style.backgroundColor = "";
+        if (title) {
+            title.classList.remove("line-through", "text-slate-400");
+            title.classList.add("text-white");
+        }
+        if (desc) {
+            desc.classList.remove("opacity-40");
+        }
+    }
 }
