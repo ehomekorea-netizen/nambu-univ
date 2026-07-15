@@ -3,9 +3,9 @@ const state = {
     currentTopic: "", // Initialized dynamically from DOM value
     selectedAgency: "chest", // 'chest' = 산출중심형, 'enterprise' = 성과중심형, 'gov' = 성과확산형
     selectedBudget: "15,000,000원",
-    selectedEvalOrg: "사회복지공동모금회",
-    selectedAppOrg: "지역아동센터",
-    selectedRegion: "광주광역시 남구"
+    selectedEvalOrg: "",
+    selectedAppOrg: "",
+    selectedRegion: ""
 };
 
 // Raw Prompt Templates (Plain text definitions, styling is applied dynamically)
@@ -160,11 +160,11 @@ function initInteractiveTopic() {
     if (!topicInput) return;
 
     // Capture initial value from HTML (prevent rollback bugs)
-    state.currentTopic = topicInput.value || "사업 주제 없음 (입력 필요)";
+    state.currentTopic = topicInput.value || "";
     renderAllPrompts(state.currentTopic);
 
     topicInput.addEventListener("input", (e) => {
-        state.currentTopic = e.target.value || "사업 주제 없음 (입력 필요)";
+        state.currentTopic = e.target.value || "";
         renderAllPrompts(state.currentTopic);
         if (typeof window.updateDeepResearchPrompt === "function") {
             window.updateDeepResearchPrompt(); 
@@ -176,20 +176,30 @@ function initInteractiveTopic() {
 }
 
 // Helper: Wrap variable text in orange contrast badge (Meng To Style)
-function getHighlightSpan(text) {
+function getHighlightSpan(text, placeholder) {
+    if (!text || text.trim() === "") {
+        return `<span class="text-rose-400 font-black bg-rose-500/10 px-2 py-0.5 rounded-lg border border-rose-500/35 animate-pulse text-xs md:text-sm">[⚠️ ${placeholder} 입력 필요]</span>`;
+    }
     return `<span class="text-orange-500 font-extrabold bg-orange-500/10 px-1.5 py-0.5 rounded border border-orange-500/20">${text}</span>`;
 }
 
+function getRawText(text, placeholder) {
+    if (!text || text.trim() === "") {
+        return `[${placeholder} 입력 필요]`;
+    }
+    return text;
+}
+
 function renderAllPrompts(topic) {
-    const topicSpan = getHighlightSpan(topic);
-    const budgetSpan = getHighlightSpan(state.selectedBudget);
-    const evalOrgSpan = getHighlightSpan(state.selectedEvalOrg);
-    const appOrgSpan = getHighlightSpan(state.selectedAppOrg);
-    const regionSpan = getHighlightSpan(state.selectedRegion);
+    const topicSpan = getHighlightSpan(topic, "사업 주제");
+    const budgetSpan = getHighlightSpan(state.selectedBudget, "예산 한도");
+    const evalOrgSpan = getHighlightSpan(state.selectedEvalOrg, "심사 기관");
+    const appOrgSpan = getHighlightSpan(state.selectedAppOrg, "신청 기관 유형");
+    const regionSpan = getHighlightSpan(state.selectedRegion, "사업 수행 지역");
     
-    const targetSpan = getHighlightSpan("저소득 난독증 아동");
-    const goalSpan = getHighlightSpan("언어역량 발달 및 정서회복");
-    const methodSpan = getHighlightSpan("문해력 향상 교실 및 자전거 멘토링");
+    const targetSpan = getHighlightSpan("저소득 난독증 아동", "대상");
+    const goalSpan = getHighlightSpan("언어역량 발달 및 정서회복", "목적");
+    const methodSpan = getHighlightSpan("문해력 향상 교실 및 자전거 멘토링", "방법");
 
     for (const [id, template] of Object.entries(promptTemplates)) {
         const divEl = document.getElementById(id);
@@ -246,9 +256,9 @@ function initDeepResearchGenerator() {
         });
 
         const budget = budgetSelect.value;
-        const evalOrg = evalInput.value || "사회복지공동모금회";
-        const appOrg = appInput.value || "지역아동센터";
-        const region = regionInput.value || "광주광역시 남구";
+        const evalOrg = evalInput.value || "";
+        const appOrg = appInput.value || "";
+        const region = regionInput.value || "";
 
         state.selectedAgency = agency;
         state.selectedBudget = budget;
@@ -267,28 +277,33 @@ function initDeepResearchGenerator() {
             typeName = "성과확산형";
         }
 
-        const typeSpan = getHighlightSpan(typeName);
-        const budgetSpan = getHighlightSpan(budget);
-        const topicSpan = getHighlightSpan(state.currentTopic);
-        const evalOrgSpan = getHighlightSpan(evalOrg);
-        const appOrgSpan = getHighlightSpan(appOrg);
-        const regionSpan = getHighlightSpan(region);
+        const typeSpan = getHighlightSpan(typeName, "사업 유형");
+        const budgetSpan = getHighlightSpan(budget, "예산 한도");
+        const topicSpan = getHighlightSpan(state.currentTopic, "사업 주제");
+        const evalOrgSpan = getHighlightSpan(evalOrg, "심사 기관");
+        const appOrgSpan = getHighlightSpan(appOrg, "신청 기관 유형");
+        const regionSpan = getHighlightSpan(region, "사업 수행 지역");
         
+        const rawTopic = getRawText(state.currentTopic, "사업 주제");
+        const rawRegion = getRawText(region, "사업 수행 지역");
+        const rawApp = getRawText(appOrg, "신청 기관 유형");
+        const rawEval = getRawText(evalOrg, "제출 심사 기관");
+
         // 2025/2026 최신 기준 강조 변수 추가
-        const yearSpan = getHighlightSpan("최근 2025년~2026년 기준");
+        const yearSpan = getHighlightSpan("최근 2025년~2026년 기준", "연도 기준");
 
         // Raw plain text for clipboard (No HTML, variables cleanly injected with 2025/2026 time constraint)
         const rawPrompt = `[기획 사업 개요]
-- 사업 주제: ${state.currentTopic}
-- 수행 지역: ${region}
-- 신청 기관: ${appOrg}
-- 공모 기관: ${evalOrg}
+- 사업 주제: ${rawTopic}
+- 수행 지역: ${rawRegion}
+- 신청 기관: ${rawApp}
+- 공모 기관: ${rawEval}
 - 예산 한도: ${budget}
 - 사업 유형: ${typeName} (최근 2025년~2026년 기준)
 
 위 사업의 기획 근거와 타당성 마련을 위해 다음 3가지 영역을 심층 조사하고, 데이터와 명확한 출처를 함께 밝혀줘:
 
-1. ${region} 내 ${state.currentTopic} 관련 아동/취약계층의 구체적인 결핍 실태, 대상 인구 수, 복지 사각지대 수치 자료
+1. ${rawRegion} 내 ${rawTopic} 관련 아동/취약계층의 구체적인 결핍 실태, 대상 인구 수, 복지 사각지대 수치 자료
 2. 보건복지부, 교육부 또는 해당 지자체(광주광역시 등)의 이 사업 주제 관련 최근 정책 아젠다 및 조례적 지원 근거
 3. 타 기관에서 수행하여 효과성이 객관적으로 입증된 유사 사업 명칭과 당시 활용된 구체적인 성과 평가 척도(검사 도구) 정보`;
 
