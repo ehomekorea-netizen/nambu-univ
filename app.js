@@ -16,7 +16,7 @@ const promptTemplates = {
 아래에 제공하는 [1. 레퍼런스 논리 구조(2단계 추출물)]와 [2. 기획 기초 팩트 자료(1단계 구글독스/검색 결과)]를 머릿속에 완벽히 기억하고, 이 두 자료를 유기적으로 융합하여 내가 앞으로 지시할 기획서 초안을 단계별로 작성해줘.
 
 ■ 1. 레퍼런스 논리 구조 (2단계 추출물)
-[이곳에 2단계에서 NotebookLM이 도출해준 '지시용 템플릿 및 뼈대 구조'를 복사-붙여넣기 하세요]
+[이곳에 2단계에서 Gemini Advanced가 도출해준 '지시용 템플릿 및 뼈대 구조'를 복사-붙여넣기 하세요]
 
 ■ 2. 기획 기초 팩트 자료 (1단계 Google Docs / 리서치 결과물)
 [이곳에 1단계 구글 딥리서치 결과가 저장된 Google Docs의 텍스트 본문 전체를 복사-붙여넣기 하세요]
@@ -335,17 +335,7 @@ function initAccordion() {
         });
     });
 
-    // Default open first items of each accordion group
-    document.querySelectorAll(".accordion-group, .space-y-4").forEach(group => {
-        const firstItem = group.querySelector(".accordion-item");
-        if (firstItem) {
-            firstItem.classList.add("active");
-            const body = firstItem.querySelector(".accordion-body");
-            if (body) {
-                body.style.maxHeight = body.scrollHeight + 150 + "px";
-            }
-        }
-    });
+    // Starting all accordions closed by default as per user request.
 }
 
 // Topic Synchronization and Rendering Highlights

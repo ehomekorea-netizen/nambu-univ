@@ -677,6 +677,84 @@
                         </ul>
                     </div>
                 </div>
+
+                <!-- 최종 종합 마스터 조립 프롬프트 뷰어 (5단계 하단 배치) -->
+                <div class="border-t border-white/5 pt-8 space-y-6">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h3 class="text-lg font-bold text-white font-sans font-sans">최종 종합 마스터 조립 프롬프트</h3>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                        앞선 4단계에서 각 단계별(1~5단계)로 질문하여 도출해 낸 부분 초안들을 아래의 <strong>유형별 마스터 프롬프트</strong> 내부 안내에 따라 붙여넣으세요. Gemini가 최종적으로 하나의 완벽한 계획서 문서로 통합 조립하여 출력해 줍니다.
+                    </p>
+
+                    <!-- 마스터 탭 버튼들 -->
+                    <div class="flex items-center gap-2 p-1 bg-slate-950/60 rounded-xl border border-white/5 max-w-max">
+                        <button onclick="changeMasterTab('outcome', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 bg-emerald-600/20 text-emerald-400">성과중심형</button>
+                        <button onclick="changeMasterTab('output', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">산출중심형</button>
+                        <button onclick="changeMasterTab('diffusion', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">성과확산형</button>
+                        <button onclick="changeMasterTab('reinforcement', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">기능보강형</button>
+                    </div>
+
+                    <!-- 4가지 마스터 뷰어 컨테이너 -->
+                    <div class="space-y-4">
+                        <!-- 성과중심형 마스터 -->
+                        <div id="master-outcome" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-outcome')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-outcome')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-outcome"></div>
+                        </div>
+
+                        <!-- 산출중심형 마스터 -->
+                        <div id="master-output" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">산출중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-output')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-output')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-output"></div>
+                        </div>
+
+                        <!-- 성과확산형 마스터 -->
+                        <div id="master-diffusion" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과확산형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-diffusion')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-diffusion')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-diffusion"></div>
+                        </div>
+
+                        <!-- 기능보강형 마스터 -->
+                        <div id="master-reinforcement" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">기능보강형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-reinforcement')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-reinforcement')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-reinforcement"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -709,8 +787,8 @@
                 <div class="flex items-center gap-3 flex-wrap">
                     <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-black text-lg shrink-0">1</span>
                     <h2 class="text-2xl md:text-3xl font-black text-white font-sans">유형별 맞춤형 기획 전략 및 딥리서치 데이터 수집</h2>
-                    <a href="https://notebooklm.google.com" target="_blank" class="px-3.5 py-1.5 rounded-full bg-purple-500/15 border border-purple-500/40 text-purple-400 text-xs font-black tracking-wide hover:bg-purple-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-purple inline-flex items-center gap-1.5 shrink-0 shadow-md">
-                        <span>NotebookLM 바로가기</span>
+                    <a href="https://gemini.google.com" target="_blank" class="px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-500/40 text-blue-400 text-xs font-black tracking-wide hover:bg-blue-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-blue inline-flex items-center gap-1.5 shrink-0 shadow-md">
+                        <span>Gemini Advanced 바로가기</span>
                         <i data-lucide="external-link" class="w-3 h-3"></i>
                     </a>
                     <button onclick="openDeepResearchModal()" class="px-4 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-400 text-xs font-black tracking-wide hover:bg-amber-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-amber inline-flex items-center gap-1.5 shrink-0 shadow-lg"><i data-lucide="help-circle" class="w-3.5 h-3.5"></i> <span>딥리서치 가이드</span></button>
@@ -783,6 +861,84 @@
                         <div class="p-6 text-base md:text-lg leading-relaxed text-slate-200 select-all code-container rounded-b-2xl" id="deep-research-result"></div>
                     </div>
                 </div>
+
+                <!-- 최종 종합 마스터 조립 프롬프트 뷰어 (5단계 하단 배치) -->
+                <div class="border-t border-white/5 pt-8 space-y-6">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h3 class="text-lg font-bold text-white font-sans font-sans">최종 종합 마스터 조립 프롬프트</h3>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                        앞선 4단계에서 각 단계별(1~5단계)로 질문하여 도출해 낸 부분 초안들을 아래의 <strong>유형별 마스터 프롬프트</strong> 내부 안내에 따라 붙여넣으세요. Gemini가 최종적으로 하나의 완벽한 계획서 문서로 통합 조립하여 출력해 줍니다.
+                    </p>
+
+                    <!-- 마스터 탭 버튼들 -->
+                    <div class="flex items-center gap-2 p-1 bg-slate-950/60 rounded-xl border border-white/5 max-w-max">
+                        <button onclick="changeMasterTab('outcome', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 bg-emerald-600/20 text-emerald-400">성과중심형</button>
+                        <button onclick="changeMasterTab('output', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">산출중심형</button>
+                        <button onclick="changeMasterTab('diffusion', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">성과확산형</button>
+                        <button onclick="changeMasterTab('reinforcement', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">기능보강형</button>
+                    </div>
+
+                    <!-- 4가지 마스터 뷰어 컨테이너 -->
+                    <div class="space-y-4">
+                        <!-- 성과중심형 마스터 -->
+                        <div id="master-outcome" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-outcome')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-outcome')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-outcome"></div>
+                        </div>
+
+                        <!-- 산출중심형 마스터 -->
+                        <div id="master-output" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">산출중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-output')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-output')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-output"></div>
+                        </div>
+
+                        <!-- 성과확산형 마스터 -->
+                        <div id="master-diffusion" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과확산형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-diffusion')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-diffusion')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-diffusion"></div>
+                        </div>
+
+                        <!-- 기능보강형 마스터 -->
+                        <div id="master-reinforcement" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">기능보강형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-reinforcement')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-reinforcement')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-reinforcement"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -810,6 +966,84 @@
                 <div class="overflow-y-auto max-h-[220px] pr-2 space-y-2 custom-scrollbar border border-white/5 rounded-2xl p-4 bg-slate-950/20" id="ref-list-container">
                     <!-- JS에 의해 동적으로 목록이 채워집니다. -->
                 </div>
+
+                <!-- 최종 종합 마스터 조립 프롬프트 뷰어 (5단계 하단 배치) -->
+                <div class="border-t border-white/5 pt-8 space-y-6">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h3 class="text-lg font-bold text-white font-sans font-sans">최종 종합 마스터 조립 프롬프트</h3>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                        앞선 4단계에서 각 단계별(1~5단계)로 질문하여 도출해 낸 부분 초안들을 아래의 <strong>유형별 마스터 프롬프트</strong> 내부 안내에 따라 붙여넣으세요. Gemini가 최종적으로 하나의 완벽한 계획서 문서로 통합 조립하여 출력해 줍니다.
+                    </p>
+
+                    <!-- 마스터 탭 버튼들 -->
+                    <div class="flex items-center gap-2 p-1 bg-slate-950/60 rounded-xl border border-white/5 max-w-max">
+                        <button onclick="changeMasterTab('outcome', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 bg-emerald-600/20 text-emerald-400">성과중심형</button>
+                        <button onclick="changeMasterTab('output', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">산출중심형</button>
+                        <button onclick="changeMasterTab('diffusion', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">성과확산형</button>
+                        <button onclick="changeMasterTab('reinforcement', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">기능보강형</button>
+                    </div>
+
+                    <!-- 4가지 마스터 뷰어 컨테이너 -->
+                    <div class="space-y-4">
+                        <!-- 성과중심형 마스터 -->
+                        <div id="master-outcome" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-outcome')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-outcome')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-outcome"></div>
+                        </div>
+
+                        <!-- 산출중심형 마스터 -->
+                        <div id="master-output" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">산출중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-output')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-output')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-output"></div>
+                        </div>
+
+                        <!-- 성과확산형 마스터 -->
+                        <div id="master-diffusion" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과확산형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-diffusion')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-diffusion')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-diffusion"></div>
+                        </div>
+
+                        <!-- 기능보강형 마스터 -->
+                        <div id="master-reinforcement" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">기능보강형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-reinforcement')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-reinforcement')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-reinforcement"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -818,8 +1052,8 @@
                 <div class="flex items-center gap-3 flex-wrap">
                     <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-black text-lg shrink-0">2</span>
                     <h2 class="text-2xl md:text-3xl font-black text-white font-sans">레퍼런스(참고자료) 파일(PDF) 분석 및 역기획</h2>
-                    <a href="https://notebooklm.google.com" target="_blank" class="px-3.5 py-1.5 rounded-full bg-purple-500/15 border border-purple-500/40 text-purple-400 text-xs font-black tracking-wide hover:bg-purple-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-purple inline-flex items-center gap-1.5 shrink-0 shadow-md">
-                        <span>NotebookLM 바로가기</span>
+                    <a href="https://gemini.google.com" target="_blank" class="px-3.5 py-1.5 rounded-full bg-blue-500/15 border border-blue-500/40 text-blue-400 text-xs font-black tracking-wide hover:bg-blue-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-blue inline-flex items-center gap-1.5 shrink-0 shadow-md">
+                        <span>Gemini Advanced 바로가기</span>
                         <i data-lucide="external-link" class="w-3 h-3"></i>
                     </a>
                     <button onclick="openAhaModal(2)" class="px-5 py-2 rounded-full bg-blue-500/15 border border-blue-500/40 text-blue-400 text-xs font-black tracking-wide hover:bg-blue-500/25 hover:scale-105 active:scale-95 transition-all duration-200 btn-glow-blue inline-flex items-center gap-1.5 shrink-0 shadow-lg"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> <span>AHA POINT</span></button>
@@ -836,7 +1070,7 @@
                 <!-- 역분석 프롬프트 카드 -->
                 <div class="flex flex-col border border-white/5 rounded-2xl bg-slate-950/40">
                     <div class="flex justify-between items-center bg-slate-900 px-5 py-3 border-b border-white/5 rounded-t-2xl">
-                        <span class="text-xs font-bold text-slate-400 font-sans">NotebookLM 입력용 역분석 프롬프트</span>
+                        <span class="text-xs font-bold text-slate-400 font-sans">Gemini 입력용 역분석 프롬프트</span>
                         <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95" onclick="copyPrompt('p-reverse-prompt')">복사</button>
                     </div>
                     <div class="p-6 text-base md:text-lg leading-relaxed text-slate-200 select-all code-container rounded-b-2xl" id="p-reverse-prompt">내가 첨부한 레퍼런스(참고자료) 제안서 PDF 파일의 논리 구조와 작성 프레임워크를 분석해줘.
@@ -849,26 +1083,157 @@
 3. [채워넣을 변수 가이드]: 새로운 사업 주제를 얹을 때 내가 수집해서 AI에게 공급해주어야 하는 핵심적인 데이터 요건(예: 지역사회 고유 특성, 예산 규모, 대상자 선정 및 측정 척도 등) 목록 도출.
 
 이 지침들을 구조화하여 기획서 설계용 리포트 형태로 보고해줘.</div>
-                    <!-- 📚 학술 및 기술적 근거 원본 링크 (수강생 검증용) -->
-                    <div class="mt-6 pt-5 border-t border-white/5 space-y-3">
-                        <span class="text-[11px] font-black text-slate-500 uppercase tracking-widest block">📚 역기획 및 논리 모델 설계의 학술·기술적 원본 근거</span>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                            <a href="https://www.naccho.org/uploads/downloadable-resources/Programs/Public-Health-Infrastructure/KelloggLogicModelGuide_161122_162808.pdf" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-slate-950/30 border border-white/5 hover:border-blue-500/30 transition text-slate-400 hover:text-white group">
-                                <span class="truncate font-medium">W.K. Kellogg 재단 Logic Model 가이드북 (원문 PDF)</span>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 shrink-0 ml-2"></i>
-                            </a>
-                            <a href="http://proposal.chest.or.kr" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-slate-950/30 border border-white/5 hover:border-blue-500/30 transition text-slate-400 hover:text-white group">
-                                <span class="truncate font-medium">사회복지공동모금회(사랑의열매) 온라인 배분신청 자료실</span>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 shrink-0 ml-2"></i>
-                            </a>
-                            <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-slate-950/30 border border-white/5 hover:border-blue-500/30 transition text-slate-400 hover:text-white group">
-                                <span class="truncate font-medium">Anthropic 공식 Prompt Engineering 가이드 문서</span>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 shrink-0 ml-2"></i>
-                            </a>
-                            <a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-slate-950/30 border border-white/5 hover:border-blue-500/30 transition text-slate-400 hover:text-white group">
-                                <span class="truncate font-medium">OpenAI 공식 Prompt Engineering 설계 지침</span>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 shrink-0 ml-2"></i>
-                            </a>
+                    <!-- 📚 학술 및 기술적 근거 원본 링크 (세련된 리소스 인포그래픽 카드 스타일) -->
+                    <div class="mt-8 pt-6 border-t border-white/5 space-y-4">
+                        <div class="flex items-center gap-2">
+                            <span class="flex h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+                            <span class="text-xs font-black text-slate-400 uppercase tracking-widest block font-sans">Engineering & Academic Foundation</span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 leading-relaxed font-medium">
+                            본 역기획 실습 프레임워크는 논리 모델(Logic Model) 설계 이론과 글로벌 테크 기업의 프롬프트 엔지니어링 표준 지침을 결합하여 고안되었습니다. 아래 학술·기술적 근거 자료를 통해 설계 정합성을 교차 검증하실 수 있습니다.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans">
+                            <!-- 근거 1: Kellogg -->
+                            <div class="relative group overflow-hidden rounded-2xl bg-slate-950/20 border border-white/5 p-4 transition-all duration-300 hover:border-amber-500/20 hover:bg-slate-900/10">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/10 text-amber-400 uppercase tracking-wider font-sans">Logic Model Theory</span>
+                                        </div>
+                                        <h4 class="text-xs font-bold text-slate-200 font-sans group-hover:text-amber-300 transition-colors">W.K. Kellogg 재단 Logic Model 가이드북</h4>
+                                        <p class="text-[11px] text-slate-400 font-medium leading-relaxed font-sans">비영리 사회 복지 프로그램 평가 및 성과 중심 논리 구조 설계의 글로벌 바이블(원문 PDF).</p>
+                                    </div>
+                                    <a href="https://www.naccho.org/uploads/downloadable-resources/Programs/Public-Health-Infrastructure/KelloggLogicModelGuide_161122_162808.pdf" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-amber-500/20 flex items-center justify-center text-slate-400 hover:text-amber-400 transition-all shrink-0">
+                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- 근거 2: 사랑의열매 -->
+                            <div class="relative group overflow-hidden rounded-2xl bg-slate-950/20 border border-white/5 p-4 transition-all duration-300 hover:border-amber-500/20 hover:bg-slate-900/10">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 uppercase tracking-wider font-sans">Official Schema</span>
+                                        </div>
+                                        <h4 class="text-xs font-bold text-slate-200 font-sans group-hover:text-emerald-300 transition-colors">공동모금회 온라인 배분신청 자료실</h4>
+                                        <p class="text-[11px] text-slate-400 font-medium leading-relaxed font-sans">사랑의열매 공식 온라인 배분 시스템의 성과/산출중심 표준 서식 정보 및 작성 지침 아카이브.</p>
+                                    </div>
+                                    <a href="http://proposal.chest.or.kr" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-emerald-500/20 flex items-center justify-center text-slate-400 hover:text-emerald-400 transition-all shrink-0">
+                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- 근거 3: Anthropic -->
+                            <div class="relative group overflow-hidden rounded-2xl bg-slate-950/20 border border-white/5 p-4 transition-all duration-300 hover:border-amber-500/20 hover:bg-slate-900/10">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-purple-500/10 text-purple-400 uppercase tracking-wider font-sans">Prompt Guideline</span>
+                                        </div>
+                                        <h4 class="text-xs font-bold text-slate-200 font-sans group-hover:text-purple-300 transition-colors">Anthropic 공식 Prompt Engineering 가이드</h4>
+                                        <p class="text-[11px] text-slate-400 font-medium leading-relaxed font-sans">컨텍스트 주입, 역할 명시 등 LLM의 정교한 기획 뼈대 추출용 고도화 프롬프트 작성 공식 지침.</p>
+                                    </div>
+                                    <a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-purple-500/20 flex items-center justify-center text-slate-400 hover:text-purple-400 transition-all shrink-0">
+                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- 근거 4: OpenAI -->
+                            <div class="relative group overflow-hidden rounded-2xl bg-slate-950/20 border border-white/5 p-4 transition-all duration-300 hover:border-amber-500/20 hover:bg-slate-900/10">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="space-y-1.5">
+                                        <div class="flex items-center gap-2">
+                                            <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-blue-500/10 text-blue-400 uppercase tracking-wider font-sans">Instruction Design</span>
+                                        </div>
+                                        <h4 class="text-xs font-bold text-slate-200 font-sans group-hover:text-blue-300 transition-colors">OpenAI 공식 Prompt Engineering 설계 지침</h4>
+                                        <p class="text-[11px] text-slate-400 font-medium leading-relaxed font-sans">구분자 사용, 예산 매핑, 복합 세부 일정 템플릿의 정확한 생성을 위한 표준 가이드라인.</p>
+                                    </div>
+                                    <a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-all shrink-0">
+                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 최종 종합 마스터 조립 프롬프트 뷰어 (5단계 하단 배치) -->
+                <div class="border-t border-white/5 pt-8 space-y-6">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h3 class="text-lg font-bold text-white font-sans font-sans">최종 종합 마스터 조립 프롬프트</h3>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                        앞선 4단계에서 각 단계별(1~5단계)로 질문하여 도출해 낸 부분 초안들을 아래의 <strong>유형별 마스터 프롬프트</strong> 내부 안내에 따라 붙여넣으세요. Gemini가 최종적으로 하나의 완벽한 계획서 문서로 통합 조립하여 출력해 줍니다.
+                    </p>
+
+                    <!-- 마스터 탭 버튼들 -->
+                    <div class="flex items-center gap-2 p-1 bg-slate-950/60 rounded-xl border border-white/5 max-w-max">
+                        <button onclick="changeMasterTab('outcome', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 bg-emerald-600/20 text-emerald-400">성과중심형</button>
+                        <button onclick="changeMasterTab('output', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">산출중심형</button>
+                        <button onclick="changeMasterTab('diffusion', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">성과확산형</button>
+                        <button onclick="changeMasterTab('reinforcement', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">기능보강형</button>
+                    </div>
+
+                    <!-- 4가지 마스터 뷰어 컨테이너 -->
+                    <div class="space-y-4">
+                        <!-- 성과중심형 마스터 -->
+                        <div id="master-outcome" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-outcome')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-outcome')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-outcome"></div>
+                        </div>
+
+                        <!-- 산출중심형 마스터 -->
+                        <div id="master-output" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">산출중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-output')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-output')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-output"></div>
+                        </div>
+
+                        <!-- 성과확산형 마스터 -->
+                        <div id="master-diffusion" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과확산형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-diffusion')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-diffusion')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-diffusion"></div>
+                        </div>
+
+                        <!-- 기능보강형 마스터 -->
+                        <div id="master-reinforcement" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">기능보강형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-reinforcement')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-reinforcement')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-reinforcement"></div>
                         </div>
                     </div>
                 </div>
@@ -891,8 +1256,8 @@
                     <div class="space-y-2 text-sm">
                         <p class="text-purple-300 font-black">그라운드(도구) 전환 및 데이터 맥락 융합 가이드 (통합 맥락 주입):</p>
                         <p class="text-slate-350 leading-relaxed font-medium font-sans">
-                            이 단계에서는 분석용 도구인 NotebookLM을 졸업하고, 창작에 특화된 범용 AI <strong class="text-blue-400">Gemini</strong>를 사용해 집필을 시작합니다.<br>
-                            집필 전, <strong>1단계(구글 딥리서치로 수집한 진짜 팩트 보고서)</strong>와 <strong>2단계(NotebookLM으로 추출한 논리 뼈대 설계도)</strong>의 데이터를 아래 최초 입력용 베이스캠프 카드에 복사-붙여넣기하여 Gemini에게 예습시키세요. 이 과정이 완료되어야 향후 연쇄 집필 시 논리가 어긋나지 않습니다.
+                            이 단계에서는 분석용 도구인 Gemini Advanced를 활용한 분석을 마친 후, 창작에 특화된 범용 AI <strong class="text-blue-400">Gemini</strong>를 사용해 집필을 시작합니다.<br>
+                            집필 전, <strong>1단계(구글 딥리서치로 수집한 진짜 팩트 보고서)</strong>와 <strong>2단계(Gemini로 추출한 논리 뼈대 설계도)</strong>의 데이터를 아래 최초 입력용 베이스캠프 카드에 복사-붙여넣기하여 Gemini에게 예습시키세요. 이 과정이 완료되어야 향후 연쇄 집필 시 논리가 어긋나지 않습니다.
                         </p>
                     </div>
                 </div>
@@ -904,9 +1269,95 @@
                             <span class="text-[10px] font-black bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded">통합 맥락주입용</span>
                             <span class="text-sm font-bold text-white font-sans">Gemini 맥락 주입 베이스 프롬프트</span>
                         </div>
-                        <button class="copy-btn bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-basecamp')">복사</button>
+                        <div class="flex items-center gap-2">
+                            <button class="copy-btn bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-basecamp')">복사</button>
+                            <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-basecamp')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                            </a>
+                            <a href="https://chatgpt.com" target="_blank" onclick="copyPrompt('p-basecamp')" class="px-4 py-1.5 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> ChatGPT 바로가기
+                            </a>
+                        </div>
                     </div>
                     <div class="p-6 text-xs leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[300px] overflow-y-auto" id="p-basecamp"></div>
+                </div>
+
+                <!-- 최종 종합 마스터 조립 프롬프트 뷰어 (5단계 하단 배치) -->
+                <div class="border-t border-white/5 pt-8 space-y-6">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h3 class="text-lg font-bold text-white font-sans font-sans">최종 종합 마스터 조립 프롬프트</h3>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                        앞선 4단계에서 각 단계별(1~5단계)로 질문하여 도출해 낸 부분 초안들을 아래의 <strong>유형별 마스터 프롬프트</strong> 내부 안내에 따라 붙여넣으세요. Gemini가 최종적으로 하나의 완벽한 계획서 문서로 통합 조립하여 출력해 줍니다.
+                    </p>
+
+                    <!-- 마스터 탭 버튼들 -->
+                    <div class="flex items-center gap-2 p-1 bg-slate-950/60 rounded-xl border border-white/5 max-w-max">
+                        <button onclick="changeMasterTab('outcome', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 bg-emerald-600/20 text-emerald-400">성과중심형</button>
+                        <button onclick="changeMasterTab('output', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">산출중심형</button>
+                        <button onclick="changeMasterTab('diffusion', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">성과확산형</button>
+                        <button onclick="changeMasterTab('reinforcement', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">기능보강형</button>
+                    </div>
+
+                    <!-- 4가지 마스터 뷰어 컨테이너 -->
+                    <div class="space-y-4">
+                        <!-- 성과중심형 마스터 -->
+                        <div id="master-outcome" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-outcome')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-outcome')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-outcome"></div>
+                        </div>
+
+                        <!-- 산출중심형 마스터 -->
+                        <div id="master-output" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">산출중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-output')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-output')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-output"></div>
+                        </div>
+
+                        <!-- 성과확산형 마스터 -->
+                        <div id="master-diffusion" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과확산형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-diffusion')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-diffusion')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-diffusion"></div>
+                        </div>
+
+                        <!-- 기능보강형 마스터 -->
+                        <div id="master-reinforcement" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">기능보강형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-reinforcement')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-reinforcement')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-reinforcement"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1071,15 +1522,7 @@
                         </div>
                     </div>
 
-                    <!-- 성과 마스터 조립 -->
-                    <div class="flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
-                        <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
-                            <span class="text-xs font-bold text-slate-200 font-sans">종합 마스터 조립 프롬프트 (최종 윤문 및 조립)</span>
-                            <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-outcome')">복사</button>
-                        </div>
-                        <div class="p-5 text-[11px] leading-relaxed text-slate-450 select-all code-container rounded-b-2xl max-h-[160px] overflow-y-auto" id="p-master-docs-outcome"></div>
                     </div>
-                </div>
 
                 <!-- ============================================ -->
                 <!-- [4-2 트랙] 산출중심형 실습 탭 콘텐츠 -->
@@ -1213,15 +1656,7 @@
                         </div>
                     </div>
 
-                    <!-- 산출 마스터 조립 -->
-                    <div class="flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
-                        <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
-                            <span class="text-xs font-bold text-slate-200 font-sans">종합 마스터 조립 프롬프트 (최종 윤문 및 조립)</span>
-                            <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-output')">복사</button>
-                        </div>
-                        <div class="p-5 text-[11px] leading-relaxed text-slate-450 select-all code-container rounded-b-2xl max-h-[160px] overflow-y-auto" id="p-master-docs-output"></div>
                     </div>
-                </div>
 
                 <!-- ============================================ -->
                 <!-- [4-3 트랙] 성과확산형 실습 탭 콘텐츠 -->
@@ -1355,15 +1790,7 @@
                         </div>
                     </div>
 
-                    <!-- 확산 마스터 조립 -->
-                    <div class="flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
-                        <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
-                            <span class="text-xs font-bold text-slate-200 font-sans">종합 마스터 조립 프롬프트 (최종 윤문 및 조립)</span>
-                            <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-diffusion')">복사</button>
-                        </div>
-                        <div class="p-5 text-[11px] leading-relaxed text-slate-450 select-all code-container rounded-b-2xl max-h-[160px] overflow-y-auto" id="p-master-docs-diffusion"></div>
                     </div>
-                </div>
 
                 <!-- ============================================ -->
                 <!-- [4-4 트랙] 기능보강형 실습 탭 콘텐츠 -->
@@ -1497,13 +1924,83 @@
                         </div>
                     </div>
 
-                    <!-- 기능보강 마스터 조립 -->
-                    <div class="flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
-                        <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
-                            <span class="text-xs font-bold text-slate-200 font-sans">종합 마스터 조립 프롬프트 (최종 윤문 및 조립)</span>
-                            <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-reinforcement')">복사</button>
+                    </div>
+
+                <!-- 최종 종합 마스터 조립 프롬프트 뷰어 (5단계 하단 배치) -->
+                <div class="border-t border-white/5 pt-8 space-y-6">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h3 class="text-lg font-bold text-white font-sans font-sans">최종 종합 마스터 조립 프롬프트</h3>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                        앞선 4단계에서 각 단계별(1~5단계)로 질문하여 도출해 낸 부분 초안들을 아래의 <strong>유형별 마스터 프롬프트</strong> 내부 안내에 따라 붙여넣으세요. Gemini가 최종적으로 하나의 완벽한 계획서 문서로 통합 조립하여 출력해 줍니다.
+                    </p>
+
+                    <!-- 마스터 탭 버튼들 -->
+                    <div class="flex items-center gap-2 p-1 bg-slate-950/60 rounded-xl border border-white/5 max-w-max">
+                        <button onclick="changeMasterTab('outcome', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 bg-emerald-600/20 text-emerald-400">성과중심형</button>
+                        <button onclick="changeMasterTab('output', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">산출중심형</button>
+                        <button onclick="changeMasterTab('diffusion', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">성과확산형</button>
+                        <button onclick="changeMasterTab('reinforcement', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">기능보강형</button>
+                    </div>
+
+                    <!-- 4가지 마스터 뷰어 컨테이너 -->
+                    <div class="space-y-4">
+                        <!-- 성과중심형 마스터 -->
+                        <div id="master-outcome" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-outcome')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-outcome')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-outcome"></div>
                         </div>
-                        <div class="p-5 text-[11px] leading-relaxed text-slate-450 select-all code-container rounded-b-2xl max-h-[160px] overflow-y-auto" id="p-master-docs-reinforcement"></div>
+
+                        <!-- 산출중심형 마스터 -->
+                        <div id="master-output" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">산출중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-output')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-output')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-output"></div>
+                        </div>
+
+                        <!-- 성과확산형 마스터 -->
+                        <div id="master-diffusion" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과확산형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-diffusion')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-diffusion')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-diffusion"></div>
+                        </div>
+
+                        <!-- 기능보강형 마스터 -->
+                        <div id="master-reinforcement" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">기능보강형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-reinforcement')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-reinforcement')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-reinforcement"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1572,6 +2069,84 @@
                         <p class="text-xs text-slate-400 leading-relaxed font-medium font-sans">
                             인건비, 사업비, 관리비 등 총 예산 표의 <strong>단가 × 인원 × 횟수 = 소계</strong> 공식이 수학적으로 틀리지 않았는지 계산기로 크로스체크합니다. 신청금(90%)과 자부담(10%) 비율 분배가 정확한지 재차 확인합니다.
                         </p>
+                    </div>
+                </div>
+
+                <!-- 최종 종합 마스터 조립 프롬프트 뷰어 (5단계 하단 배치) -->
+                <div class="border-t border-white/5 pt-8 space-y-6">
+                    <div class="flex items-center gap-2">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h3 class="text-lg font-bold text-white font-sans font-sans">최종 종합 마스터 조립 프롬프트</h3>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed font-medium">
+                        앞선 4단계에서 각 단계별(1~5단계)로 질문하여 도출해 낸 부분 초안들을 아래의 <strong>유형별 마스터 프롬프트</strong> 내부 안내에 따라 붙여넣으세요. Gemini가 최종적으로 하나의 완벽한 계획서 문서로 통합 조립하여 출력해 줍니다.
+                    </p>
+
+                    <!-- 마스터 탭 버튼들 -->
+                    <div class="flex items-center gap-2 p-1 bg-slate-950/60 rounded-xl border border-white/5 max-w-max">
+                        <button onclick="changeMasterTab('outcome', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 bg-emerald-600/20 text-emerald-400">성과중심형</button>
+                        <button onclick="changeMasterTab('output', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">산출중심형</button>
+                        <button onclick="changeMasterTab('diffusion', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">성과확산형</button>
+                        <button onclick="changeMasterTab('reinforcement', this)" class="master-tab-btn px-3.5 py-1.5 rounded-lg text-xs font-black transition active:scale-95 text-slate-400 hover:text-white">기능보강형</button>
+                    </div>
+
+                    <!-- 4가지 마스터 뷰어 컨테이너 -->
+                    <div class="space-y-4">
+                        <!-- 성과중심형 마스터 -->
+                        <div id="master-outcome" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-outcome')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-outcome')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-outcome"></div>
+                        </div>
+
+                        <!-- 산출중심형 마스터 -->
+                        <div id="master-output" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">산출중심형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-output')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-output')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-output"></div>
+                        </div>
+
+                        <!-- 성과확산형 마스터 -->
+                        <div id="master-diffusion" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">성과확산형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-diffusion')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-diffusion')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-diffusion"></div>
+                        </div>
+
+                        <!-- 기능보강형 마스터 -->
+                        <div id="master-reinforcement" class="master-content flex flex-col border border-emerald-500/20 rounded-2xl bg-slate-950/40 hidden">
+                            <div class="flex justify-between items-center bg-[#072417]/70 px-5 py-3.5 border-b border-emerald-500/20 rounded-t-2xl">
+                                <span class="text-xs font-bold text-slate-200 font-sans">기능보강형 종합 마스터 조립 프롬프트</span>
+                                <div class="flex items-center gap-2">
+                                    <button class="copy-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-1.5 rounded-lg text-xs transition active:scale-95 shadow-md" onclick="copyPrompt('p-master-docs-reinforcement')">복사</button>
+                                    <a href="https://gemini.google.com" target="_blank" onclick="copyPrompt('p-master-docs-reinforcement')" class="px-4 py-1.5 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 hover:text-white text-xs font-black transition active:scale-95 flex items-center gap-1 shadow-md">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Gemini 바로가기
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="p-5 text-[11px] leading-relaxed text-slate-400 select-all code-container rounded-b-2xl max-h-[180px] overflow-y-auto" id="p-master-docs-reinforcement"></div>
+                        </div>
                     </div>
                 </div>
             </div>
