@@ -1897,61 +1897,61 @@
                     </div>
                 </div>
 
-<!-- 4대 정합성 체크리스트 카드 (인터랙티브 체크박스로 변경) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full" id="qa-checklist-container">
+<!-- 4대 정합성 체크리스트 카드 (5번 영역 글씨 크기 대폭 확대 및 줄간격 확보) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full" id="qa-checklist-container">
                     
                     <!-- 체크리스트 1: 사업명-필요성 매핑 -->
-                    <label for="qa-check-1" class="qa-check-card glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 cursor-pointer block select-none hover:border-white/20 transition-all">
+                    <label for="qa-check-1" class="qa-check-card glass-card p-8 rounded-3xl border border-white/10 space-y-5 bg-slate-900/40 cursor-pointer block select-none hover:border-white/20 transition-all">
                         <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="w-6 h-6 rounded bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs">1</span>
-                                <strong class="text-white text-base font-sans qa-title">사업명 - 필요성 논리 정합성</strong>
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-black text-sm shrink-0">1</span>
+                                <strong class="text-white text-lg md:text-xl font-bold font-sans qa-title">사업명 - 필요성 논리 정합성</strong>
                             </div>
-                            <input type="checkbox" id="qa-check-1" class="qa-checkbox w-5 h-5 rounded border-white/10 text-emerald-500 bg-slate-950 focus:ring-emerald-500/50 cursor-pointer">
+                            <input type="checkbox" id="qa-check-1" class="qa-checkbox w-6 h-6 rounded border-white/10 text-emerald-500 bg-slate-955 focus:ring-emerald-500/50 cursor-pointer shrink-0">
                         </div>
-                        <p class="text-xs text-slate-400 leading-relaxed font-medium font-sans qa-desc">
+                        <p class="text-sm md:text-base text-slate-300 leading-relaxed font-semibold font-sans qa-desc">
                             사업명의 [목적] 및 [방법]이 '2. 사업 필요성' 단락에서 제기된 문제점들과 100% 일치하는지 확인합니다. 필요성에서 지적하지 않은 활동이 갑자기 사업명에 언급되면 감점 대상입니다.
                         </p>
                     </label>
 
                     <!-- 체크리스트 2: 프로그램-대상자 매핑 -->
-                    <label for="qa-check-2" class="qa-check-card glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 cursor-pointer block select-none hover:border-white/20 transition-all">
+                    <label for="qa-check-2" class="qa-check-card glass-card p-8 rounded-3xl border border-white/10 space-y-5 bg-slate-900/40 cursor-pointer block select-none hover:border-white/20 transition-all">
                         <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="w-6 h-6 rounded bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-xs">2</span>
-                                <strong class="text-white text-base font-sans qa-title">프로그램 - 참여 대상자 일치</strong>
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-black text-sm shrink-0">2</span>
+                                <strong class="text-white text-lg md:text-xl font-bold font-sans qa-title">프로그램 - 참여 대상자 일치</strong>
                             </div>
-                            <input type="checkbox" id="qa-check-2" class="qa-checkbox w-5 h-5 rounded border-white/10 text-emerald-500 bg-slate-950 focus:ring-emerald-500/50 cursor-pointer">
+                            <input type="checkbox" id="qa-check-2" class="qa-checkbox w-6 h-6 rounded border-white/10 text-emerald-500 bg-slate-955 focus:ring-emerald-500/50 cursor-pointer shrink-0">
                         </div>
-                        <p class="text-xs text-slate-400 leading-relaxed font-medium font-sans qa-desc">
+                        <p class="text-sm md:text-base text-slate-300 leading-relaxed font-semibold font-sans qa-desc">
                             수혜 대상자 수(예: 아동 20명)가 앞서 '참여자 선정' 표에 명시된 클라이언트(핵심 참여자) 인원수와 단 1명도 오차 없이 일치하는지 확인합니다.
                         </p>
                     </label>
 
                     <!-- 체크리스트 3: 세부활동-예산 매핑 -->
-                    <label for="qa-check-3" class="qa-check-card glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 cursor-pointer block select-none hover:border-white/20 transition-all">
+                    <label for="qa-check-3" class="qa-check-card glass-card p-8 rounded-3xl border border-white/10 space-y-5 bg-slate-900/40 cursor-pointer block select-none hover:border-white/20 transition-all">
                         <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="w-6 h-6 rounded bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-xs">3</span>
-                                <strong class="text-white text-base font-sans qa-title">세부 프로그램 - 예산 비목 일치</strong>
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-black text-sm shrink-0">3</span>
+                                <strong class="text-white text-lg md:text-xl font-bold font-sans qa-title">세부 프로그램 - 예산 비목 일치</strong>
                             </div>
-                            <input type="checkbox" id="qa-check-3" class="qa-checkbox w-5 h-5 rounded border-white/10 text-emerald-500 bg-slate-950 focus:ring-emerald-500/50 cursor-pointer">
+                            <input type="checkbox" id="qa-check-3" class="qa-checkbox w-6 h-6 rounded border-white/10 text-emerald-500 bg-slate-955 focus:ring-emerald-500/50 cursor-pointer shrink-0">
                         </div>
-                        <p class="text-xs text-slate-400 leading-relaxed font-medium font-sans qa-desc">
+                        <p class="text-sm md:text-base text-slate-300 leading-relaxed font-semibold font-sans qa-desc">
                             세부 내용에 있는 외부 치료 활동이나 특강 수업이 '예산편성'의 외부 강사 수수료 및 교구비 항목에 한 비목도 빠짐없이 반영되어 금액 단가로 설정되어 있는지 확인합니다.
                         </p>
                     </label>
 
                     <!-- 체크리스트 4: 예산 산출 공식 재검산 -->
-                    <label for="qa-check-4" class="qa-check-card glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 cursor-pointer block select-none hover:border-white/20 transition-all">
+                    <label for="qa-check-4" class="qa-check-card glass-card p-8 rounded-3xl border border-white/10 space-y-5 bg-slate-900/40 cursor-pointer block select-none hover:border-white/20 transition-all">
                         <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="w-6 h-6 rounded bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs">4</span>
-                                <strong class="text-white text-base font-sans qa-title">사칙연산 및 자부담 비율 확인</strong>
+                            <div class="flex items-center gap-3">
+                                <span class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-black text-sm shrink-0">4</span>
+                                <strong class="text-white text-lg md:text-xl font-bold font-sans qa-title">사칙연산 및 자부담 비율 확인</strong>
                             </div>
-                            <input type="checkbox" id="qa-check-4" class="qa-checkbox w-5 h-5 rounded border-white/10 text-emerald-500 bg-slate-950 focus:ring-emerald-500/50 cursor-pointer">
+                            <input type="checkbox" id="qa-check-4" class="qa-checkbox w-6 h-6 rounded border-white/10 text-emerald-500 bg-slate-955 focus:ring-emerald-500/50 cursor-pointer shrink-0">
                         </div>
-                        <p class="text-xs text-slate-400 leading-relaxed font-medium font-sans qa-desc">
+                        <p class="text-sm md:text-base text-slate-300 leading-relaxed font-semibold font-sans qa-desc">
                             인건비, 사업비, 관리비 등 총 예산 표의 <strong>단가 × 인원 × 횟수 = 소계</strong> 공식이 수학적으로 틀리지 않았는지 계산기로 크로스체크합니다. 신청금(90%)과 자부담(10%) 비율 분배가 정확한지 재차 확인합니다.
                         </p>
                     </label>
@@ -1971,15 +1971,16 @@
                     <h2 class="text-2xl md:text-3xl font-black text-white font-sans">실전 자가 퀴즈 및 성취도 진단</h2>
                 </div>
 
-                <div class="bg-purple-500/5 rounded-xl p-6 border border-purple-500/20 flex flex-col md:flex-row items-center justify-between gap-6 w-full">
-                    <div class="space-y-2 text-sm font-sans max-w-2xl">
-                        <p class="text-purple-400 font-black text-base flex items-center gap-1.5"><i data-lucide="award" class="w-5 h-5"></i> 3일차 교육 성취도 진단평가</p>
-                        <p class="text-slate-350 leading-relaxed font-medium text-sm md:text-base">
-                            AI 프로포절 실전 내비게이터(전략 딥리서치, 우수사례 역기획, 베이스 프롬프트, 연쇄적 프롬프팅 지침셋 설계, 예산 수동 검증 등) 전 과정을 제대로 이해하셨는지 자가 진단 문제를 통해 실시간 채점해 보세요. 
+                <div class="bg-[#a855f7]/5 rounded-[24px] p-8 md:p-10 border border-[#a855f7]/25 flex flex-col xl:flex-row items-center justify-between gap-8 w-full">
+                    <div class="space-y-3 font-sans max-w-4xl text-left">
+                        <p class="text-[#a855f7] font-black text-lg md:text-xl flex items-center gap-2.5"><i data-lucide="award" class="w-6 h-6"></i> 3일차 교육 성취도 최종 진단평가</p>
+                        <p class="text-slate-200 leading-relaxed font-black text-base md:text-lg">
+                            AI 프로포절 실전 내비게이터 전 과정을 마스터하셨는지 10문항의 자가 진단을 통해 실시간 점검해 보세요.<br>
+                            체점 완료 후 오답 해설 가이드가 즉시 제공되며, 통과 점수를 달성하여 최종 학습을 멋지게 마무리하세요!
                         </p>
                     </div>
-                    <button onclick="openQuizModal()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black py-4 px-8 rounded-2xl text-sm transition-all duration-200 active:scale-95 shadow-xl shadow-purple-500/20 flex items-center justify-center gap-2 shrink-0">
-                        <i data-lucide="help-circle" class="w-5 h-5"></i> 자가 퀴즈 시작하기
+                    <button onclick="openQuizModal()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black py-5 px-10 rounded-2xl text-base transition-all duration-200 active:scale-95 shadow-xl shadow-purple-500/20 flex items-center justify-center gap-2 shrink-0">
+                        <i data-lucide="help-circle" class="w-5.5 h-5.5"></i> 자가 퀴즈 시작하기
                     </button>
                 </div>
             </div>
