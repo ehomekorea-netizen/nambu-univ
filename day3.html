@@ -126,6 +126,8 @@
             font-family: 'JetBrains Mono', 'Fira Code', monospace;
             white-space: pre-wrap;
             word-break: break-all;
+            font-size: 1.05rem !important; /* Slightly enlarged for middle-aged practitioners */
+            line-height: 1.7;
         }
 
         /* Button Glows & Animations */
@@ -695,45 +697,25 @@
                         </div>
                         <div class="space-y-2">
                             <label class="font-bold text-slate-300 block text-xs tracking-wider">2. 제출할 심사 기관</label>
-                            <div class="relative">
-                                <select id="var-eval-org" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 text-xs appearance-none cursor-pointer">
-                                    <option value="사회복지공동모금회">사회복지공동모금회</option>
-                                    <option value="대기업 사회공헌재단 (삼성, 아산 등)">대기업 사회공헌재단 (삼성, 아산 등)</option>
-                                    <option value="지자체/정부 공모사업">지자체/정부 공모사업</option>
-                                    <option value="민간 복지재단">민간 복지재단</option>
-                                </select>
-                                <div class="absolute right-4 top-4 pointer-events-none text-slate-400">
-                                    <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
-                                </div>
-                            </div>
+                            <input type="text" id="var-eval-org" value="사회복지공동모금회" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-blue-500 placeholder-slate-500 font-bold" placeholder="예: 사회복지공동모금회, 기업 재단 등">
                         </div>
                         <div class="space-y-2">
                             <label class="font-bold text-slate-300 block text-xs tracking-wider">3. 신청 기관 유형</label>
-                            <div class="relative">
-                                <select id="var-app-org" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 text-xs appearance-none cursor-pointer">
-                                    <option value="지역아동센터">지역아동센터</option>
-                                    <option value="종합사회복지관">종합사회복지관</option>
-                                    <option value="장애인복지관">장애인복지관</option>
-                                    <option value="다문화가족지원센터">다문화가족지원센터</option>
-                                </select>
-                                <div class="absolute right-4 top-4 pointer-events-none text-slate-400">
-                                    <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
-                                </div>
-                            </div>
+                            <input type="text" id="var-app-org" value="지역아동센터" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-blue-500 placeholder-slate-500 font-bold" placeholder="예: 지역아동센터, 종합사회복지관 등">
                         </div>
                         <div class="space-y-2">
-                            <label class="font-bold text-slate-300 block text-xs tracking-wider">4. 리서치 대상 지역</label>
-                            <input type="text" id="var-region" value="광주광역시 남구" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 text-xs placeholder-slate-500">
+                            <label class="font-bold text-slate-300 block text-xs tracking-wider">4. 사업 수행 지역</label>
+                            <input type="text" id="var-region" value="광주광역시 남구" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-blue-500 placeholder-slate-500 font-bold" placeholder="예: 광주광역시 남구, 서울시 마포구">
                         </div>
                         <div class="space-y-2">
                             <label class="font-bold text-slate-300 block text-xs tracking-wider">5. 총 사업 예산 한도</label>
                             <div class="relative">
-                                <select id="var-budget" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 text-xs appearance-none cursor-pointer">
+                                <select id="var-budget" class="w-full bg-[#0d1326] border border-white/10 rounded-xl p-3.5 text-sm font-bold text-white focus:outline-none focus:border-blue-500 appearance-none cursor-pointer">
                                     <option value="15,000,000원">1,500만 원 이하 (일반 배분사업)</option>
                                     <option value="30,000,000원">3,000만 원 이하 (중규모 기획사업)</option>
                                     <option value="50,000,000원">5,000만 원 이하 (대규모 기업 매칭)</option>
                                 </select>
-                                <div class="absolute right-4 top-4 pointer-events-none text-slate-400">
+                                <div class="absolute right-4 top-4.5 pointer-events-none text-slate-400">
                                     <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
                                 </div>
                             </div>
