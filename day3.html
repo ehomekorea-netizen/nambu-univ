@@ -576,6 +576,10 @@
             <div class="absolute left-[15px] top-[14px] bottom-[14px] w-[2px] bg-slate-800 z-0"></div>
             <div id="sidebar-progress-line" class="absolute left-[15px] top-[14px] w-[2px] bg-blue-500 transition-all duration-300 z-0" style="height: 0px;"></div>
 
+            <a href="#notebooklm-studio" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
+                <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
+                <span>NotebookLM 스튜디오</span>
+            </a>
             <a href="#step-1" class="relative flex items-center gap-3 py-1.5 px-2 rounded-lg hover:bg-white/5 hover:text-white transition-all z-10">
                 <span class="nav-dot w-3.5 h-3.5 rounded-full bg-slate-700 shrink-0 transition-all duration-300 border-[3px] border-[#05070f]"></span>
                 <span>1. 전략 딥리서치</span>
@@ -699,11 +703,265 @@
             </div>
         </div>
 
-        
+        <!-- NotebookLM 스튜디오 실무 기능 및 추천 프롬프트 섹션 -->
+        <section id="notebooklm-studio" class="presentation-section">
+            <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border w-full bg-gradient-to-br from-[#1e1c18] to-[#12110f]">
+                <div class="flex items-center gap-3 flex-wrap">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center font-black text-lg shrink-0">
+                        <i data-lucide="layers" class="w-5 h-5 text-slate-950"></i>
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-black text-white font-sans">NotebookLM 스튜디오 실무 기능 & 추천 프롬프트</h2>
+                </div>
 
-        
+                <div class="bg-amber-500/5 rounded-xl p-5 border border-amber-500/25 flex items-start gap-3 w-full">
+                    <span class="text-amber-500 text-xl">💡</span>
+                    <div class="space-y-1.5 text-sm font-sans">
+                        <p class="text-amber-400 font-bold">결과물 퀄리티를 200% 끌어올리는 세부 프롬프트의 힘:</p>
+                        <p class="text-slate-350 leading-relaxed font-medium">
+                            NotebookLM 스튜디오의 기본 생성 버튼만 클릭하면 일반적이고 밋밋한 아웃풋이 도출되기 쉽습니다.<br>
+                            결과물의 퀄리티 차이는 결국 **"사용자가 추가하는 세부 프롬프트(Chat/Prompt)"**에서 결정됩니다. 아래의 각 기능별 <strong>1:1 맞춤형 세부 추천 프롬프트</strong>를 복사하여 NotebookLM 대화창에 추가로 지시해 보세요. 실전 업무 성과가 완전히 달라집니다.
+                        </p>
+                    </div>
+                </div>
 
-        
+                <!-- 스튜디오 기능 카드 그리드 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    
+                    <!-- 1. AI 오디오 오버뷰 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs"><i data-lucide="mic" class="w-4 h-4"></i></span>
+                                    <strong class="text-white text-base font-sans">🎙️ AI 오디오 오버뷰 (Audio Overview)</strong>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-300 leading-relaxed font-medium font-sans">
+                                <span class="text-blue-400 font-black block">💡 무슨 기능인가요?</span>
+                                자료를 바탕으로 두 명의 남녀 아나운서가 대화식으로 풀어주는 팟캐스트(라디오) 음성을 만들어 줍니다. (영어 기반이지만 한국어 문서를 요약해서 대화로 들려주어 인기가 가장 많습니다.)
+                            </div>
+                            <div class="text-xs text-slate-450 leading-relaxed font-medium font-sans">
+                                <span class="text-purple-400 font-black block">🏫 지역아동센터 실무 활용 예시</span>
+                                바쁜 퇴근길이나 청소 시간에 복잡한 보건복지부 지침서나 아동 발달 논문을 라디오처럼 귀로 들으면서 공부할 수 있습니다.
+                            </div>
+                        </div>
+                        <div class="space-y-2 pt-2 border-t border-white/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-purple-400">추천 세부 프롬프트</span>
+                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded-lg text-xs transition active:scale-95 flex items-center gap-1 shrink-0" onclick="copyPrompt('p-studio-audio')">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사
+                                </button>
+                            </div>
+                            <div class="p-3 text-[11px] leading-relaxed text-slate-300 select-all code-container rounded-xl max-h-[80px] overflow-y-auto" id="p-studio-audio">이 문서는 지역아동센터 아동 발달 지원 사업 계획서야. 한국어로 작성되었지만, 영어 오디오 오버뷰 생성을 위해 '한국 복지 현장의 시급성과 핵심 수혜 조건'을 위주로 내용을 아주 명확하게 설명해 줘. 두 대화자가 다문화 아동 지원과 심리 언어 치료의 필요성을 중점적으로 짚으며 감동적으로 대화하도록 흐름을 유도해 줘.</div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 슬라이드 자료 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs"><i data-lucide="presentation" class="w-4 h-4"></i></span>
+                                    <strong class="text-white text-base font-sans">📊 슬라이드 자료 (Slides)</strong>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-300 leading-relaxed font-medium font-sans">
+                                <span class="text-blue-400 font-black block">💡 무슨 기능인가요?</span>
+                                문서의 방대한 내용을 발표나 교육에 쓰기 좋게 프레젠테이션용 장표(슬라이드)의 핵심 텍스트 구성안으로 재정리해 줍니다.
+                            </div>
+                            <div class="text-xs text-slate-455 leading-relaxed font-medium font-sans">
+                                <span class="text-purple-400 font-black block">🏫 지역아동센터 실무 활용 예시</span>
+                                학부모 설명회나 센터 내부 회의 시, 연구 자료를 일일이 ppt로 요약할 필요 없이 발표 자료의 뼈대를 3초 만에 뽑아냅니다.
+                            </div>
+                        </div>
+                        <div class="space-y-2 pt-2 border-t border-white/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-purple-400">추천 세부 프롬프트</span>
+                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded-lg text-xs transition active:scale-95 flex items-center gap-1 shrink-0" onclick="copyPrompt('p-studio-slides')">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사
+                                </button>
+                            </div>
+                            <div class="p-3 text-[11px] leading-relaxed text-slate-300 select-all code-container rounded-xl max-h-[80px] overflow-y-auto" id="p-studio-slides">학부모 설명회용 10슬라이드 발표 장표의 텍스트 구성안을 짜줘. 슬라이드마다 [제목], [핵심 메시지(1문장)], [3가지 세부 불릿포인트] 구조로 정렬하고, 전문적인 복지 용어는 학부모들이 이해하기 쉬운 친숙한 단어로 치환해서 기술해 줘.</div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 동영상 개요 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs"><i data-lucide="video" class="w-4 h-4"></i></span>
+                                    <strong class="text-white text-base font-sans">🎬 동영상 개요 (Video Outline)</strong>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-300 leading-relaxed font-medium font-sans">
+                                <span class="text-blue-400 font-black block">💡 무슨 기능인가요?</span>
+                                이 자료를 기반으로 교육용 영상이나 설명 동영상을 만든다면 어떤 흐름으로 찍어야 하는지 시나리오/개요를 짜줍니다.
+                            </div>
+                            <div class="text-xs text-slate-455 leading-relaxed font-medium font-sans">
+                                <span class="text-purple-400 font-black block">🏫 지역아동센터 실무 활용 예시</span>
+                                아이들에게 보여줄 '올바른 언어 습관' 교육 영상을 직접 제작할 때, 어떤 순서로 영상을 구성해야 할지 가이드라인을 잡을 수 있습니다.
+                            </div>
+                        </div>
+                        <div class="space-y-2 pt-2 border-t border-white/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-purple-400">추천 세부 프롬프트</span>
+                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded-lg text-xs transition active:scale-95 flex items-center gap-1 shrink-0" onclick="copyPrompt('p-studio-video')">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사
+                                </button>
+                            </div>
+                            <div class="p-3 text-[11px] leading-relaxed text-slate-300 select-all code-container rounded-xl max-h-[80px] overflow-y-auto" id="p-studio-video">초등학교 저학년 아동들을 대상으로 하는 '올바른 언어 습관' 5분 교육 동영상 시나리오 개요를 작성해 줘. 인트로(흥미 유발) ➔ 본론(상황별 예시와 나쁜 습관 교정) ➔ 아웃트로(실천 다짐 퀴즈) 흐름으로 구성하고, 화면 연출 묘사(Visual)와 대사(Audio)를 표 형태로 갈라줘.</div>
+                        </div>
+                    </div>
+
+                    <!-- 4. 마인드맵 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs"><i data-lucide="git-fork" class="w-4 h-4"></i></span>
+                                    <strong class="text-white text-base font-sans">🧠 마인드맵 (Mindmap)</strong>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-300 leading-relaxed font-medium font-sans">
+                                <span class="text-blue-400 font-black block">💡 무슨 기능인가요?</span>
+                                복잡하게 얽혀 있는 정보들을 머릿속에 한눈에 들어오도록 계층별 구조(마인드맵 텍스트)로 시각화하여 일목요연하게 쪼개줍니다.
+                            </p>
+                            <div class="text-xs text-slate-455 leading-relaxed font-medium font-sans">
+                                <span class="text-purple-400 font-black block">🏫 지역아동센터 실무 활용 예시</span>
+                                '수용·표현 어휘력 진단 및 치료 과정'처럼 복잡한 발달 단계를 한눈에 들어오는 트리 구조로 정리해서 보고 싶을 때 유용합니다.
+                            </div>
+                        </div>
+                        <div class="space-y-2 pt-2 border-t border-white/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-purple-400">추천 세부 프롬프트</span>
+                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded-lg text-xs transition active:scale-95 flex items-center gap-1 shrink-0" onclick="copyPrompt('p-studio-mindmap')">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사
+                                </button>
+                            </div>
+                            <div class="p-3 text-[11px] leading-relaxed text-slate-300 select-all code-container rounded-xl max-h-[80px] overflow-y-auto" id="p-studio-mindmap">이 자료에 담긴 '아동 언어/정서 발달 진단 및 3단계 치료 프로세스'의 복잡한 계층 구조를 마인드맵용 트리 텍스트로 요약해 줘. Root(대주제) ➔ Branch(진단, 치료, 사후관리) ➔ Leaf(세부 체크리스트 및 측정 척도) 형태로 탭(Tab) 들여쓰기를 명확히 하여 계층화해 줘.</div>
+                        </div>
+                    </div>
+
+                    <!-- 5. 보고서 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs"><i data-lucide="file-text" class="w-4 h-4"></i></span>
+                                    <strong class="text-white text-base font-sans">📝 보고서 (Study Guide/Brief)</strong>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-300 leading-relaxed font-medium font-sans">
+                                <span class="text-blue-400 font-black block">💡 무슨 기능인가요?</span>
+                                수십 장의 긴 원문 자료에서 가장 핵심적인 정보만 쏙쏙 골라 1~2장 분량의 깔끔한 핵심 요약 문서로 재탄생시킵니다.
+                            </div>
+                            <div class="text-xs text-slate-455 leading-relaxed font-medium font-sans">
+                                <span class="text-purple-400 font-black block">🏫 지역아동센터 실무 활용 예시</span>
+                                외부 공모사업 신청서를 쓰거나 내부 결재를 올릴 때, 어려운 학술 논문을 쉽게 요약된 요약본으로 즉시 변환합니다.
+                            </div>
+                        </div>
+                        <div class="space-y-2 pt-2 border-t border-white/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-purple-400">추천 세부 프롬프트</span>
+                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded-lg text-xs transition active:scale-95 flex items-center gap-1 shrink-0" onclick="copyPrompt('p-studio-report')">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사
+                                </button>
+                            </div>
+                            <div class="p-3 text-[11px] leading-relaxed text-slate-300 select-all code-container rounded-xl max-h-[80px] overflow-y-auto" id="p-studio-report">이 50페이지 분량 of 아동 복지 지침서 원문에서, 우리 지역아동센터에 반드시 적용해야 하는 '수혜 대상 기준 개정안'과 '회계 정산 변경 규칙'만 쏙쏙 골라 1페이지 분량의 요약 보고서(Brief)로 재탄생시켜 줘. 개조식 종결어미(~함, ~임)를 사용해줘.</div>
+                        </div>
+                    </div>
+
+                    <!-- 6. 플래시카드 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs"><i data-lucide="credit-card" class="w-4 h-4"></i></span>
+                                    <strong class="text-white text-base font-sans">🃏 플래시카드 (Flashcards)</strong>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-300 leading-relaxed font-medium font-sans">
+                                <span class="text-blue-400 font-black block">💡 무슨 기능인가요?</span>
+                                앞면에는 '질문(개념)', 뒷면에는 '답변(뜻)'이 적힌 공부용 단어 카드 셋트를 자동으로 만들어 줍니다.
+                            </div>
+                            <div class="text-xs text-slate-455 leading-relaxed font-medium font-sans">
+                                <span class="text-purple-400 font-black block">🏫 지역아동센터 실무 활용 예시</span>
+                                아이들이 꼭 알아야 하는 필수 어휘나 다문화 아동 대상 기초 한국어 단어 공부용 카드놀이 세트를 순식간에 제작할 수 있습니다.
+                            </div>
+                        </div>
+                        <div class="space-y-2 pt-2 border-t border-white/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-purple-400">추천 세부 프롬프트</span>
+                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded-lg text-xs transition active:scale-95 flex items-center gap-1 shrink-0" onclick="copyPrompt('p-studio-flashcards')">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사
+                                </button>
+                            </div>
+                            <div class="p-3 text-[11px] leading-relaxed text-slate-300 select-all code-container rounded-xl max-h-[80px] overflow-y-auto" id="p-studio-flashcards">다문화 아동들이 실생활에서 자주 틀리는 '기초 한국어 존댓말 및 어휘' 15세트를 플래시카드로 구성해 줘. 앞면에는 [한국어 문장 또는 어휘], 뒷면에는 [올바른 표현 방법 및 일상 활용 예시]가 깔끔하게 1:1로 대응되도록 Markdown 표 서식으로 출력해 줘.</div>
+                        </div>
+                    </div>
+
+                    <!-- 7. 퀴즈 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs"><i data-lucide="help-circle" class="w-4 h-4"></i></span>
+                                    <strong class="text-white text-base font-sans">❓ 퀴즈 (Quiz)</strong>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-300 leading-relaxed font-medium font-sans">
+                                <span class="text-blue-400 font-black block">💡 무슨 기능인가요?</span>
+                                업로드한 문서의 핵심 내용을 잘 이해했는지 테스트해 볼 수 있는 객관식/주관식 문제지를 자동으로 만들어 줍니다.
+                            </div>
+                            <div class="text-xs text-slate-455 leading-relaxed font-medium font-sans">
+                                <span class="text-purple-400 font-black block">🏫 지역아동센터 실무 활용 예시</span>
+                                교육 프로그램을 마친 후, 아이들이 내용을 잘 이해했는지 확인하기 위한 이해도 테스트 시험지를 손쉽게 출제합니다.
+                            </div>
+                        </div>
+                        <div class="space-y-2 pt-2 border-t border-white/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-purple-400">추천 세부 프롬프트</span>
+                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded-lg text-xs transition active:scale-95 flex items-center gap-1 shrink-0" onclick="copyPrompt('p-studio-quiz')">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사
+                                </button>
+                            </div>
+                            <div class="p-3 text-[11px] leading-relaxed text-slate-300 select-all code-container rounded-xl max-h-[80px] overflow-y-auto" id="p-studio-quiz">아이들이 '안전한 인터넷 사용법' 지침을 잘 이해했는지 검증하기 위한 초등 3~4학년 난이도의 객관식 5문제, 주관식 2문제를 만들어 줘. 각 문제 아래에는 친절한 [해설]과 [정답]을 숨김 처리나 구분선 아래에 따로 몰아서 표기해 줘.</div>
+                        </div>
+                    </div>
+
+                    <!-- 8. 인포그래픽 -->
+                    <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-4 bg-slate-900/30 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs"><i data-lucide="info" class="w-4 h-4"></i></span>
+                                    <strong class="text-white text-base font-sans">ℹ️ 인포그래픽 (Infographic)</strong>
+                                </div>
+                            </div>
+                            <div class="text-xs text-slate-300 leading-relaxed font-medium font-sans">
+                                <span class="text-blue-400 font-black block">💡 무슨 기능인가요?</span>
+                                텍스트 중심의 지루한 자료를 카드뉴스나 포스터 등 이미지(시각 자료)로 표현하기에 가장 좋은 구조와 배치를 기획해 줍니다.
+                            </div>
+                            <div class="text-xs text-slate-455 leading-relaxed font-medium font-sans">
+                                <span class="text-purple-400 font-black block">🏫 지역아동센터 실무 활용 예시</span>
+                                센터 게시판에 붙일 '아동 어휘력 향상을 위한 가정 내 수칙' 안내문/포스터의 레이아웃과 들어갈 핵심 문구를 기획할 때 씁니다.
+                            </div>
+                        </div>
+                        <div class="space-y-2 pt-2 border-t border-white/5">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-purple-400">추천 세부 프롬프트</span>
+                                <button class="copy-btn bg-blue-600 hover:bg-blue-500 text-white font-bold px-3 py-1 rounded-lg text-xs transition active:scale-95 flex items-center gap-1 shrink-0" onclick="copyPrompt('p-studio-infographic')">
+                                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> 복사
+                                </button>
+                            </div>
+                            <div class="p-3 text-[11px] leading-relaxed text-slate-300 select-all code-container rounded-xl max-h-[80px] overflow-y-auto" id="p-studio-infographic">가정 내 어휘력 향상을 위한 부모 가이드라인 5대 수칙을 카드뉴스나 포스터로 제작하려 해. 디자이너에게 줄 상세 포스터 기획안을 작성해 줘. 각 카드별로 [들어갈 핵심 텍스트(30자 내외)], [추천 일러스트/아이콘 이미지 구도 묘사], [배경 및 어조 톤앤매너]를 명확히 갈라줘.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
         <!-- 1단계: 딥리서치 & 한계 파악 -->
         <section id="step-1" class="presentation-section">
             <div class="glass-panel rounded-[32px] p-8 md:p-12 space-y-8 glow-border">
